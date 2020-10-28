@@ -1,0 +1,244 @@
+/* Fonts */
+@import url(//fonts.googleapis.com/css?family=Roboto);
+@import url(//fonts.googleapis.com/css?family=Anton);
+@import url(//fonts.googleapis.com/css?family=Staatliches);
+@import url(//fonts.googleapis.com/css?family=Poppins);
+@import url(//fonts.googleapis.com/css?family=Cairo);
+@import url(//fonts.googleapis.com/css?family=Squada+One);
+@import url(//fonts.googleapis.com/css?family=Russo+One);
+
+/* Variables */
+:root{
+  --dark_grey:#373737;
+  --light_grey:#bbbbbb;
+  --mid-grey:#292929;
+  --dark_blue:#0B22F2;
+  --light_blue:#0BB4F2;
+  --cyan:#00FFFF;
+  --pink:#FF00FF;
+  --purple:#9933FF;
+  --red:#FF0000;
+  --yellow:#FFFF00;
+  --green:#00FF00;
+  --neon_green:#93FA0B;
+  --danger:#f19292a8;
+  --warning:#f7f27aef;
+  --info:#92d5f0c4;
+  --success:#87f190b9;
+}
+
+/* HTML Elements */
+body,html{
+  height:100%;
+}
+
+h1{
+  font-family: "Staatliches";
+  letter-spacing: 2px;
+}
+
+h2{
+  font-family: "Poppins";
+  font-weight: bolder;
+}
+
+p,li,input,a{
+  font-family: "Cairo";
+}
+
+p{
+  font-weight: lighter;
+  padding: 5px;
+}
+
+a{
+  font-weight: bold;
+}
+
+button,div{
+  font-family: "Russo One";
+}
+
+button{
+  transition: 0.5s;
+  padding: 10px 15px 10px 15px;
+  margin:20px;
+  border:0;
+  border-radius: 10px;
+  background-color: black;
+  color:white;
+}
+
+button:hover{
+  background-color: var(--dark_grey);
+}
+
+ul {
+  list-style-position: inside;
+}
+
+input{
+  transition: 0.5s;
+  padding: 5px 10px 5px 10px;
+  color:black;
+  background-color: var(--light_grey);
+  border:2px solid black;
+  margin-bottom: 20px;
+}
+
+input::placeholder{
+  color:black;
+}
+
+input:focus{
+  outline:0;
+  border-radius: 15px;
+  background-color: rgba(0,0,0,0.7);
+  width:200px;
+  color:white;
+}
+
+input:focus::placeholder{
+  color: white;
+}
+
+input[type="submit"]{
+  transition: 0.5s;
+  padding: 10px 15px 10px 15px;
+  margin:20px;
+  width:100px;
+  border:0;
+  border-radius: 10px;
+  background-color: black;
+  color:white;
+  font-family: "Russo one";
+}
+
+input[type="submit"]:hover{
+  background-color: var(--dark_grey);
+}
+
+hr{
+  margin:10px,0px,10px,0px;
+  border:1px solid #b9b9b9;
+}
+
+span {
+  font-family: "Cairo";
+  font-weight: bold;
+}
+
+span a{
+  color:black;
+  text-decoration: none;
+}
+
+span a:hover{
+  text-decoration: underline;
+  color:var(--light_blue);
+}
+
+/* CLASS Selectors */
+.center-container{
+  text-align:center;
+  margin: auto;
+  margin-bottom:50px;
+  width: 70%;
+}
+
+.right-container{
+  text-align:right;
+  margin-left: auto;
+  margin-right: 50px;
+  margin-bottom:50px;
+  width: 70%;
+}
+
+.left-container{
+  text-align:left;
+  margin-right: auto;
+  margin-left: 50px;
+  margin-bottom:50px;
+  width: 70%;
+}
+
+.bg-danger{
+  font-weight: bolder;
+  color:black;
+  background-color:var(--danger);
+}
+
+.bg-warning{
+  font-weight: bolder;
+  color:black;
+  background-color:var(--warning);
+}
+
+.bg-info{
+  font-weight: bolder;
+  color:black;
+  background-color:var(--info);
+}
+
+.bg-success{
+  font-weight: bolder;
+  color:black;
+  background-color:var(--success);
+}
+
+.home-bar{
+  width: 100%;
+  background-color: var(--mid-grey);
+  color:white;
+  padding:10px;
+}
+
+.home-bar img{
+  width:4%;
+}
+
+.home-bar .align-right{
+  float:right;
+  margin:15px;
+}
+
+.dropdown_menu{
+  display: none;
+  z-index: 1;
+  background-color: white;
+  color:black;
+  height:fit-content;
+  padding:10px;
+  border-radius: 5px;
+}
+
+.dropdown_menu span::after{
+  content: "\A";
+  white-space: pre;
+}
+
+/*ID Selectors*/
+#background{
+  width: fit-content;
+  transition: 0.5s;
+  background-color: rgba(0,0,0,0.2);
+  padding:50px;
+  border-radius: 20px;
+}
+
+#feed_bg{
+  background-color: #bbbbbb;
+}
+
+/* Media Queries */
+@media screen and (max-width:800px){
+  .right-container,.left-container{
+    margin-left:0;
+    margin-right:0;
+    width:fit-content;
+  }
+
+  .home-bar img{
+    width: 20%;
+  }
+}

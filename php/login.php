@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--  Jquery link(s)  -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!--  React.js libraries  -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <!-- Font awesome kit  -->
+  <script src="https://kit.fontawesome.com/b82b391bad.js" crossorigin="anonymous"></script>
+  <!--  Bootstrap(s)  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <!-- My scripts -->
+  <link rel="stylesheet" href="../root/css/design.css">
+  <link rel="stylesheet" href="../root/css/style.css">
+  <script type="text/jsx" src="../root/js/index.js"></script>
+  <title>Project Anon - Login</title>
+</head>
+<body>
+  <div class="center-container">
+    <h1>Project Anon</h1>
+    <h5>A social media platform developed for sharing projects.</h5>
+  </div>
+<?php
+session_start();
+# cross site scripting prevention
+function e($str){
+  return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
+}
+# Signing the user up, and adding data to the DB
+# Turn off all notices
+error_reporting(E_ALL & ~E_NOTICE);
+# All the database data we need to connect
+$DB_SERVER = "127.0.0.1:3307";
+$DB_USERNAME = "root";
+$DB_PASSWORD = ""; 
+$DB_NAME = "anon";
+# Connecting to the server
+$connection = mysqli_connect($DB_SERVER,$DB_USERNAME,$DB_PASSWORD,$DB_NAME);
+# on connection error
+if($connection == false){
+  echo "<h2>Something went wrong</h2>";
+}
+# Variables from the form
+$uname =  mysqli_real_escape_string($connection, e($_POST['uname']));
+$_SESSION["uname"] = $uname;
+$email = mysqli_real_escape_string($connection, e($_POST['email']));
+$_SESSION["email"] = $email;
+$pass = mysqli_real_escape_string($connection, e($_POST['pass']));
+# Hashing the password (bcrypt)
+# Getting the username from the database
+$query = "SELECT `uname` FROM `users` WHERE `uname` = '$uname'";
+$logged_uname = mysqli_query($connection,$query);
+$logged_uname = mysqli_fetch_row($logged_uname);
+$logged_uname = $logged_uname[0];
+# Getting the password from the database
+$pass_query = "SELECT `pass` FROM `users` WHERE `uname` = '$uname'";
+$logged_pass = mysqli_query($connection,$pass_query);
+$logged_pass = mysqli_fetch_row($logged_pass);
+$logged_pass = $logged_pass[0];
+# Checking for the right data
+if ($uname == $logged_uname) {
+  if (password_verify($pass, $logged_pass)) {
+    $logged_in = true;
+    header( "Location: ./feed.php" );
+  }
+  else{
+    $logged_in = false;
+    $message = "Wrong password, try again.";
+  }
+}
+else{
+  $logged_in = false;
+  $message = "Wrong username.";
+}
+mysqli_close($connection);
+?>
+<?php if($logged_in == false){?>
+  <div class="center-container">
+  </div>
+  <div class="center-container" id="background">
+    <form method="POST" action="./login.php">
+      <input type="text" name="uname" placeholder="Username" required><br>
+      <input type="password" name="pass" placeholder="Password" required><br>
+      <p class="bg-danger"><?php echo $message; ?></p>
+      <input type="submit" value="Log in" id="signup">
+    </form>
+    <p>Not a member yet?<br><a href="../root/signup.html">Sign up</a></p>
+  </div>
+<?php }?>
+</html>
