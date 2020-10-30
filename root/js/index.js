@@ -33,13 +33,13 @@ $(document).ready(() => {
 // Render the Project post form
 const ProjectForm = () => {
   return(
-    <div className="center-container" id="background">
-      <div className="project-form">
-        <i className="fas fa-times-circle" style={{ fontSize: "30px", }}></i>
-        <h1>Post a new project</h1>
+    <div className="center-container">
+      <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
+      <div className="project-form" id="projects">
+        <h2>Post a new project</h2>
         <form method="POST" action="../../php/project-gen.php">
           <input type="text" name="title" placeholder="Title of Project" /><br/>
-          <input type="text" name="desc" placeholder="Description of your project" /><br />
+          <textarea name="desc" placeholder="Describe your project"></textarea><br />
           <input type="submit" value="Post" />
         </form>
       </div>
