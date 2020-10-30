@@ -23,8 +23,9 @@ $p_query = "SELECT `projects` FROM `users` WHERE `uname` = '$uname'";
 $projects = mysqli_query($connection,$p_query);
 $projects = mysqli_fetch_row($projects);
 $projects = $projects[0];
+$projects = json_decode($projects,true);
 # Checking if we can show projects
-if (count(unserialize($projects)) == 0){
+if (count($projects) == 0){
   $show_projects_state = False;
   $msg = "You don't have any projects..."; 
 }
@@ -64,12 +65,12 @@ else{
   </div>
   <div class="center-container">
     <h1><?php echo $uname;?></h1>
-    <h4>Number of projects: <?php echo count(unserialize($projects))?></h4>
+    <h4>Number of projects: <?php echo count($projects)?></h4>
   </div>
   <hr>
   <!-- PROJECTS -->
   <?php if ($show_projects_state == True){
-    foreach(unserialize($projects) as $title => $desc) {?>
+    foreach($projects as $title => $desc) {?>
     <div class="center-container">
       <div class="project">
         <h2><?php echo $title;?></h2>

@@ -23,13 +23,13 @@ $p_query = "SELECT `projects` FROM `users` WHERE `uname` = '$uname'";
 $projects = mysqli_query($connection,$p_query);
 $projects = mysqli_fetch_row($projects);
 $projects = $projects[0];
-$projects = unserialize($projects);
+$projects = json_decode($projects,true);
 # Getting data from the form
 $title =  mysqli_real_escape_string($connection, e($_POST['title']));
 $desc =  mysqli_real_escape_string($connection, e($_POST['desc']));
 # Append new project to the dict
 $projects[$title] = $desc;
-$projects = serialize($projects);
+$projects = json_encode($projects);
 #Appending data to the Database
 $append_query = "UPDATE `users` SET projects = '$projects' WHERE `uname` = '$uname'";
 if ($connection->query($append_query) === TRUE) {

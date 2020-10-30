@@ -61,7 +61,7 @@ $logged_email = mysqli_fetch_row($logged_email);
 $logged_email = $logged_email[0];
 # Projects
 $projects = [];
-$projects = serialize($projects);
+$projects = json_encode($projects);
 #Appending data to the Database
 $append_query = "INSERT INTO `users` (uname,email,pass,projects) VALUES ('$uname','$email','$hashed_password','$projects')";
 if ($connection->query($append_query) === TRUE) {
