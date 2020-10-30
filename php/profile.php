@@ -45,6 +45,7 @@ $projects = $projects[0];
   <title>Project Anon - <?php echo $uname;?></title>
 </head>
 <body id="feed_bg">
+  <div id="project-form-overlay"></div>
   <div id="menu-bar"></div>
   <div class="home-bar">
     <img src="/root/imgs/logo_anon.png" alt="logo">
@@ -53,9 +54,10 @@ $projects = $projects[0];
       <div id="menu"></div>
     </div>
   </div>
-  <div class="center-container" id="background">
+  <div class="center-container">
     <h1><?php echo $uname;?></h1>
     <h4>Number of projects: <?php echo count(unserialize($projects))?></h4>
   </div>
+  <hr>
 </body>
 </html>

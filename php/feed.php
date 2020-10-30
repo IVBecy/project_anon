@@ -23,6 +23,7 @@ $uname = $_SESSION["uname"];
   <title>Project Anon - Your feed</title>
 </head>
 <body id="feed_bg">
+  <div id="project-form-overlay"></div>
   <div class="home-bar">
     <img src="/root/imgs/logo_anon.png" alt="logo">
     <div class="align-right">

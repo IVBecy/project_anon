@@ -86,8 +86,6 @@ else {
 mysqli_close($connection);
 ?>
 <?php if($signed_up == false){?>
-  <div class="center-container">
-  </div>
   <div class="center-container" id="background">
     <form method="POST" action="./signup.php">
       <input type="text" name="uname" placeholder="Username" minlength="4" required><br>
