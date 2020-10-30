@@ -23,6 +23,14 @@ $p_query = "SELECT `projects` FROM `users` WHERE `uname` = '$uname'";
 $projects = mysqli_query($connection,$p_query);
 $projects = mysqli_fetch_row($projects);
 $projects = $projects[0];
+# Checking if we can show projects
+if (count(unserialize($projects)) == 0){
+  $show_projects_state = False;
+  $msg = "You don't have any projects..."; 
+}
+else{
+  $show_projects_state = True;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,5 +67,17 @@ $projects = $projects[0];
     <h4>Number of projects: <?php echo count(unserialize($projects))?></h4>
   </div>
   <hr>
+  <!-- PROJECTS -->
+  <?php if ($show_projects_state == True){
+    foreach(unserialize($projects) as $title => $desc) {?>
+    <div class="center-container">
+      <div class="project">
+        <h2><?php echo $title;?></h2>
+        <p><?php echo $desc;?></p>
+      </div>
+    </div>
+  <?php }}else{?>
+    <div class="center-container"><?php echo $msg?></div>
+  <?php }?>
 </body>
 </html>

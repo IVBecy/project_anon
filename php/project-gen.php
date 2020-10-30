@@ -36,7 +36,7 @@ if ($connection->query($append_query) === TRUE) {
   $append = true;
   $message = "";
 }
-## Check for the same uname
+# If something goes wrong
 else{
   $append = false;
   $message = "Something went wrong please try again.";
