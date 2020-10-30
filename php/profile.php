@@ -55,7 +55,7 @@ $projects = $projects[0];
   </div>
   <div class="center-container" id="background">
     <h1><?php echo $uname;?></h1>
-    <h4>Number of projects: <?php sizeof($projects)?></h4>
+    <h4>Number of projects: <?php echo count(unserialize($projects))?></h4>
   </div>
 </body>
 </html>
