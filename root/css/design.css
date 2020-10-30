@@ -256,6 +256,18 @@ span a:hover{
   transform: scale(1.1);
 }
 
+.project{
+  border: 1px solid black;
+  padding:20px;
+  box-shadow: -5px 4px 24px -4px #a8a8a8;
+  transition: 0.5s;
+}
+
+.project:hover{
+  transform: scale(1.01);
+  box-shadow: -5px 4px 24px -4px #000000;
+}
+
 /*ID Selectors*/
 #background{
   width: fit-content;
