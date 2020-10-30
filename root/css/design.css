@@ -203,13 +203,15 @@ span a:hover{
 }
 
 .dropdown_menu{
-  display: none;
+  position: absolute;
+  visibility: hidden;
   z-index: 10;
   background-color: white;
   color:black;
   height:fit-content;
   padding:10px;
   border-radius: 5px;
+  right:2%;
 }
 
 .dropdown_menu span::after{

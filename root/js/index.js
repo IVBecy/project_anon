@@ -3,7 +3,7 @@ $(document).ready(() => {
   if (document.getElementById("menu")){
     const RenderDropDown = () => {
       return (
-        <div className="dropdown_menu" id="dropdown_settings" style={{ display: "none", width:"200px" }}>
+        <div className="dropdown_menu" id="dropdown_settings" style={{ visibility: "hidden", width:"200px" }}>
           <span><a href="./profile.php">Your Profile</a></span>
           <span><a href="./feed.php">Your Feed</a></span>
           <span id="new_project">New project</span>
@@ -19,11 +19,10 @@ $(document).ready(() => {
       var elem = document.getElementById("dropdown_settings");
       if (name) {
         name.onclick = () => {
-          if (elem.style.display == "none") {
-            elem.style.display = "block";
-            name.style.marginLeft = elem.style.width;
+          if (elem.style.visibility == "hidden") {
+            elem.style.visibility = "visible";
           } else {
-            elem.style.display = "none";
+            elem.style.visibility = "hidden";
           }
         }
       }
