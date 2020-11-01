@@ -23,12 +23,12 @@ $(document).ready(() => {
             elem.style.visibility = "visible";
           } else {
             elem.style.visibility = "hidden";
-          }
-        }
-      }
-    }, 100)
-  }
-})
+          };
+        };
+      };
+    }, 100);
+  };
+});
 
 // Render the Project post form
 const ProjectForm = () => {
@@ -63,9 +63,116 @@ $(document).ready(() => {
         if (x && overlay.style.display == "block") {
           x.onclick = () => {
             overlay.style.display = "none";
-          }
-        }
+          };
+        };
       },200)
     };
   };
-})
+});
+
+// When you click on the ellipses,you get options regarding your project
+const ProjectSettings = () => {
+  return(
+    <div className="dropdown_menu" id="project-dropdown" style={{width: "200px", visibility:"visible"}}>
+      <span id="edit-post">Edit</span>
+      <span id="delete-post">Delete</span>
+    </div> 
+  )
+};
+const RenderPostEdit = () =>{
+  return(
+    <div className="center-container" id="projects" style={{backgroundColor:"white"}}>
+      <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
+      <div className="edit-post">
+        <h1>Edit your post</h1>
+        <form method="POST" onSubmit={onPostEdit} action="../../php/edit-post.php">
+          <input type="text" name="title" placeholder="Edit title"/><br />
+          <textarea name="desc" placeholder="Edit the description of your projects"></textarea><br />
+          <input type="submit" name="send-edited-post" value="Edit Post" />
+        </form>
+      </div>
+    </div>
+  )
+};
+const DeletePost = () => {
+  return (
+    <div className="center-container">
+      <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
+      <div className="delete-post-popup">
+        <form method="POST" action="../../php/delete-post.php">
+          <h4>Are you sure that you want to delete your project?</h4>
+          <input type="submit" value="Delete" style={{backgroundColor:"red",color:"white"}}/>
+        </form>
+      </div>
+    </div>
+  )
+};
+
+// When we click the edit post button
+const onPostEdit = () => {
+  var newTitle = document.getElementsByName("title")[0].value;
+  var newDesc = document.getElementsByName("desc")[0].value;
+  var newProj = {
+    "newTitle": newTitle,
+    "newDesc": newDesc
+  };
+  document.cookie = `editedPost=${JSON.stringify(newProj)}`
+}
+
+$(document).ready(() => {
+  var overlay = document.getElementById("project-form-overlay");
+  if (document.querySelectorAll(".fas.fa-ellipsis-h")[0]){
+    var elips = document.querySelectorAll(".fas.fa-ellipsis-h");
+    for (var i in elips){
+      if (typeof elips[i] != "object"){}
+      else{
+        elips[i].onclick = (e) => {
+          var elem = document.getElementById("project-dropdown");
+          if (elem) {
+            ReactDOM.unmountComponentAtNode(e.target)
+          } else {
+            ReactDOM.render(<ProjectSettings />, e.target)
+            //editing posts
+            document.getElementById("edit-post").onclick = () => {
+              var title = e.target.parentNode.id;
+              var projectDesc = e.target.parentNode.getElementsByClassName("project-desc")[0].innerHTML;
+              overlay.style.display = "block";
+              ReactDOM.render(<RenderPostEdit/>,overlay)
+              //set values to the input fields
+              setTimeout(() => {
+                document.getElementsByName("title")[0].value = title;
+                document.getElementsByName("desc")[0].value = projectDesc;
+                var oldTitle = document.getElementsByName("title")[0].value;
+                var oldDesc = document.getElementsByName("desc")[0].value;
+                var oldArray = {
+                  "oldTitle": oldTitle,
+                  "oldDesc": oldDesc
+                };
+                document.cookie = `oldPost=${JSON.stringify(oldArray)}`
+              },100)
+              var x = document.getElementsByClassName("fas fa-times-circle")[0];
+              if (x && overlay.style.display == "block") {
+                x.onclick = () => {
+                  overlay.style.display = "none";
+                };
+              };
+            };
+            // Post deletion
+            document.getElementById("delete-post").onclick = () => {
+              overlay.style.display = "block";
+              ReactDOM.render(<DeletePost />, overlay)
+              var x = document.getElementsByClassName("fas fa-times-circle")[0];
+              //set cookie for php top be able to access the item in the array
+              document.cookie=`ToBeDeleted=${e.target.parentNode.id}`;
+              if (x && overlay.style.display == "block") {
+                x.onclick = () => {
+                  overlay.style.display = "none";
+                };
+              };
+            }
+          };
+        };
+      };
+    };
+  };
+});

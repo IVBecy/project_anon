@@ -245,6 +245,10 @@ span a:hover{
   white-space: pre;
 }
 
+.dropdown_menu span:hover{
+  color:var(--light_blue);
+}
+
 .fas.fa-times-circle{
   transition: 0.5s;
   margin-bottom:20px;
@@ -263,9 +267,20 @@ span a:hover{
   transition: 0.5s;
 }
 
-.project:hover{
-  transform: scale(1.01);
-  box-shadow: -5px 4px 24px -4px #000000;
+.project .fas.fa-ellipsis-h{
+  float: right;
+}
+
+.delete-post-popup{
+  z-index: 30;
+  margin-top: 100px;
+  padding:50px;
+  background-color: white;
+}
+
+.delete-button{
+  background-color: red;
+  color:white;
 }
 
 /*ID Selectors*/
@@ -298,6 +313,14 @@ span a:hover{
   margin-top: 100px;
   background-color: white;
   padding:50px;
+}
+
+#project-dropdown{
+  right:10%;
+}
+
+#delete-post{
+  color: red;
 }
 
 /* Media Queries */
