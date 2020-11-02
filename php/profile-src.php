@@ -75,7 +75,6 @@ else{
     foreach($projects as $title => $desc) {?>
     <div class="center-container">
       <div class="project" id=<?php $title?>>
-        <i class="fas fa-ellipsis-h"></i>
         <h2><?php echo $title;?></h2>
         <p><?php echo $desc;?></p>
       </div>
