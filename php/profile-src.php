@@ -1,14 +1,19 @@
 <?php 
 session_start();
+# Turn off all notices
+error_reporting(E_ALL & ~E_NOTICE);
 # cross site scripting prevention
 function e($str){
   return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
 }
 # Username from URL query
-$uname = $_SESSION["uname"];
 $src_uname = e($_GET["id"]);
-# Turn off all notices
-error_reporting(E_ALL & ~E_NOTICE);
+if ($_SESSION["uname"]){
+  $uname = $_SESSION["uname"];
+}
+else{
+  $uname = " ";
+};
 # All the database data we need to connect
 $DB_SERVER = "127.0.0.1:3307";
 $DB_USERNAME = "root";
@@ -53,7 +58,7 @@ else{
   <!-- My scripts -->
   <link rel="stylesheet" href="../root/css/design.css">
   <script type="text/jsx" src="../root/js/index.js"></script>
-  <title>Project Anon - <?php echo $uname;?></title>
+  <title>Project Anon - <?php echo $src_uname;?></title>
 </head>
 <body id="feed_bg">
   <div id="project-form-overlay"></div>

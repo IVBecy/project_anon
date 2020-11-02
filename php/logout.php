@@ -1,5 +1,6 @@
 <?php
-session_destroy();
+session_start();
 unset($_SESSION['uname']);
+session_destroy();
 header('Location: ../root/index.html');
 ?>
