@@ -33,17 +33,7 @@ function e($str){
 # Signing the user up, and adding data to the DB
 # Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
-# All the database data we need to connect
-$DB_SERVER = "127.0.0.1:3307";
-$DB_USERNAME = "root";
-$DB_PASSWORD = ""; 
-$DB_NAME = "anon";
-# Connecting to the server
-$connection = mysqli_connect($DB_SERVER,$DB_USERNAME,$DB_PASSWORD,$DB_NAME);
-# on connection error
-if($connection == false){
-  echo "<h2>Something went wrong</h2>";
-}
+include("./connect.php");
 # Variables from the form
 $uname =  mysqli_real_escape_string($connection, e($_POST['uname']));
 $_SESSION["uname"] = $uname;

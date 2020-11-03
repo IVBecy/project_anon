@@ -14,17 +14,7 @@ if ($_SESSION["uname"]){
 else{
   $uname = " ";
 };
-# All the database data we need to connect
-$DB_SERVER = "127.0.0.1:3307";
-$DB_USERNAME = "root";
-$DB_PASSWORD = ""; 
-$DB_NAME = "anon";
-# Connecting to the server
-$connection = mysqli_connect($DB_SERVER,$DB_USERNAME,$DB_PASSWORD,$DB_NAME);
-# on connection error
-if($connection == false){
-  echo "<h2>Something went wrong</h2>";
-}
+include("./connect.php");
 # Getting the projects from the database
 $p_query = "SELECT `projects` FROM `users` WHERE `uname` = '$src_uname'";
 $projects = mysqli_query($connection,$p_query);
