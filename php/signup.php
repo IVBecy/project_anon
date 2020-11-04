@@ -52,31 +52,32 @@ $logged_email = $logged_email[0];
 # Projects
 $projects = [];
 $projects = json_encode($projects);
-#Appending data to the Database
-$append_query = "INSERT INTO `users` (uname,email,pass,projects) VALUES ('$uname','$email','$hashed_password','$projects')";
-if ($connection->query($append_query) === TRUE) {
-  $signed_up = true;
-  $message = "";
-  ## Check for the same email
-  if($logged_email == $email){
-    $signed_up = false;
-    $message = "This email is already in use.";
-  }
-}
-## Check for the same uname
-else if($logged_uname == $uname){
-  $signed_up = false;
-  $message = "This username is taken, try another one.";
-} 
-## Check for the same email
-else if($logged_email == $email){
+ ## Check for the same email
+if($logged_email == $email){
   $signed_up = false;
   $message = "This email is already in use.";
 }
+# Check for the same uname
+else if($logged_uname == $uname){
+  $signed_up = false;
+  $message = "This username is taken, try another one.";
+}
+else{
+  $signed_up = true;
+};
+#Appending data to the Database
+$append_query = "INSERT INTO `users` (uname,email,pass,projects) VALUES ('$uname','$email','$hashed_password','$projects')";
+if ($signed_up == true) {
+  $connection->query($append_query);
+  $signed_up = true;
+  $message = "";
+}
 # Any error
 else {
-  $signed_up = false;
-  $message = "Error: $append_query : $connection->error";
+  if ($message){}
+  else{
+    $message = "Something went wrong, try again later.";
+  };
 }
 mysqli_close($connection);
 ?>
