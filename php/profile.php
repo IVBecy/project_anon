@@ -62,10 +62,10 @@ else{
   <?php if ($show_projects_state == True){
     foreach($projects as $title => $desc) {?>
     <div class="center-container">
-      <div class="project" id=<?php echo $title?>>
+      <div class="project" id="<?php echo $title?>">
         <i class="fas fa-ellipsis-h"></i>
-        <h2><?php echo $title;?></h2>
-        <p class="project-desc"><?php echo $desc;?></p>
+        <h2 id="title"><?php echo $title;?></h2>
+        <p id="description" class="project-desc"><?php echo $desc;?></p>
       </div>
     </div>
   <?php }}else{?>
