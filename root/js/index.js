@@ -70,7 +70,7 @@ $(document).ready(() => {
   };
 });
 
-// When you click on the ellipses,you get options regarding your project
+// When you click on the ellipses, you get options regarding your project
 const ProjectSettings = () => {
   return(
     <div className="dropdown_menu" id="project-dropdown" style={{width: "200px", visibility:"visible"}}>

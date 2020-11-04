@@ -1,4 +1,5 @@
 <?php 
+#Start session and set uname as a var
 session_start();
 $uname = $_SESSION["uname"];
 ?>

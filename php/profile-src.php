@@ -1,12 +1,16 @@
 <?php 
+#Session (start and vars)
 session_start();
-# Turn off all notices
-error_reporting(E_ALL & ~E_NOTICE);
-# cross site scripting prevention
+$uname = $_SESSION["uname"];
+#cross site scripting prevention
 function e($str){
   return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
 }
-# Username from URL query
+#Turn off all notices
+error_reporting(E_ALL & ~E_NOTICE);
+#Adding the script that connects to the DB
+include("./connect.php");
+#Username from URL query
 $src_uname = e($_GET["id"]);
 if ($_SESSION["uname"]){
   $uname = $_SESSION["uname"];
@@ -14,7 +18,6 @@ if ($_SESSION["uname"]){
 else{
   $uname = " ";
 };
-include("./connect.php");
 # Getting the projects from the database
 $p_query = "SELECT `projects` FROM `users` WHERE `uname` = '$src_uname'";
 $projects = mysqli_query($connection,$p_query);

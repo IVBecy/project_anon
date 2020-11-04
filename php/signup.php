@@ -25,19 +25,19 @@
     <h5>A social media platform developed for sharing projects.</h5>
   </div>
 <?php
-# cross site scripting prevention
+#cross site scripting prevention
 function e($str){
   return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
 }
-# Signing the user up, and adding data to the DB
-# Turn off all notices
+#Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
+#Adding the script that connects to the DB
 include("./connect.php");
 # Variables from the form
 $uname =  mysqli_real_escape_string($connection, e($_POST['uname']));
 $email = mysqli_real_escape_string($connection, e($_POST['email']));
 $pass = mysqli_real_escape_string($connection, e($_POST['pass']));
-# Hashing the password (bcrypt)
+# Hashing the password
 $hashed_password = password_hash($pass,PASSWORD_BCRYPT);
 # Getting the username from the database (IF IT IS PRESENT)
 $query = "SELECT `uname` FROM `users` WHERE `uname` = '$uname'";
@@ -49,15 +49,15 @@ $email_query = "SELECT `email` FROM `users` WHERE `email` = '$email'";
 $logged_email = mysqli_query($connection,$email_query);
 $logged_email = mysqli_fetch_row($logged_email);
 $logged_email = $logged_email[0];
-# Projects
+#Projects
 $projects = [];
 $projects = json_encode($projects);
- ## Check for the same email
+# Check for the same email
 if($logged_email == $email){
   $signed_up = false;
   $message = "This email is already in use.";
 }
-# Check for the same uname
+#Check for the same username
 else if($logged_uname == $uname){
   $signed_up = false;
   $message = "This username is taken, try another one.";
@@ -65,14 +65,14 @@ else if($logged_uname == $uname){
 else{
   $signed_up = true;
 };
-#Appending data to the Database
+#Appending data to the DB, if email and username are not found in the DB
 $append_query = "INSERT INTO `users` (uname,email,pass,projects) VALUES ('$uname','$email','$hashed_password','$projects')";
 if ($signed_up == true) {
   $connection->query($append_query);
   $signed_up = true;
   $message = "";
 }
-# Any error
+#Any error
 else {
   if ($message){}
   else{

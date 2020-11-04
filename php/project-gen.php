@@ -1,14 +1,16 @@
 <?php
+#Session (start and vars)
 session_start();
 $uname = $_SESSION["uname"];
-# cross site scripting prevention
+#cross site scripting prevention
 function e($str){
   return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
 }
-# Turn off all notices
+#Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
+#Adding the script that connects to the DB
 include("./connect.php");
-# Getting the projects from the database
+#Getting the projects from the database
 $p_query = "SELECT `projects` FROM `users` WHERE `uname` = '$uname'";
 $projects = mysqli_query($connection,$p_query);
 $projects = mysqli_fetch_row($projects);
@@ -26,7 +28,7 @@ if ($connection->query($append_query) === TRUE) {
   $append = true;
   $message = "";
 }
-# If something goes wrong
+#If something goes wrong
 else{
   $append = false;
   $message = "Something went wrong please try again.";

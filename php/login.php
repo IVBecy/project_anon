@@ -25,14 +25,15 @@
     <h5>A social media platform developed for sharing projects.</h5>
   </div>
 <?php
+#Session (start and vars)
 session_start();
-# cross site scripting prevention
+#cross site scripting prevention
 function e($str){
   return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
 }
-# Signing the user up, and adding data to the DB
-# Turn off all notices
+#Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
+#Adding the script that connects to the DB
 include("./connect.php");
 # Variables from the form
 $uname =  mysqli_real_escape_string($connection, e($_POST['uname']));
@@ -51,10 +52,9 @@ $pass_query = "SELECT `pass` FROM `users` WHERE `uname` = '$uname'";
 $logged_pass = mysqli_query($connection,$pass_query);
 $logged_pass = mysqli_fetch_row($logged_pass);
 $logged_pass = $logged_pass[0];
-# Checking for the right data
+#Checking for the right data
 if ($uname == $logged_uname) {
   if (password_verify($pass, $logged_pass)) {
-    $logged_in = true;
     header( "Location: ./feed.php" );
   }
   else{
