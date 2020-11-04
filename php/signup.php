@@ -57,6 +57,11 @@ $append_query = "INSERT INTO `users` (uname,email,pass,projects) VALUES ('$uname
 if ($connection->query($append_query) === TRUE) {
   $signed_up = true;
   $message = "";
+  ## Check for the same email
+  if($logged_email == $email){
+    $signed_up = false;
+    $message = "This email is already in use.";
+  }
 }
 ## Check for the same uname
 else if($logged_uname == $uname){
