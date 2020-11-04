@@ -89,11 +89,9 @@ mysqli_close($connection);
     </form>
     <p>Already a member?<br><a href="../root/index.html">Sign in</a></p>
   </div>
-<?php }else{?>
-  <div class="center-container" id="background">
-    <h2>You are signed up as <?php echo $uname;?></h2>
-    <p>Click the button and log in</p>
-    <a href="../root/index.html"><button>Go to the login page</button></a>
-  </div>
-<?php } ?>
+<?php }else{
+  header("Location: ./profile.php");
+  session_start();
+  $_SESSION["uname"] = $uname;
+}?>
 </html>
