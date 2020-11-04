@@ -11,35 +11,33 @@ error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
 #Getting the projects from the database
-$p_query = "SELECT `projects` FROM `users` WHERE `uname` = '$uname'";
+$collection = [];
+$p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
 $projects = mysqli_query($connection,$p_query);
-$projects = mysqli_fetch_row($projects);
-$projects = $projects[0];
-$projects = json_decode($projects,true);
+#Appending all the projects to one array
+while ($row = mysqli_fetch_assoc($projects)) {
+    array_push($collection,$row);
+};
 #Edited Post and reassign vars
 $newArray = json_decode($_COOKIE["editedPost"],true);
-$newTitle = $newArray["newTitle"];
-$newDesc = $newArray["newDesc"];
+$newTitle = mysqli_real_escape_string($connection,e($newArray["newTitle"]));
+$newDesc = mysqli_real_escape_string($connection,e($newArray["newDesc"]));
 $oldArray = json_decode($_COOKIE["oldPost"],true);
-$oldTitle = $oldArray["oldTitle"];
-$oldDesc = $oldArray["oldDesc"];
+$oldTitle = mysqli_real_escape_string($connection,e($oldArray["oldTitle"]));
+$oldDesc = mysqli_real_escape_string($connection,e($oldArray["oldDesc"]));
 #Adding new title and description
-unset($projects[$oldTitle]);
-$projects[$newTitle] = $newDesc;
-$projects = json_encode($projects);
+foreach($collection as $k) {
+  if ($k["title"] == $oldTitle){
+    $k["title"] = $newTitle;
+    $k["report"] = $newDesc;
+  }
+}
 #Delete cookies
 setcookie("editedPost", NULL, 0);
-setcookie("oldPost", NULL, 0);
-$append_query = "UPDATE `users` SET projects = '$projects' WHERE `uname` = '$uname'";
-if ($connection->query($append_query) === TRUE) {
-  $append = true;
-  $message = "";
-}
-#If something goes wrong
-else{
-  $append = false;
-  $message = "Something went wrong please try again.";
-} 
+setcookie("oldPost", NULL, 0); 
+#Making the changes in the Database
+$append_query = "UPDATE `posts` SET `title` = '$newTitle', `report` = '$newDesc' WHERE `uname` = '$uname' AND `title` = '$oldTitle'";
+$connection->query($append_query);
 mysqli_close($connection);
 header("Location: ./profile.php")
 ?>

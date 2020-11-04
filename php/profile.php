@@ -10,14 +10,16 @@ function e($str){
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
-#Getting the projects from the database
-$p_query = "SELECT `projects` FROM `users` WHERE `uname` = '$uname'";
+#Getting projects for the user
+$collection = [];
+$p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
 $projects = mysqli_query($connection,$p_query);
-$projects = mysqli_fetch_row($projects);
-$projects = $projects[0];
-$projects = json_decode($projects,true);
+#Appending all the projects to one array
+while ($row = mysqli_fetch_assoc($projects)) {
+    array_push($collection,$row);
+};
 #Checking if we can show projects
-if (count($projects) == 0){
+if (count($collection) == 0){
   $show_projects_state = False;
   $msg = "You don't have any projects..."; 
 }
@@ -57,17 +59,17 @@ else{
   </div>
   <div class="center-container">
     <h1><?php echo $uname;?></h1>
-    <h4>Number of projects: <?php echo count($projects)?></h4>
+    <h4>Number of projects: <?php echo count($collection)?></h4>
   </div>
   <hr>
   <!-- PROJECTS -->
   <?php if ($show_projects_state == True){
-    foreach($projects as $title => $desc) {?>
+    foreach($collection as $k) {?>
     <div class="center-container">
-      <div class="project" id="<?php echo $title?>">
+      <div class="project" id="<?php echo $k["title"]?>">
         <i class="fas fa-ellipsis-h"></i>
-        <h2 id="title"><?php echo $title;?></h2>
-        <p id="description" class="project-desc"><?php echo $desc;?></p>
+        <h2 id="title"><?php echo $k["title"];?></h2>
+        <p id="description" class="project-desc"><?php echo $k["report"];?></p>
       </div>
     </div>
   <?php }}else{?>

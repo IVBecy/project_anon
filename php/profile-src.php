@@ -2,6 +2,8 @@
 #Session (start and vars)
 session_start();
 $uname = $_SESSION["uname"];
+#Username from URL query
+$src_uname = e($_GET["id"]);
 #cross site scripting prevention
 function e($str){
   return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
@@ -10,22 +12,16 @@ function e($str){
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
-#Username from URL query
-$src_uname = e($_GET["id"]);
-if ($_SESSION["uname"]){
-  $uname = $_SESSION["uname"];
-}
-else{
-  $uname = " ";
-};
-# Getting the projects from the database
-$p_query = "SELECT `projects` FROM `users` WHERE `uname` = '$src_uname'";
+##Getting projects for the user
+$collection = [];
+$p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
 $projects = mysqli_query($connection,$p_query);
-$projects = mysqli_fetch_row($projects);
-$projects = $projects[0];
-$projects = json_decode($projects,true);
-# Checking if we can show projects
-if (count($projects) == 0){
+#Appending all the projects to one array
+while ($row = mysqli_fetch_assoc($projects)) {
+    array_push($collection,$row);
+};
+#Checking if we can show projects
+if (count($collection) == 0){
   $show_projects_state = False;
   $msg = $src_uname." doesn't have any projects..."; 
 }
@@ -65,16 +61,16 @@ else{
   </div>
   <div class="center-container">
     <h1><?php echo $src_uname;?></h1>
-    <h4>Number of projects: <?php echo count($projects)?></h4>
+    <h4>Number of projects: <?php echo count($collection)?></h4>
   </div>
   <hr>
   <!-- PROJECTS -->
   <?php if ($show_projects_state == True){
-    foreach($projects as $title => $desc) {?>
+    foreach($collection as $k){?>
     <div class="center-container">
-      <div class="project" id=<?php $title?>>
-        <h2><?php echo $title;?></h2>
-        <p><?php echo $desc;?></p>
+      <div class="project" id=<?php $k["title"]?>>
+        <h2><?php echo $k["title"];?></h2>
+        <p><?php echo $k["report"];?></p>
       </div>
     </div>
   <?php }}else{?>

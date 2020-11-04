@@ -49,9 +49,6 @@ $email_query = "SELECT `email` FROM `users` WHERE `email` = '$email'";
 $logged_email = mysqli_query($connection,$email_query);
 $logged_email = mysqli_fetch_row($logged_email);
 $logged_email = $logged_email[0];
-#Projects
-$projects = [];
-$projects = json_encode($projects);
 # Check for the same email
 if($logged_email == $email){
   $signed_up = false;
@@ -66,7 +63,7 @@ else{
   $signed_up = true;
 };
 #Appending data to the DB, if email and username are not found in the DB
-$append_query = "INSERT INTO `users` (uname,email,pass,projects) VALUES ('$uname','$email','$hashed_password','$projects')";
+$append_query = "INSERT INTO `users` (uname,email,pass) VALUES ('$uname','$email','$hashed_password')";
 if ($signed_up == true) {
   $connection->query($append_query);
   $signed_up = true;

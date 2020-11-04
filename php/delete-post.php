@@ -11,29 +11,24 @@ error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
 #Getting the projects from the database
-$p_query = "SELECT `projects` FROM `users` WHERE `uname` = '$uname'";
+$collection = [];
+$p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
 $projects = mysqli_query($connection,$p_query);
-$projects = mysqli_fetch_row($projects);
-$projects = $projects[0];
-$projects = json_decode($projects,true);
+#Appending all the projects to one array
+while ($row = mysqli_fetch_assoc($projects)) {
+    array_push($collection,$row);
+};
 #Deletion cookie
-$delete_item = $_COOKIE["ToBeDeleted"];
-#Remove the project that has been set for deletion by the user
-unset($projects[$delete_item]);
-$projects = json_encode($projects);
+$delete_item = e($_COOKIE["ToBeDeleted"]);
+#Delete the post from the DB
+foreach($collection as $k) {
+  if ($k["title"] == $delete_item){
+    $delete_query = "DELETE FROM `posts` WHERE `uname` = '$uname' AND `title` = '$delete_item'";
+    $connection->query($delete_query);
+  }
+}
 #Delete cookie 
 setcookie("ToBeDeleted", NULL, 0);
-#Add the array back to the Database
-$append_query = "UPDATE `users` SET projects = '$projects' WHERE `uname` = '$uname'";
-if ($connection->query($append_query) === TRUE) {
-  $append = true;
-  $message = "";
-}
-#If something goes wrong
-else{
-  $append = false;
-  $message = "Something went wrong please try again.";
-} 
 mysqli_close($connection);
 header("Location: ./profile.php")
 ?>
