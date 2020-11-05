@@ -3,7 +3,7 @@
 session_start();
 $uname = $_SESSION["uname"];
 #Username from URL query
-$src_uname = e($_GET["id"]);
+$src_uname = e($_POST["src_name"]);
 #cross site scripting prevention
 function e($str){
   return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
@@ -12,9 +12,14 @@ function e($str){
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
+#User query
+$u_query = "SELECT `uname` FROM `users` WHERE `uname` = '$src_uname'";
+$logged_name = mysqli_query($connection,$u_query);
+$logged_name = mysqli_fetch_row($logged_name);
+$logged_name = $logged_name[0];
 ##Getting projects for the user
 $collection = [];
-$p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
+$p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$src_uname'";
 $projects = mysqli_query($connection,$p_query);
 #Appending all the projects to one array
 while ($row = mysqli_fetch_assoc($projects)) {
@@ -24,6 +29,10 @@ while ($row = mysqli_fetch_assoc($projects)) {
 if (count($collection) == 0){
   $show_projects_state = False;
   $msg = $src_uname." doesn't have any projects..."; 
+  if ($src_uname != $logged_name){
+    $usr = false;
+    $msg = $src_uname." is not a user.";
+  }
 }
 else{
   $show_projects_state = True;
@@ -58,7 +67,13 @@ else{
       <h5 id="uname"><?php echo $uname;?></h5>
       <div id="menu"></div>
     </div>
+    <div class="align-right">
+      <form method="POST" action="./profile-src.php">
+        <input class="search-usrs" type="search" name="src_name" placeholder="Search">
+      </form>
+    </div>
   </div>
+  <br>
   <div class="center-container">
     <h1><?php echo $src_uname;?></h1>
     <h4>Number of projects: <?php echo count($collection)?></h4>
@@ -73,8 +88,12 @@ else{
         <p><?php echo $k["report"];?></p>
       </div>
     </div>
-  <?php }}else{?>
+  <?php }}else{ if($usr == false){?>
+    <div class="center-container">
+      <h1><?php echo $msg?></h1>
+    </div>
+  <?php }else{?>
     <div class="center-container"><?php echo $msg?></div>
-  <?php }?>
+  <?php }}?>
 </body>
 </html>

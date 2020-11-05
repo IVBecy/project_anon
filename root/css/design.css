@@ -101,6 +101,13 @@ input:focus::placeholder{
   color: white;
 }
 
+input[type="search"]{
+  width:300px;
+  border-radius: 15px;
+  background-color: white;
+  color:black;
+}
+
 textarea{
   font-family: "Cairo";
   width:80%;
@@ -225,6 +232,11 @@ span a:hover{
 
 .home-bar .align-right{
   float:right;
+  margin:15px;
+}
+
+.home-bar .align-left{
+  float:left;
   margin:15px;
 }
 
