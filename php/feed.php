@@ -1,4 +1,4 @@
-<?php 
+<?php
 #Start session and set uname as a var
 session_start();
 $uname = $_SESSION["uname"];
@@ -32,5 +32,52 @@ $uname = $_SESSION["uname"];
       <div id="menu"></div>
     </div>
   </div>
+  <?php
+  #cross site scripting prevention
+  function e($str){
+    return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
+  }
+  #Turn off all notices
+  error_reporting(E_ALL & ~E_NOTICE);
+  #Adding the script that connects to the DB
+  include("./connect.php");
+  #Getting people that the user follows
+  $follows_query = "SELECT `follows` FROM `users` WHERE `uname` = '$uname'";
+  $follows = mysqli_query($connection,$follows_query);
+  $follows = mysqli_fetch_row($follows);
+  $follows = $follows[0];  
+  $follows = json_decode($follows,true);
+  #time
+  $t = time();
+  #collect
+  $collection = [];
+  #user's last logout time
+  $time_query = "SELECT `logout-time` FROM `users` WHERE `uname` = '$uname'";
+  $logout_time = mysqli_query($connection,$time_query);
+  $logout_time = mysqli_fetch_row($logout_time);
+  $logout_time = $logout_time[0];
+  #Get posts
+  if ($follows){
+    foreach($follows as $p){
+      $post_query = "SELECT `uname`,`title`,`report` FROM `posts` WHERE `uname` = '$p' AND `time` <= '$t'";
+      $post = mysqli_query($connection,$post_query);
+      while ($row = mysqli_fetch_assoc($post)) {
+          array_push($collection,$row);
+      }
+    }
+  }
+  #Restrict array to show max 300 posts
+  array_slice($collection, 0, 300)
+  ?>
+  <!--show posts-->
+  <?php foreach($collection as $k){ ?>
+    <div class="center-container">
+        <h1>Posted by <?php echo $k["uname"]?></h1>
+       <div class="project" id="<?php echo $k["title"]?>">
+        <h2 id="title"><?php echo $k["title"];?></h2>
+        <p id="description" class="project-desc"><?php echo $k["report"];?></p>
+      </div>
+    </div>
+  <?php }?>
 </body>
 </html>

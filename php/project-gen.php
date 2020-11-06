@@ -14,7 +14,8 @@ include("./connect.php");
 $title =  mysqli_real_escape_string($connection, e($_POST['title']));
 $desc =  mysqli_real_escape_string($connection, e($_POST['desc']));
 #Appending data to the Database
-$append_query = "INSERT INTO `posts` (uname,title,report) VALUES ('$uname','$title','$desc')";
+$t = time();
+$append_query = "INSERT INTO `posts` (uname,title,report,time) VALUES ('$uname','$title','$desc','$t')";
 if ($connection->query($append_query) === TRUE) {
   $append = true;
   $message = "";
