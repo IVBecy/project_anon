@@ -43,6 +43,8 @@ if (count($collection) == 0){
 else{
   $usr = true;
   $show_projects_state = true;
+  #Reverse the order of the array, so newest will be 1st
+  $collection = array_reverse($collection);
 }
 #Following system
 $followers_query = "SELECT `followers` FROM `users` WHERE `uname` = '$src_uname'";

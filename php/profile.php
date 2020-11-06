@@ -36,6 +36,8 @@ if (count($collection) == 0){
 }
 else{
   $show_projects_state = True;
+  #Reverse the order of the array, so newest will be 1st
+  $collection = array_reverse($collection);
 }
 ?>
 <!DOCTYPE html>
