@@ -106,7 +106,7 @@ if ($usr === true){
   <?php if ($show_projects_state === true && $usr === true){?>
     <div class="center-container">
       <h1><?php echo $src_uname;?></h1>
-      <h4>Number of projects: <?php echo count($collection)?></h4>
+      <h4>Projects: <?php echo count($collection)?></h4>
       <h4>Followers: <?php echo count($followers)?></h4>
       <h4>Follows: <?php echo count($follows)?></h4>
       <form action="<?php echo $script?>" method="POST">
@@ -128,7 +128,7 @@ if ($usr === true){
   <?php }else if($show_projects_state === false && $usr === true){?>
     <div class="center-container">
       <h1><?php echo $src_uname;?></h1>
-      <h4>Number of projects: <?php echo count($collection)?></h4>
+      <h4>Projects: <?php echo count($collection)?></h4>
       <h4>Followers: <?php echo count($followers)?></h4>
       <h4>Follows: <?php echo count($follows)?></h4>
       <form action="<?php echo $script?>" method="POST">
