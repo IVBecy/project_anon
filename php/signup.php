@@ -33,6 +33,10 @@ function e($str){
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
+# Variables from the form
+$uname =  mysqli_real_escape_string($connection, e($_POST['uname']));
+$email = mysqli_real_escape_string($connection, e($_POST['email']));
+$pass = mysqli_real_escape_string($connection, e($_POST['pass']));
 # Getting the username from the database (IF IT IS PRESENT)
 $query = "SELECT `uname` FROM `users` WHERE `uname` = '$uname'";
 $logged_uname = mysqli_query($connection,$query);
@@ -71,8 +75,6 @@ else{
 $append_query = "INSERT INTO `users` (uname,email,pass,followers,follows) VALUES ('$uname','$email','$hashed_password','$followers','$follows')";
 if ($signed_up == true) {
   $connection->query($append_query);
-  $signed_up = true;
-  $message = "";
 }
 #Any error
 else {
@@ -95,8 +97,8 @@ mysqli_close($connection);
     <p>Already a member?<br><a href="../root/index.html">Sign in</a></p>
   </div>
 <?php }else{
-  header("Location: ./profile.php");
   session_start();
   $_SESSION["uname"] = $uname;
+  header("Location: ./profile.php");
 }?>
 </html>
