@@ -39,16 +39,11 @@ $email = mysqli_real_escape_string($connection, e($_POST['email']));
 $pass = mysqli_real_escape_string($connection, e($_POST['pass']));
 # Hashing the password
 $hashed_password = password_hash($pass,PASSWORD_BCRYPT);
-# Getting the username from the database (IF IT IS PRESENT)
-$query = "SELECT `uname` FROM `users` WHERE `uname` = '$uname'";
-$logged_uname = mysqli_query($connection,$query);
-$logged_uname = mysqli_fetch_row($logged_uname);
-$logged_uname = $logged_uname[0];
-# Getting the email from the database (IF IT IS PRESENT)
-$email_query = "SELECT `email` FROM `users` WHERE `email` = '$email'";
-$logged_email = mysqli_query($connection,$email_query);
-$logged_email = mysqli_fetch_row($logged_email);
-$logged_email = $logged_email[0];
+#followers and follows array
+$followers = [];
+$follows = [];
+$followers = json_encode($followers);
+$follows = json_encode($follows);
 # Check for the same email
 if($logged_email == $email){
   $signed_up = false;
@@ -63,7 +58,7 @@ else{
   $signed_up = true;
 };
 #Appending data to the DB, if email and username are not found in the DB
-$append_query = "INSERT INTO `users` (uname,email,pass) VALUES ('$uname','$email','$hashed_password')";
+$append_query = "INSERT INTO `users` (uname,email,pass,followers,follows) VALUES ('$uname','$email','$hashed_password','$followers','$follows')";
 if ($signed_up == true) {
   $connection->query($append_query);
   $signed_up = true;

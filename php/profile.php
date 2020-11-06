@@ -14,6 +14,17 @@ include("./connect.php");
 $collection = [];
 $p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
 $projects = mysqli_query($connection,$p_query);
+#Following system
+$followers_query = "SELECT `followers` FROM `users` WHERE `uname` = '$uname'";
+$followers = mysqli_query($connection,$followers_query);
+$followers = mysqli_fetch_row($followers);
+$followers = $followers[0];
+$follows_query = "SELECT `follows` FROM `users` WHERE `uname` = '$uname'";
+$follows = mysqli_query($connection,$follows_query);
+$follows = mysqli_fetch_row($follows);
+$follows = $follows[0];
+$followers = json_decode($followers,true);
+$follows = json_decode($follows,true);
 #Appending all the projects to one array
 while ($row = mysqli_fetch_assoc($projects)) {
     array_push($collection,$row);
@@ -66,6 +77,8 @@ else{
   <div class="center-container">
     <h1><?php echo $uname;?></h1>
     <h4>Number of projects: <?php echo count($collection)?></h4>
+    <h4>Followers: <?php echo count($followers)?></h4>
+    <h4>Follows: <?php echo count($follows)?></h4>
   </div>
   <hr>
   <!-- PROJECTS -->

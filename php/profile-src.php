@@ -4,6 +4,11 @@ session_start();
 $uname = $_SESSION["uname"];
 #Username from URL query
 $src_uname = e($_POST["src_name"]);
+$_SESSION["src_uname"] = $src_uname;
+#Redirect if the user searches themselves
+if ($src_uname == $uname){
+  header("Location: ./profile.php");
+};
 #cross site scripting prevention
 function e($str){
   return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
@@ -36,6 +41,25 @@ if (count($collection) == 0){
 }
 else{
   $show_projects_state = True;
+}
+#Following system
+$followers_query = "SELECT `followers` FROM `users` WHERE `uname` = '$src_uname'";
+$followers = mysqli_query($connection,$followers_query);
+$followers = mysqli_fetch_row($followers);
+$followers = $followers[0];
+$follows_query = "SELECT `follows` FROM `users` WHERE `uname` = '$src_uname'";
+$follows = mysqli_query($connection,$follows_query);
+$follows = mysqli_fetch_row($follows);
+$follows = $follows[0];
+$followers = json_decode($followers,true);
+$follows = json_decode($follows,true);
+#Checking for already following
+if (array_search($uname,$followers) !== false){
+  $btn_val = "Unfollow";
+  $script = "./unfollow.php";
+}else{
+  $btn_val = "Follow";
+  $script = "./follow.php";
 }
 ?>
 <!DOCTYPE html>
@@ -77,6 +101,11 @@ else{
   <div class="center-container">
     <h1><?php echo $src_uname;?></h1>
     <h4>Number of projects: <?php echo count($collection)?></h4>
+    <h4>Followers: <?php echo count($followers)?></h4>
+    <h4>Follows: <?php echo count($follows)?></h4>
+    <form action="<?php echo $script?>" method="POST">
+      <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
+    </form>
   </div>
   <hr>
   <!-- PROJECTS -->
