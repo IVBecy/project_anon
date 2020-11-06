@@ -109,8 +109,8 @@ if (array_search($uname,$followers) !== false){
   </div>
   <hr>
   <!-- PROJECTS -->
-  <?php if ($show_projects_state == True){
-    foreach($collection as $k){?>
+  <?php if ($show_projects_state == True){?>
+    <?php foreach($collection as $k){?>
     <div class="center-container">
       <div class="project" id=<?php $k["title"]?>>
         <h2><?php echo $k["title"];?></h2>

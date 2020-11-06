@@ -33,6 +33,16 @@ function e($str){
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
+# Getting the username from the database (IF IT IS PRESENT)
+$query = "SELECT `uname` FROM `users` WHERE `uname` = '$uname'";
+$logged_uname = mysqli_query($connection,$query);
+$logged_uname = mysqli_fetch_row($logged_uname);
+$logged_uname = $logged_uname[0];
+# Getting the email from the database (IF IT IS PRESENT)
+$email_query = "SELECT `email` FROM `users` WHERE `email` = '$email'";
+$logged_email = mysqli_query($connection,$email_query);
+$logged_email = mysqli_fetch_row($logged_email);
+$logged_email = $logged_email[0];
 # Variables from the form
 $uname =  mysqli_real_escape_string($connection, e($_POST['uname']));
 $email = mysqli_real_escape_string($connection, e($_POST['email']));
