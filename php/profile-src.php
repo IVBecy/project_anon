@@ -33,6 +33,7 @@ while ($row = mysqli_fetch_assoc($projects)) {
 #Checking if we can show projects
 if (count($collection) == 0){
   $show_projects_state = False;
+  $usr = true;
   $msg = $src_uname." doesn't have any projects..."; 
   if ($src_uname != $logged_name){
     $usr = false;
@@ -40,7 +41,8 @@ if (count($collection) == 0){
   }
 }
 else{
-  $show_projects_state = True;
+  $usr = true;
+  $show_projects_state = true;
 }
 #Following system
 $followers_query = "SELECT `followers` FROM `users` WHERE `uname` = '$src_uname'";
@@ -54,12 +56,14 @@ $follows = $follows[0];
 $followers = json_decode($followers,true);
 $follows = json_decode($follows,true);
 #Checking for already following
-if (array_search($uname,$followers) !== false){
-  $btn_val = "Unfollow";
-  $script = "./unfollow.php";
-}else{
-  $btn_val = "Follow";
-  $script = "./follow.php";
+if ($usr === true){
+  if (array_search($uname,$followers) !== false){
+    $btn_val = "Unfollow";
+    $script = "./unfollow.php";
+  }else{
+    $btn_val = "Follow";
+    $script = "./follow.php";
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -98,18 +102,18 @@ if (array_search($uname,$followers) !== false){
     </div>
   </div>
   <br>
-  <div class="center-container">
-    <h1><?php echo $src_uname;?></h1>
-    <h4>Number of projects: <?php echo count($collection)?></h4>
-    <h4>Followers: <?php echo count($followers)?></h4>
-    <h4>Follows: <?php echo count($follows)?></h4>
-    <form action="<?php echo $script?>" method="POST">
-      <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
-    </form>
-  </div>
-  <hr>
   <!-- PROJECTS -->
-  <?php if ($show_projects_state == True){?>
+  <?php if ($show_projects_state === true && $usr === true){?>
+    <div class="center-container">
+      <h1><?php echo $src_uname;?></h1>
+      <h4>Number of projects: <?php echo count($collection)?></h4>
+      <h4>Followers: <?php echo count($followers)?></h4>
+      <h4>Follows: <?php echo count($follows)?></h4>
+      <form action="<?php echo $script?>" method="POST">
+        <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
+      </form>
+    </div>
+    <hr>
     <?php foreach($collection as $k){?>
     <div class="center-container">
       <div class="project" id=<?php $k["title"]?>>
@@ -117,11 +121,23 @@ if (array_search($uname,$followers) !== false){
         <p><?php echo $k["report"];?></p>
       </div>
     </div>
-  <?php }}else{ if($usr == false){?>
+  <?php }}else{ if($usr === false){?>
     <div class="center-container">
       <h1><?php echo $msg?></h1>
     </div>
-  <?php }else{?>
+  <?php }else if($show_projects_state === false && $usr === true){?>
+    <div class="center-container">
+      <h1><?php echo $src_uname;?></h1>
+      <h4>Number of projects: <?php echo count($collection)?></h4>
+      <h4>Followers: <?php echo count($followers)?></h4>
+      <h4>Follows: <?php echo count($follows)?></h4>
+      <form action="<?php echo $script?>" method="POST">
+        <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
+      </form>
+    </div>
+    <hr>
+    <div class="center-container"><?php echo $msg?></div>
+  <?php } else{?>
     <div class="center-container"><?php echo $msg?></div>
   <?php }}?>
 </body>

@@ -76,7 +76,7 @@ else{
   <br>
   <div class="center-container">
     <h1><?php echo $uname;?></h1>
-    <h4>Number of projects: <?php echo count($collection)?></h4>
+    <h4>Projects: <?php echo count($collection)?></h4>
     <h4>Followers: <?php echo count($followers)?></h4>
     <h4>Follows: <?php echo count($follows)?></h4>
   </div>
