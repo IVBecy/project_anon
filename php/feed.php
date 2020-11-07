@@ -59,15 +59,18 @@ $uname = $_SESSION["uname"];
   #Get posts
   if ($follows){
     foreach($follows as $p){
-      $post_query = "SELECT `uname`,`title`,`report` FROM `posts` WHERE `uname` = '$p' AND `time` <= '$t'";
+      $post_query = "SELECT `uname`,`title`,`report`,`time` FROM `posts` WHERE `uname` = '$p' AND `time` <= '$t'";
       $post = mysqli_query($connection,$post_query);
       while ($row = mysqli_fetch_assoc($post)) {
           array_push($collection,$row);
       }
     }
+    #Sort the array by time, so newest will appear on the top
+    $time = array_column($collection, "time");
+    array_multisort($time, SORT_DESC, $collection);
+    #Restrict array to show max 300 posts
+    array_slice($collection, 0, 300);
   }
-  #Restrict array to show max 300 posts
-  array_slice($collection, 0, 300)
   ?>
   <!--show posts-->
   <?php foreach($collection as $k){ ?>
