@@ -85,12 +85,12 @@ const ProjectSettings = () => {
 };
 const RenderPostEdit = () =>{
   return(
-    <div className="center-container" id="projects" style={{backgroundColor:"white"}}>
+    <div className="center-container" style={{backgroundColor:"white"}}>
       <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
-      <div className="edit-post">
+      <div className="edit-post" id="projects">
         <h1>Edit your post</h1>
         <form method="POST" onSubmit={onPostEdit} action="../../php/edit-post.php">
-          <input type="text" name="title" placeholder="Edit title"/><br />
+          <input type="text" name="title" placeholder="Edit title" /><br />
           <textarea name="desc" placeholder="Edit the description of your projects"></textarea><br />
           <input type="submit" name="send-edited-post" value="Edit Post" />
         </form>
