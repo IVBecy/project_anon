@@ -116,7 +116,6 @@ if ($usr === true){
     <div class="center-container">
       <div class="post">
         <div class="project" id="<?php echo $k["title"]?>">
-          <i class="fas fa-ellipsis-h"></i>
           <h2 id="title"><?php echo $k["title"];?></h2>
           <p id="description" class="project-desc"><?php echo $k["report"];?></p>
         </div>
