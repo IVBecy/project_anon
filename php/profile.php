@@ -73,12 +73,15 @@ else{
   </div>
   <br>
   <div class="center-container">
-    <h1><?php echo $uname;?></h1>
-    <h4>Projects: <?php echo count($collection)?></h4>
-    <h4>Followers: <?php echo count($followers)?></h4>
-    <h4>Follows: <?php echo count($follows)?></h4>
+    <div class="profile-card">
+      <div class="cover-img"><img src="../root/imgs/profile-img.png" alt="cover-img"></div>
+      <img src="../root/imgs/profile-img.png" alt="prof-img">
+      <h1><?php echo $uname;?></h1>
+      <h5>Projects: <?php echo count($collection)?></h5>
+      <h5>Followers: <?php echo count($followers)?></h5>
+      <h5>Follows: <?php echo count($follows)?></h5>
+    </div>
   </div>
-  <hr>
   <!-- PROJECTS -->
   <?php if ($show_projects_state == True){
     foreach($collection as $k) {?>

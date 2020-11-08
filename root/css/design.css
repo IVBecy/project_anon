@@ -42,6 +42,11 @@ h2{
   font-family: "Poppins";
 }
 
+h5{
+  font-family: "Roboto";
+  font-weight: bold;
+}
+
 p,li,input,a{
   font-family: "Cairo";
 }
@@ -315,6 +320,38 @@ span a:hover{
   background-color: rgba(0,0,0,0.1);
 }
 
+.profile-card{
+  background-color: whitesmoke;
+  border: 2px solid black;
+  text-align: center;
+  margin:auto;  
+  width:40%;
+}
+
+.profile-card h5{
+  display: inline-block;
+  padding-right:30px;
+  padding-left:30px;
+}
+
+.profile-card img{
+  margin:10px;
+  width:100px;;
+  border-radius: 20px;
+  border: 3px solid rgb(46, 46, 46);
+  margin-top:-50px;
+}
+
+.profile-card .cover-img img{
+  width:100%;
+  height: 100px;
+  margin:0;
+  border-radius: 0;
+  border:0;
+  object-fit:cover;
+  object-position:50% 50%;
+}
+
 .delete-post-popup{
   z-index: 30;
   margin-top: 100px;
@@ -381,5 +418,9 @@ span a:hover{
 
   h1{
     font-size: 2em;
+  }
+
+  .profile-card{
+    width:90%;
   }
 }

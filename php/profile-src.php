@@ -103,15 +103,18 @@ if ($usr === true){
   <!-- PROJECTS -->
   <?php if ($show_projects_state === true && $usr === true){?>
     <div class="center-container">
-      <h1><?php echo $src_uname;?></h1>
-      <h4>Projects: <?php echo count($collection)?></h4>
-      <h4>Followers: <?php echo count($followers)?></h4>
-      <h4>Follows: <?php echo count($follows)?></h4>
-      <form action="<?php echo $script?>" method="POST">
-        <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
-      </form>
+      <div class="profile-card">
+        <div class="cover-img"><img src="../root/imgs/profile-img.png" alt="cover-img"></div>
+        <img src="../root/imgs/profile-img.png" alt="prof-img">
+        <h1><?php echo $src_uname;?></h1>
+         <form action="<?php echo $script?>" method="POST">
+          <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
+        </form>
+        <h5>Projects: <?php echo count($collection)?></h5>
+        <h5>Followers: <?php echo count($followers)?></h5>
+        <h5>Follows: <?php echo count($follows)?></h5>
+      </div>
     </div>
-    <hr>
     <?php foreach($collection as $k){?>
     <div class="center-container">
       <div class="post">
@@ -131,15 +134,18 @@ if ($usr === true){
     </div>
   <?php }else if($show_projects_state === false && $usr === true){?>
     <div class="center-container">
-      <h1><?php echo $src_uname;?></h1>
-      <h4>Projects: <?php echo count($collection)?></h4>
-      <h4>Followers: <?php echo count($followers)?></h4>
-      <h4>Follows: <?php echo count($follows)?></h4>
-      <form action="<?php echo $script?>" method="POST">
-        <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
-      </form>
+      <div class="profile-card">
+        <div class="cover-img"><img src="../root/imgs/profile-img.png" alt="cover-img"></div>
+        <img src="../root/imgs/profile-img.png" alt="prof-img">
+        <h1><?php echo $src_uname;?></h1>
+         <form action="<?php echo $script?>" method="POST">
+          <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
+        </form>
+        <h5>Projects: <?php echo count($collection)?></h5>
+        <h5>Followers: <?php echo count($followers)?></h5>
+        <h5>Follows: <?php echo count($follows)?></h5>
+      </div>
     </div>
-    <hr>
     <div class="center-container"><?php echo $msg?></div>
   <?php } else{?>
     <div class="center-container"><?php echo $msg?></div>
