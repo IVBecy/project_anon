@@ -31,7 +31,13 @@ $uname = $_SESSION["uname"];
       <h5 id="uname"><?php echo $uname;?></h5>
       <div id="menu"></div>
     </div>
+    <div class="align-right">
+      <form method="POST" action="./profile-src.php">
+        <input class="search-usrs" type="search" name="src_name" placeholder="Search">
+      </form>
+    </div>
   </div>
+  <br>
   <?php
   #cross site scripting prevention
   function e($str){
