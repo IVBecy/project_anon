@@ -46,7 +46,8 @@ $uname = $_SESSION["uname"];
   $follows = mysqli_query($connection,$follows_query);
   $follows = mysqli_fetch_row($follows);
   $follows = $follows[0];  
-  $follows = json_decode($follows,true);
+  $follows = openssl_decrypt($follows,"AES-128-CBC",$uname);
+  $follows = json_decode($follows,true);    
   #time
   $t = time();
   #collect

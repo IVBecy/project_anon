@@ -23,6 +23,8 @@ $follows_query = "SELECT `follows` FROM `users` WHERE `uname` = '$uname'";
 $follows = mysqli_query($connection,$follows_query);
 $follows = mysqli_fetch_row($follows);
 $follows = $follows[0];
+$followers = openssl_decrypt($followers,"AES-128-CBC",$uname);
+$follows = openssl_decrypt($follows,"AES-128-CBC",$uname);
 $followers = json_decode($followers,true);
 $follows = json_decode($follows,true);
 #Appending all the projects to one array

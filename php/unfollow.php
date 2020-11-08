@@ -21,6 +21,8 @@ $follows_query = "SELECT `follows` FROM `users` WHERE `uname` = '$uname'";
 $follows = mysqli_query($connection,$follows_query);
 $follows = mysqli_fetch_row($follows);
 $follows = $follows[0];
+$followers = openssl_decrypt($followers,"AES-128-CBC",$src_uname);
+$follows = openssl_decrypt($follows,"AES-128-CBC",$uname);
 $followers = json_decode($followers,true);
 $follows = json_decode($follows,true);
 #Delete the pov user from the searched user's followers list ## NOT LOGGED IN USER
@@ -29,6 +31,8 @@ unset($followers[array_search($uname,$followers)]);
 unset($follows[array_search($src_uname,$follows)]);
 $followers = json_encode($followers);
 $follows = json_encode($follows);
+$followers = openssl_encrypt($followers,"AES-128-CBC",$src_uname);
+$follows = openssl_encrypt($follows,"AES-128-CBC",$uname);
 #Append new follow to the DB ## NOT LOGGED IN
 $follow_q = "UPDATE `users` SET `followers` = '$followers' WHERE `uname` = '$src_uname'";
 $connection->query($follow_q);

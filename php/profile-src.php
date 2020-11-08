@@ -55,6 +55,8 @@ $follows_query = "SELECT `follows` FROM `users` WHERE `uname` = '$src_uname'";
 $follows = mysqli_query($connection,$follows_query);
 $follows = mysqli_fetch_row($follows);
 $follows = $follows[0];
+$followers = openssl_decrypt($followers,"AES-128-CBC",$src_uname);
+$follows = openssl_decrypt($follows,"AES-128-CBC",$src_uname);
 $followers = json_decode($followers,true);
 $follows = json_decode($follows,true);
 #Checking for already following

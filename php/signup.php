@@ -58,6 +58,8 @@ $followers = [];
 $follows = [];
 $followers = json_encode($followers);
 $follows = json_encode($follows);
+$followers = openssl_encrypt($followers,"AES-128-CBC",$uname);
+$follows = openssl_encrypt($follows,"AES-128-CBC",$uname);
 # Check for the same email
 if($logged_email == $email){
   $signed_up = false;
