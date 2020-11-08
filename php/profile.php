@@ -83,10 +83,16 @@ else{
   <?php if ($show_projects_state == True){
     foreach($collection as $k) {?>
     <div class="center-container">
-      <div class="project" id="<?php echo $k["title"]?>">
-        <i class="fas fa-ellipsis-h"></i>
-        <h2 id="title"><?php echo $k["title"];?></h2>
-        <p id="description" class="project-desc"><?php echo $k["report"];?></p>
+      <div class="post">
+        <div class="project" id="<?php echo $k["title"]?>">
+          <i class="fas fa-ellipsis-h"></i>
+          <h2 id="title"><?php echo $k["title"];?></h2>
+          <p id="description" class="project-desc"><?php echo $k["report"];?></p>
+        </div>
+        <div class="post-actions">
+          <div class="actions" id="star"><i class="fas fa-star"></i>Star</div>
+          <div class="actions" id="comment"><i class="fas fa-comment-alt"></i>Comment</div>
+        </div>
       </div>
     </div>
   <?php }}else{?>

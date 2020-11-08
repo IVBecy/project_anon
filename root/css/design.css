@@ -280,14 +280,39 @@ span a:hover{
 }
 
 .project{
-  border: 1px solid black;
   padding:20px;
-  box-shadow: -5px 4px 24px -4px #a8a8a8;
   transition: 0.5s;
 }
 
 .project .fas.fa-ellipsis-h{
   float: right;
+}
+
+.post{
+  text-align: left;
+  border: 1px solid black;
+  padding:20px;
+  box-shadow: var(--small-shadow);
+  transition: 0.5s;
+}
+
+.post-actions div{
+  display: inline-block;
+}
+
+.post-actions i{
+  margin:10px;
+  font-size: 15px;
+}
+
+.actions{
+  padding-left:10px;
+  padding-right:10px;
+  border-radius:5px;
+}
+
+.actions:hover{
+  background-color: rgba(0,0,0,0.1);
 }
 
 .delete-post-popup{

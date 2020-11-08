@@ -76,10 +76,16 @@ $uname = $_SESSION["uname"];
   <!--show posts-->
   <?php foreach($collection as $k){ ?>
     <div class="center-container">
-        <h1>Posted by <?php echo $k["uname"]?></h1>
-       <div class="project" id="<?php echo $k["title"]?>">
-        <h2 id="title"><?php echo $k["title"];?></h2>
-        <p id="description" class="project-desc"><?php echo $k["report"];?></p>
+      <div class="post">
+        <h6 class="posted-by">Posted by <?php echo $k["uname"]?></h6>
+        <div class="project" id="<?php echo $k["title"]?>">
+          <h2 id="title"><?php echo $k["title"];?></h2>
+          <p id="description" class="project-desc"><?php echo $k["report"];?></p>
+        </div>
+        <div class="post-actions">
+          <div class="actions" id="star"><i class="fas fa-star"></i>Star</div>
+          <div class="actions" id="comment"><i class="fas fa-comment-alt"></i>Comment</div>
+        </div>
       </div>
     </div>
   <?php }?>
