@@ -25,6 +25,7 @@
   --warning:#f7f27aef;
   --info:#92d5f0c4;
   --success:#87f190b9;
+  --small-shadow: -5px 4px 24px -4px #a8a8a8;;
 }
 
 /* HTML Elements */
@@ -102,10 +103,22 @@ input:focus::placeholder{
 }
 
 input[type="search"]{
-  width:300px;
-  border-radius: 15px;
+  display: block;
+  transition: none;
+  height:30px;
+  width:150px;
+  border-radius: 5px;
   background-color: white;
   color:black;
+}
+
+input[type="search"]:focus{
+  background-color:var(--dark_grey);
+  color:white;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
 }
 
 textarea{
@@ -223,21 +236,14 @@ span a:hover{
   width: 100%;
   background-color: var(--mid-grey);
   color:white;
-  padding:10px;
-}
-
-.home-bar img{
-  width:4%;
+  padding-top:20px;
+  padding-right: 20px;
+  overflow: hidden;
 }
 
 .home-bar .align-right{
   float:right;
-  margin:15px;
-}
-
-.home-bar .align-left{
-  float:left;
-  margin:15px;
+  margin-left:100px;
 }
 
 .dropdown_menu{
@@ -249,7 +255,8 @@ span a:hover{
   height:fit-content;
   padding:10px;
   border-radius: 5px;
-  right:2%;
+  right:3%;
+  box-shadow: var(--small-shadow);
 }
 
 .dropdown_menu span::after{
@@ -341,10 +348,6 @@ span a:hover{
     margin-left:0;
     margin-right:0;
     width:fit-content;
-  }
-
-  .home-bar img{
-    width: 20%;
   }
 
   textarea{

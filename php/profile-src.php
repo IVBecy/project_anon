@@ -93,16 +93,10 @@ if ($usr === true){
 <body id="feed_bg">
   <div id="project-form-overlay"></div>
   <div id="menu-bar"></div>
-  <div class="home-bar">
-    <img src="/root/imgs/logo_anon.png" alt="logo">
+ <div class="home-bar">
     <div class="align-right">
-      <h5 id="uname"><?php echo $uname;?></h5>
+      <h4 id="uname"><?php echo $uname;?></h4>
       <div id="menu"></div>
-    </div>
-    <div class="align-right">
-      <form method="POST" action="./profile-src.php">
-        <input class="search-usrs" type="search" name="src_name" placeholder="Search">
-      </form>
     </div>
   </div>
   <br>
