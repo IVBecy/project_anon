@@ -17,6 +17,14 @@ function e($str){
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
+$id_src_name = "SELECT `id` FROM `users` WHERE `uname` = '$src_uname'";
+$followers_id = mysqli_query($connection,$id_src_name);
+$followers_id = mysqli_fetch_row($followers_id);
+$followers_id = $followers_id[0];
+$id_name = "SELECT `id` FROM `users` WHERE `uname` = '$src_uname'";
+$follows_id = mysqli_query($connection,$id_name);
+$follows_id = mysqli_fetch_row($follows_id);
+$follows_id = $follows_id[0];
 #User query
 $u_query = "SELECT `uname` FROM `users` WHERE `uname` = '$src_uname'";
 $logged_name = mysqli_query($connection,$u_query);
@@ -55,13 +63,14 @@ $follows_query = "SELECT `follows` FROM `users` WHERE `uname` = '$src_uname'";
 $follows = mysqli_query($connection,$follows_query);
 $follows = mysqli_fetch_row($follows);
 $follows = $follows[0];
-$followers = openssl_decrypt($followers,"AES-128-CBC",$src_uname);
-$follows = openssl_decrypt($follows,"AES-128-CBC",$src_uname);
+$followers = openssl_decrypt($followers,"AES-128-CBC",$followers_id);
+$follows = openssl_decrypt($follows,"AES-128-CBC",$follows_id);
+echo $follows;
 $followers = json_decode($followers,true);
 $follows = json_decode($follows,true);
 #Checking for already following
 if ($usr === true){
-  if (array_search($uname,$followers) !== false){
+  if (in_array($uname, $followers)){
     $btn_val = "Unfollow";
     $script = "./unfollow.php";
   }else{
@@ -104,7 +113,6 @@ if ($usr === true){
   <?php if ($show_projects_state === true && $usr === true){?>
     <div class="center-container">
       <div class="profile-card">
-        <div class="cover-img"><img src="../root/imgs/profile-img.png" alt="cover-img"></div>
         <img src="../root/imgs/profile-img.png" alt="prof-img">
         <h1><?php echo $src_uname;?></h1>
          <form action="<?php echo $script?>" method="POST">
@@ -135,7 +143,6 @@ if ($usr === true){
   <?php }else if($show_projects_state === false && $usr === true){?>
     <div class="center-container">
       <div class="profile-card">
-        <div class="cover-img"><img src="../root/imgs/profile-img.png" alt="cover-img"></div>
         <img src="../root/imgs/profile-img.png" alt="prof-img">
         <h1><?php echo $src_uname;?></h1>
          <form action="<?php echo $script?>" method="POST">

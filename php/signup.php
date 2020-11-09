@@ -30,7 +30,7 @@ function e($str){
   return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
 }
 #Turn off all notices
-error_reporting(E_ALL & ~E_NOTICE);
+error_reporting(0);
 #Adding the script that connects to the DB
 include("./connect.php");
 # Variables from the form
@@ -53,13 +53,25 @@ $email = mysqli_real_escape_string($connection, e($_POST['email']));
 $pass = mysqli_real_escape_string($connection, e($_POST['pass']));
 # Hashing the password
 $hashed_password = password_hash($pass,PASSWORD_BCRYPT);
+#id 
+$id = mt_rand();
+$q = "SELECT `id` FROM `users` WHERE `id` = '$id'";
+$logged_id = mysqli_query($connection,$q);
+$logged_id = mysqli_fetch_row($logged_id);
+$logged_id = $logged_id[0];
+while ($logged_id == $id){
+  $id = mt_rand();
+  if ($logged_id != $id){
+    break;
+  }
+}
 #followers and follows array
 $followers = [];
 $follows = [];
 $followers = json_encode($followers);
 $follows = json_encode($follows);
-$followers = openssl_encrypt($followers,"AES-128-CBC",$uname);
-$follows = openssl_encrypt($follows,"AES-128-CBC",$uname);
+$followers = openssl_encrypt($followers,"AES-128-CBC",$id);
+$follows = openssl_encrypt($follows,"AES-128-CBC",$id);
 # Check for the same email
 if($logged_email == $email){
   $signed_up = false;
@@ -74,7 +86,7 @@ else{
   $signed_up = true;
 };
 #Appending data to the DB, if email and username are not found in the DB
-$append_query = "INSERT INTO `users` (uname,email,pass,followers,follows) VALUES ('$uname','$email','$hashed_password','$followers','$follows')";
+$append_query = "INSERT INTO `users` (id,uname,email,pass,followers,follows) VALUES ('$id','$uname','$email','$hashed_password','$followers','$follows')";
 if ($signed_up == true) {
   $connection->query($append_query);
 }

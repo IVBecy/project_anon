@@ -41,12 +41,16 @@ $uname = $_SESSION["uname"];
   error_reporting(E_ALL & ~E_NOTICE);
   #Adding the script that connects to the DB
   include("./connect.php");
+  $id_name = "SELECT `id` FROM `users` WHERE `uname` = '$uname'";
+  $follows_id = mysqli_query($connection,$id_name);
+  $follows_id = mysqli_fetch_row($follows_id);
+  $follows_id = $follows_id[0];
   #Getting people that the user follows
   $follows_query = "SELECT `follows` FROM `users` WHERE `uname` = '$uname'";
   $follows = mysqli_query($connection,$follows_query);
   $follows = mysqli_fetch_row($follows);
   $follows = $follows[0];  
-  $follows = openssl_decrypt($follows,"AES-128-CBC",$uname);
+  $follows = openssl_decrypt($follows,"AES-128-CBC",$follows_id);
   $follows = json_decode($follows,true);    
   #time
   $t = time();

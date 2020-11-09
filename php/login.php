@@ -38,8 +38,6 @@ include("./connect.php");
 # Variables from the form
 $uname =  mysqli_real_escape_string($connection, e($_POST['uname']));
 $_SESSION["uname"] = $uname;
-$email = mysqli_real_escape_string($connection, e($_POST['email']));
-$_SESSION["email"] = $email;
 $pass = mysqli_real_escape_string($connection, e($_POST['pass']));
 # Hashing the password (bcrypt)
 # Getting the username from the database

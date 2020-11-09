@@ -12,6 +12,7 @@ $(document).ready(() => {
           <span><a href="./feed.php">Your Feed</a></span>
           <span id="new_project">New project</span>
           <hr />
+          <span><a href="./settings.php">Settings</a></span>
           <span>Docs</span>
           <span><a href="./logout.php">Sign out</a></span>
         </div> 

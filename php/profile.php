@@ -14,6 +14,11 @@ include("./connect.php");
 $collection = [];
 $p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
 $projects = mysqli_query($connection,$p_query);
+#ID
+$id_q = "SELECT `id` FROM `users` WHERE `uname` = '$uname'";
+$id = mysqli_query($connection,$id_q);
+$id = mysqli_fetch_row($id);
+$id = $id[0];
 #Following system
 $followers_query = "SELECT `followers` FROM `users` WHERE `uname` = '$uname'";
 $followers = mysqli_query($connection,$followers_query);
@@ -23,8 +28,8 @@ $follows_query = "SELECT `follows` FROM `users` WHERE `uname` = '$uname'";
 $follows = mysqli_query($connection,$follows_query);
 $follows = mysqli_fetch_row($follows);
 $follows = $follows[0];
-$followers = openssl_decrypt($followers,"AES-128-CBC",$uname);
-$follows = openssl_decrypt($follows,"AES-128-CBC",$uname);
+$followers = openssl_decrypt($followers,"AES-128-CBC",$id);
+$follows = openssl_decrypt($follows,"AES-128-CBC",$id);
 $followers = json_decode($followers,true);
 $follows = json_decode($follows,true);
 #Appending all the projects to one array
@@ -74,7 +79,6 @@ else{
   <br>
   <div class="center-container">
     <div class="profile-card">
-      <div class="cover-img"><img src="../root/imgs/profile-img.png" alt="cover-img"></div>
       <img src="../root/imgs/profile-img.png" alt="prof-img">
       <h1><?php echo $uname;?></h1>
       <h5>Projects: <?php echo count($collection)?></h5>
