@@ -21,7 +21,7 @@ $email = mysqli_query($connection,$email_query);
 $email = mysqli_fetch_row($email);
 $email = $email[0];
 #getting profile image if set
-$prof_query = "SELECT `profile-img` FROM `users` WHERE `uname` = '$uname'";
+$prof_query = "SELECT `img` FROM `users` WHERE `uname` = '$uname'";
 $prof_img = mysqli_query($connection,$prof_query);
 $prof_img = mysqli_fetch_row($prof_img);
 $prof_img = $prof_img[0];
@@ -86,76 +86,127 @@ $edits = [];
         <input type="text" name="uname" value="<?php echo $uname?>"><br>
         <p>Your name appears on your profile and on any post, that you have shared previously.</p>
         <span>Email:</span>
-        <input type="email" name="email" value="<?php echo $email?>"><br>
+        <span>Current: <?php echo $email?></span>
+        <input type="email" name="email" placeholder="New email address"><br>
         <p>Your email is used for notifying you, of any changes regarding the platform or your account.</p>
         <?php 
         function update(){
-          global $connection;
+          $msg = "";
+          global $connection, $name_id;
           $uname = $_SESSION["uname"];
           #Checking what has been changed
           if (isset($_POST["uname"])){
             $new_uname = mysqli_real_escape_string($connection,e($_POST["uname"]));
-            #new uname for post
-            $q = "SELECT `uname` FROM `posts` WHERE `uname` = '$uname'";
-            $posts_name = mysqli_query($connection,$q);
-            $posts_name = mysqli_fetch_row($posts_name);
-            $posts_name = $posts_name[0];
-            $q = "UPDATE `posts` SET `uname` = '$new_uname' WHERE `uname` = '$uname'";
-            #$connection->query($q);
-            #follows of the user
-            $q = "SELECT `follows` FROM `users` WHERE `uname` = '$uname'";
-            $user_follows = mysqli_query($connection,$q);
-            $user_follows = mysqli_fetch_row($user_follows);
-            $user_follows = $user_follows[0];
-            $user_follows = openssl_decrypt($user_follows,"AES-128-CBC",$name_id);
-            $user_follows = json_decode($user_follows,true);
-            #new uname for all the followers
-            $q = "SELECT `followers` FROM `users` WHERE `uname` = '$uname'";
-            $followers = mysqli_query($connection,$q);
-            $followers = mysqli_fetch_row($followers);
-            $followers = $followers[0];
-            $followers = openssl_decrypt($followers,"AES-128-CBC",$name_id);
-            echo $followers;
-            $followers = json_decode($followers,true);
-            foreach($followers as $u){
-              #get id of follower 
-              $q = "SELECT `id` FROM `users` WHERE `uname` = '$u'";
-              $id = mysqli_query($connection,$q);
-              $id = mysqli_fetch_row($id);
-              $id = $id[0];
-              #replace the follow name
-              $q = "SELECT `follows` FROM `users` WHERE `uname` = '$u'";
-              $follows = mysqli_query($connection,$q);
-              $follows = mysqli_fetch_row($follows);
-              $follows = $follows[0];
-              $follows = openssl_decrypt($follows,"AES-128-CBC",$id);
-              $follows = json_decode($follows,true);
-              $pos = array_search($uname,$follows);
-              $follows = array_replace($follows, [$pos => $new_uname]);
-              $follows = json_encode($follows);
-              echo $follows;
-              $follows = openssl_encrypt($follows,"AES-128-CBC",$id);
-              $q = "UPDATE `users` SET `follows` = '$follows' WHERE `uname` = '$u'";
-              #$connection->query($q);
-            };
-            #new uname
-            $q = "UPDATE `users` SET `uname` = '$new_uname' WHERE `uname` = '$uname'";
-            #$connection->query($q);
-            $_SESSION["uname"] = $new_uname;
+            #check for mtaching usernames in the BD
+            $q = "SELECT `uname` FROM `users` WHERE `uname` = '$new_uname'";
+            $logged_name = mysqli_query($connection,$q);
+            $logged_name = mysqli_fetch_row($logged_name);
+            $logged_name = $logged_name[0];
+            if ($logged_name == $new_uname){
+              if($new_uname == $uname){
+                $msg .= "<p class='bg-info' style='width:fit-content'>This is your username right now...</p>";
+              }
+              else{
+                $msg .= "<p class='bg-danger' style='width:fit-content'>This username is taken, try something else</p>";
+              }
+            }
+            else{
+              #new uname for post
+              $q = "SELECT `uname` FROM `posts` WHERE `uname` = '$uname'";
+              $posts_name = mysqli_query($connection,$q);
+              $posts_name = mysqli_fetch_row($posts_name);
+              $posts_name = $posts_name[0];
+              $q = "UPDATE `posts` SET `uname` = '$new_uname' WHERE `uname` = '$uname'";
+              $connection->query($q);
+              #follows of the user
+              $q = "SELECT `follows` FROM `users` WHERE `uname` = '$uname'";
+              $user_follows = mysqli_query($connection,$q);
+              $user_follows = mysqli_fetch_row($user_follows);
+              $user_follows = $user_follows[0];
+              $user_follows = openssl_decrypt($user_follows,"AES-128-CBC",$name_id);
+              $user_follows = json_decode($user_follows,true);
+              #new uname for all the followers
+              $q = "SELECT `followers` FROM `users` WHERE `uname` = '$uname'";
+              $followers = mysqli_query($connection,$q);
+              $followers = mysqli_fetch_row($followers);
+              $followers = $followers[0];
+              $followers = openssl_decrypt($followers,"AES-128-CBC",$name_id);
+              $followers = json_decode($followers,true);
+              foreach($followers as $u){
+                #get id of follower 
+                $q = "SELECT `id` FROM `users` WHERE `uname` = '$u'";
+                $id = mysqli_query($connection,$q);
+                $id = mysqli_fetch_row($id);
+                $id = $id[0];
+                #replace the follow name
+                $q = "SELECT `follows` FROM `users` WHERE `uname` = '$u'";
+                $follows = mysqli_query($connection,$q);
+                $follows = mysqli_fetch_row($follows);
+                $follows = $follows[0];
+                $follows = openssl_decrypt($follows,"AES-128-CBC",$id);
+                $follows = json_decode($follows,true);
+                $pos = array_search($uname,$follows);
+                $follows = array_replace($follows, [$pos => $new_uname]);
+                $follows = json_encode($follows);
+                $follows = openssl_encrypt($follows,"AES-128-CBC",$id);
+                $q = "UPDATE `users` SET `follows` = '$follows' WHERE `uname` = '$u'";
+                $connection->query($q);
+                #replace the follower name
+                $q = "SELECT `followers` FROM `users` WHERE `uname` = '$u'";
+                $alt_follower = mysqli_query($connection,$q);
+                $alt_follower = mysqli_fetch_row($alt_follower);
+                $alt_follower = $alt_follower[0];
+                $alt_follower = openssl_decrypt($alt_follower,"AES-128-CBC",$id);
+                $alt_follower = json_decode($alt_follower,true);
+                if (in_array($uname,$alt_follower)){
+                  $pos = array_search($uname,$alt_follower);
+                  $alt_follower = array_replace($alt_follower, [$pos => $new_uname]);
+                  $alt_follower = json_encode($alt_follower);
+                  $alt_follower = openssl_encrypt($alt_follower,"AES-128-CBC",$id);
+                  $q = "UPDATE `users` SET `followers` = '$alt_follower' WHERE `uname` = '$u'";
+                  $connection->query($q);
+                };
+              };
+              #new uname
+              $q = "UPDATE `users` SET `uname` = '$new_uname' WHERE `uname` = '$uname'";
+              $connection->query($q);
+              $_SESSION["uname"] = $new_uname;
+              $msg .= "<p class='bg-success' style='width:fit-content'>Username updated successfully</p>";
+            }
           };
-          if ($_POST["email"] != $email){
+          if (isset($_POST["email"])){
             $new_email = mysqli_real_escape_string($connection,e($_POST["email"]));
-            $q = "UPDATE `users` SET `email` = '$new_email' WHERE `uname` = '$uname'";
-            $connection->query($q);
+            # Getting the email from the database (IF IT IS PRESENT)
+            if ($new_email == ""){
+              $new_email = false;
+            }
+            $email_query = "SELECT `email` FROM `users` WHERE `email` = '$new_email'";
+            $logged_email = mysqli_query($connection,$email_query);
+            $logged_email = mysqli_fetch_row($logged_email);
+            $logged_email = $logged_email[0];
+            if ($new_email == $logged_email && $new_email != false){
+              $msg .= "<p class='bg-danger' style='width:fit-content'>This email is taken</p>";
+            }
+            else if($new_email == false){
+              $msg .= "<p class='bg-info' style='width:fit-content'>No email given, will not be changed</p>";
+            }
+            else{
+              $msg .= "<p class='bg-success' style='width:fit-content'>Email updated successfully</p>";
+              $q = "UPDATE `users` SET `email` = '$new_email' WHERE `uname` = '$uname'";
+              $connection->query($q);
+            }
           };
-          if (isset($_FILES["profile-img"])) {
-            $image = addslashes(file_get_contents($_FILES["profile-img"]["tmp_name"]));
-            $q = "INSERT INTO `users` (img) VALUES ('$image')"; 
+          if (is_uploaded_file($_FILES["profile-img"])) {		
+            $image = $_FILES["profile-img"]["tmp_name"];  
+            $image = base64_encode(file_get_contents(addslashes($image)));
+            $q = "UPDATE `users` SET `img` = '$image' WHERE `uname` = '$uname'"; 
+            $connection->query($q);
+            $msg .= "<p class='bg-success' style='width:fit-content'>New profile picture has been added</p>";
           }
+          echo $msg;
         }
         if(isset($_POST['submit'])){
           update();
-          echo "<p class='bg-success' style='width:fit-content'>Profile has been updated successfully</p>";
           mysqli_close($connection);
         }
         ?>
