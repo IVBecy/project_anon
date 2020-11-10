@@ -11,8 +11,10 @@ include("./vars.php");
 #Set profile pic
 if ($prof_img == ""){
   $prof_img_state = false;
+  $dir = "<img src='../root/imgs/profile-img.png'><br><p>(Default)</p>";
 }
 else{
+  $dir = '<img src="data:image/jpeg;base64,'.$prof_img.'"/>';
   $prof_img_state = true;
 }
 #Array of edited stuff
@@ -54,13 +56,7 @@ $edits = [];
   <div class="center-container" >
     <div class="settings-menu">
       <div class="settings-imgs">
-        <?php if($prof_img_state == true){
-        echo '<img src="data:image/jpeg;base64,'.$prof_img.'"/>';
-        }
-        else{
-          echo "<img src='../root/imgs/profile-img.png'><br><p>(Default)</p>";
-        }      
-        ?>
+        <?php echo $dir;?>
       </div>
       <span>Profile picture:</span>
       <form method="POST" action="./settings.php" enctype="multipart/form-data">
@@ -69,8 +65,7 @@ $edits = [];
         <span>Username:</span>
         <input type="text" name="uname" value="<?php echo $uname?>"><br>
         <p>Your name appears on your profile and on any post, that you have shared previously.</p>
-        <span>Email:</span>
-        <span>Current: <?php echo $logged_email?></span>
+        <span>Email: <?php echo $logged_email?></span>
         <input type="email" name="email" placeholder="New email address"><br>
         <p>Your email is used for notifying you, of any changes regarding the platform or your account.</p>
         <?php 
@@ -78,7 +73,7 @@ $edits = [];
           $msg = "";
           global $connection, $id, $followers;
           $uname = $_SESSION["uname"];
-          #Checking what has been changed
+          # USERNAME
           if (isset($_POST["uname"])){
             $new_uname = mysqli_real_escape_string($connection,e($_POST["uname"]));
             #check for matching usernames in the BD
@@ -87,9 +82,7 @@ $edits = [];
             $db_name = mysqli_fetch_row($db_name);
             $db_name = $db_name[0];
             if ($db_name == $new_uname){
-              if($new_uname == $uname){
-                $msg .= "<p class='bg-info' style='width:fit-content'>This is your username right now...</p>";
-              }
+              if($new_uname == $uname){} 
               else{
                 $msg .= "<p class='bg-danger' style='width:fit-content'>This username is taken, try something else</p>";
               }
@@ -101,7 +94,10 @@ $edits = [];
               $posts_name = mysqli_fetch_row($posts_name);
               $posts_name = $posts_name[0];
               $q = "UPDATE `posts` SET `uname` = '$new_uname' WHERE `uname` = '$uname'";
-              $connection->query($q);
+              if ($connection->query($q) === true){}
+              else{
+                echo "<p class='bg-danger' style='width:fit-content'>Error: $connection->error</p>";
+              }
               foreach($followers as $u){
                 #get id of follower 
                 $q = "SELECT `id` FROM `users` WHERE `uname` = '$u'";
@@ -120,7 +116,10 @@ $edits = [];
                 $follower_follows = json_encode($follower_follows);
                 $follower_follows = openssl_encrypt($follower_follows,"AES-128-CBC",$follower_id);
                 $q = "UPDATE `users` SET `follows` = '$follower_follows' WHERE `uname` = '$u'";
-                $connection->query($q);
+                if ($connection->query($q) === true){}
+                else{
+                  echo "<p class='bg-danger' style='width:fit-content'>Error: $connection->error</p>";
+                }
                 #replace the follower name
                 $q = "SELECT `followers` FROM `users` WHERE `uname` = '$u'";
                 $follower_followers = mysqli_query($connection,$q);
@@ -134,41 +133,55 @@ $edits = [];
                   $follower_followers = json_encode($follower_followers);
                   $follower_followers = openssl_encrypt($follower_followers,"AES-128-CBC",$follower_id);
                   $q = "UPDATE `users` SET `followers` = '$follower_followers' WHERE `uname` = '$u'";
-                  $connection->query($q);
+                  if ($connection->query($q) === true){}
+                  else{
+                    echo "<p class='bg-danger' style='width:fit-content'>Error: $connection->error</p>";
+                  }
                 };
               };
               #new uname
               $q = "UPDATE `users` SET `uname` = '$new_uname' WHERE `uname` = '$uname'";
-              $connection->query($q);
+              if ($connection->query($q) === true){}
+              else{
+                echo "<p class='bg-danger' style='width:fit-content'>Error: $connection->error</p>";
+              }
               $_SESSION["uname"] = $new_uname;
               $msg .= "<p class='bg-success' style='width:fit-content'>Username updated successfully</p>";
             }
           };
+          # EMAIL
           if (isset($_POST["email"])){
             $new_email = mysqli_real_escape_string($connection,e($_POST["email"]));
-            # Getting the email from the database (IF IT IS PRESENT)
-            if ($new_email == ""){
-              $new_email = false;
-            }
             $email_query = "SELECT `email` FROM `users` WHERE `email` = '$new_email'";
             $db_email = mysqli_query($connection,$email_query);
             $db_email = mysqli_fetch_row($db_email);
             $db_email = $db_email[0];
-            if ($new_email == $db_email && $new_email != false){
+            if ($new_email == $db_email && !empty($new_email)){
               $msg .= "<p class='bg-danger' style='width:fit-content'>This email is taken</p>";
             }
+            else if (empty($new_email)){}
             else{
               $msg .= "<p class='bg-success' style='width:fit-content'>Email updated successfully</p>";
               $q = "UPDATE `users` SET `email` = '$new_email' WHERE `uname` = '$uname'";
-              $connection->query($q);
+              if ($connection->query($q) === true){}
+              else{
+                echo "<p class='bg-danger' style='width:fit-content'>Error: $connection->error</p>";
+              }
             }
           };
+          # PROFILE PIC
           if (!empty($_FILES["profile-img"])) {		
-            $image = $_FILES["profile-img"]["tmp_name"];;  
-            $image = base64_encode(file_get_contents(addslashes($image)));
-            $q = "UPDATE `users` SET `img` = '$image' WHERE `uname` = '$uname'"; 
-            $connection->query($q);
-            $msg .= "<p class='bg-success' style='width:fit-content'>New profile picture has been added</p>";
+            if (empty($_FILES["profile-img"]["name"])){}
+            else{
+              $image = $_FILES["profile-img"]["tmp_name"];;  
+              $image = base64_encode(file_get_contents(addslashes($image)));
+              $q = "UPDATE `users` SET `img` = '$image' WHERE `uname` = '$uname'"; 
+              if ($connection->query($q) === true){}
+              else{
+                echo "<p class='bg-danger' style='width:fit-content'>Error: $connection->error</p>";
+              }
+              $msg .= "<p class='bg-success' style='width:fit-content'>New profile picture has been added</p>";
+            }
           }
           echo $msg;
         }
