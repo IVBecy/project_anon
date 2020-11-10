@@ -46,6 +46,19 @@ else{
   #Reverse the order of the array, so newest will be 1st
   $collection = array_reverse($collection);
 }
+#getting profile image if set
+$prof_query = "SELECT `img` FROM `users` WHERE `uname` = '$uname'";
+$prof_img = mysqli_query($connection,$prof_query);
+$prof_img = mysqli_fetch_row($prof_img);
+$prof_img = $prof_img[0];
+if ($prof_img == ""){
+  $dir = '<img src="../root/imgs/profile-img.png" alt="prof-img">';
+  $prof_img_state = false;
+}
+else{
+  $dir = '<img src="data:image/jpeg;base64,'.$prof_img.'"/>';
+  $prof_img_state = true;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +92,7 @@ else{
   <br>
   <div class="center-container">
     <div class="profile-card">
-      <img src="../root/imgs/profile-img.png" alt="prof-img">
+      <?php echo $dir?>
       <h1><?php echo $uname;?></h1>
       <h5>Projects: <?php echo count($collection)?></h5>
       <h5>Followers: <?php echo count($followers)?></h5>

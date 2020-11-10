@@ -65,7 +65,6 @@ $follows = mysqli_fetch_row($follows);
 $follows = $follows[0];
 $followers = openssl_decrypt($followers,"AES-128-CBC",$followers_id);
 $follows = openssl_decrypt($follows,"AES-128-CBC",$follows_id);
-echo $follows;
 $followers = json_decode($followers,true);
 $follows = json_decode($follows,true);
 #Checking for already following
@@ -77,6 +76,19 @@ if ($usr === true){
     $btn_val = "Follow";
     $script = "./follow.php";
   }
+}
+#getting profile image if set
+$prof_query = "SELECT `img` FROM `users` WHERE `uname` = '$src_uname'";
+$prof_img = mysqli_query($connection,$prof_query);
+$prof_img = mysqli_fetch_row($prof_img);
+$prof_img = $prof_img[0];
+if ($prof_img == ""){
+  $dir = '<img src="../root/imgs/profile-img.png" alt="prof-img">';
+  $prof_img_state = false;
+}
+else{
+  $dir = '<img src="data:image/jpeg;base64,'.$prof_img.'"/>';
+  $prof_img_state = true;
 }
 ?>
 <!DOCTYPE html>
@@ -113,7 +125,7 @@ if ($usr === true){
   <?php if ($show_projects_state === true && $usr === true){?>
     <div class="center-container">
       <div class="profile-card">
-        <img src="../root/imgs/profile-img.png" alt="prof-img">
+        <?php echo $dir?>
         <h1><?php echo $src_uname;?></h1>
          <form action="<?php echo $script?>" method="POST">
           <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
