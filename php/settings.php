@@ -71,7 +71,7 @@ $edits = [];
     <div class="settings-menu">
       <div class="settings-imgs">
         <?php if($prof_img_state == true){
-        echo "<img src='$prof_img'>";
+        echo '<img src="data:image/jpeg;base64,'.$prof_img.'"/>';
         }
         else{
           echo "<img src='../root/imgs/profile-img.png'><br><p>(Default)</p>";
@@ -79,8 +79,8 @@ $edits = [];
         ?>
       </div>
       <span>Profile picture:</span>
-      <form method="POST" action="./settings.php">
-        <input type="file" name="profile-img" accept=".png,.jpg,.jpeg" enctype="multipart/form-data"><br>
+      <form method="POST" action="./settings.php" enctype="multipart/form-data">
+        <input type="file" name="profile-img" accept=".png,.jpg,.jpeg"><br>
         <p>This picture will appear whenever someone looks up your profile.</p>
         <span>Username:</span>
         <input type="text" name="uname" value="<?php echo $uname?>"><br>
@@ -196,8 +196,8 @@ $edits = [];
               $connection->query($q);
             }
           };
-          if (is_uploaded_file($_FILES["profile-img"])) {		
-            $image = $_FILES["profile-img"]["tmp_name"];  
+          if (!empty($_FILES["profile-img"])) {		
+            $image = $_FILES["profile-img"]["tmp_name"];;  
             $image = base64_encode(file_get_contents(addslashes($image)));
             $q = "UPDATE `users` SET `img` = '$image' WHERE `uname` = '$uname'"; 
             $connection->query($q);
