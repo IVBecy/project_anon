@@ -67,12 +67,12 @@ if ($usr === true){
   }
 }
 # Showing profile picture
-if ($prof_img == ""){
+if ($src_prof_img == ""){
   $dir = '<img src="../root/imgs/profile-img.png" alt="prof-img">';
   $prof_img_state = false;
 }
 else{
-  $dir = '<img src="data:image/jpeg;base64,'.$prof_img.'"/>';
+  $dir = '<img src="data:image/jpeg;base64,'.$src_prof_img.'"/>';
   $prof_img_state = true;
 }
 ?>
