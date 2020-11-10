@@ -2,14 +2,12 @@
 #Session (start and vars)
 session_start();
 $uname = $_SESSION["uname"];
-#cross site scripting prevention
-function e($str){
-  return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
-}
 #Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
+#Getting some vars
+include("./vars.php");
 #Username from URL query
 $src_uname = mysqli_real_escape_string($connection,e($_POST["src_name"]));
 $_SESSION["src_uname"] = $src_uname;
@@ -17,21 +15,24 @@ $_SESSION["src_uname"] = $src_uname;
 if ($src_uname == $uname){
   header("Location: ./profile.php");
 };
-#Followers
-$id_src_name = "SELECT `id` FROM `users` WHERE `uname` = '$src_uname'";
-$followers_id = mysqli_query($connection,$id_src_name);
-$followers_id = mysqli_fetch_row($followers_id);
-$followers_id = $followers_id[0];
-$id_name = "SELECT `id` FROM `users` WHERE `uname` = '$src_uname'";
-$follows_id = mysqli_query($connection,$id_name);
-$follows_id = mysqli_fetch_row($follows_id);
-$follows_id = $follows_id[0];
-#User query
+#Getting vars for the searched user
+$src_query = "SELECT * FROM `users` WHERE `uname` = '$src_uname'";
+$src_data = mysqli_query($connection,$src_query);
+$src_data = mysqli_fetch_assoc($src_data);
+$src_id  = $src_data["id"];
+$src_prof_img = $src_data["img"];
+$src_followers = $src_data["followers"];
+$src_followers = openssl_decrypt($src_followers,"AES-128-CBC",$src_id);
+$src_followers = json_decode($src_followers,true);
+$src_follows = $src_data["follows"];
+$src_follows = openssl_decrypt($src_follows,"AES-128-CBC",$src_id);
+$src_follows = json_decode($src_follows,true);
+#see if the searched user is in the DB
 $u_query = "SELECT `uname` FROM `users` WHERE `uname` = '$src_uname'";
-$logged_name = mysqli_query($connection,$u_query);
-$logged_name = mysqli_fetch_row($logged_name);
-$logged_name = $logged_name[0];
-##Getting projects for the user
+$logged_src_name = mysqli_query($connection,$u_query);
+$logged_src_name = mysqli_fetch_row($logged_src_name);
+$logged_src_name = $logged_src_name[0];
+#Getting projects for the user
 $collection = [];
 $p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$src_uname'";
 $projects = mysqli_query($connection,$p_query);
@@ -44,7 +45,7 @@ if (count($collection) == 0){
   $show_projects_state = False;
   $usr = true;
   $msg = $src_uname." doesn't have any projects..."; 
-  if ($src_uname != $logged_name){
+  if ($src_uname != $logged_src_name){
     $usr = false;
     $msg = $src_uname." is not a user.";
   }
@@ -55,22 +56,9 @@ else{
   #Reverse the order of the array, so newest will be 1st
   $collection = array_reverse($collection);
 }
-#Following system
-$followers_query = "SELECT `followers` FROM `users` WHERE `uname` = '$src_uname'";
-$followers = mysqli_query($connection,$followers_query);
-$followers = mysqli_fetch_row($followers);
-$followers = $followers[0];
-$follows_query = "SELECT `follows` FROM `users` WHERE `uname` = '$src_uname'";
-$follows = mysqli_query($connection,$follows_query);
-$follows = mysqli_fetch_row($follows);
-$follows = $follows[0];
-$followers = openssl_decrypt($followers,"AES-128-CBC",$followers_id);
-$follows = openssl_decrypt($follows,"AES-128-CBC",$follows_id);
-$followers = json_decode($followers,true);
-$follows = json_decode($follows,true);
 #Checking for already following
 if ($usr === true){
-  if (in_array($uname, $followers)){
+  if (in_array($uname, $src_followers)){
     $btn_val = "Unfollow";
     $script = "./unfollow.php";
   }else{
@@ -78,11 +66,7 @@ if ($usr === true){
     $script = "./follow.php";
   }
 }
-#getting profile image if set
-$prof_query = "SELECT `img` FROM `users` WHERE `uname` = '$src_uname'";
-$prof_img = mysqli_query($connection,$prof_query);
-$prof_img = mysqli_fetch_row($prof_img);
-$prof_img = $prof_img[0];
+# Showing profile picture
 if ($prof_img == ""){
   $dir = '<img src="../root/imgs/profile-img.png" alt="prof-img">';
   $prof_img_state = false;
@@ -132,8 +116,8 @@ else{
           <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
         </form>
         <h5>Projects: <?php echo count($collection)?></h5>
-        <h5>Followers: <?php echo count($followers)?></h5>
-        <h5>Follows: <?php echo count($follows)?></h5>
+        <h5>Followers: <?php echo count($src_followers)?></h5>
+        <h5>Follows: <?php echo count($src_follows)?></h5>
       </div>
     </div>
     <?php foreach($collection as $k){?>
@@ -162,8 +146,8 @@ else{
           <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
         </form>
         <h5>Projects: <?php echo count($collection)?></h5>
-        <h5>Followers: <?php echo count($followers)?></h5>
-        <h5>Follows: <?php echo count($follows)?></h5>
+        <h5>Followers: <?php echo count($src_followers)?></h5>
+        <h5>Follows: <?php echo count($src_follows)?></h5>
       </div>
     </div>
     <div class="center-container"><?php echo $msg?></div>

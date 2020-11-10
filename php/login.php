@@ -27,19 +27,15 @@
 <?php
 #Session (start and vars)
 session_start();
-#cross site scripting prevention
-function e($str){
-  return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
-}
 #Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
+#Getting some vars
+include("./vars.php");
 # Variables from the form
 $uname =  mysqli_real_escape_string($connection, e($_POST['uname']));
-$_SESSION["uname"] = $uname;
 $pass = mysqli_real_escape_string($connection, e($_POST['pass']));
-# Hashing the password (bcrypt)
 # Getting the username from the database
 $query = "SELECT `uname` FROM `users` WHERE `uname` = '$uname'";
 $logged_uname = mysqli_query($connection,$query);
@@ -53,6 +49,7 @@ $logged_pass = $logged_pass[0];
 #Checking for the right data
 if ($uname == $logged_uname) {
   if (password_verify($pass, $logged_pass)) {
+    $_SESSION["uname"] = $uname;
     header( "Location: ./feed.php" );
   }
   else{

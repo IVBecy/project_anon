@@ -2,6 +2,12 @@
 #Start session and set uname as a var
 session_start();
 $uname = $_SESSION["uname"];
+#Turn off all notices
+error_reporting(E_ALL & ~E_NOTICE);
+#Adding the script that connects to the DB
+include("./connect.php");
+#Getting some vars
+include("./vars.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,35 +38,11 @@ $uname = $_SESSION["uname"];
     </div>
   </div>
   <br>
-  <?php
-  #cross site scripting prevention
-  function e($str){
-    return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
-  }
-  #Turn off all notices
-  error_reporting(E_ALL & ~E_NOTICE);
-  #Adding the script that connects to the DB
-  include("./connect.php");
-  $id_name = "SELECT `id` FROM `users` WHERE `uname` = '$uname'";
-  $follows_id = mysqli_query($connection,$id_name);
-  $follows_id = mysqli_fetch_row($follows_id);
-  $follows_id = $follows_id[0];
-  #Getting people that the user follows
-  $follows_query = "SELECT `follows` FROM `users` WHERE `uname` = '$uname'";
-  $follows = mysqli_query($connection,$follows_query);
-  $follows = mysqli_fetch_row($follows);
-  $follows = $follows[0];  
-  $follows = openssl_decrypt($follows,"AES-128-CBC",$follows_id);
-  $follows = json_decode($follows,true);    
+  <?php    
   #time
   $t = time();
   #collect
   $collection = [];
-  #user's last logout time
-  $time_query = "SELECT `logout-time` FROM `users` WHERE `uname` = '$uname'";
-  $logout_time = mysqli_query($connection,$time_query);
-  $logout_time = mysqli_fetch_row($logout_time);
-  $logout_time = $logout_time[0];
   #Get posts
   if ($follows){
     foreach($follows as $p){

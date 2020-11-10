@@ -2,36 +2,16 @@
 #Session (start and vars)
 session_start();
 $uname = $_SESSION["uname"];
-#cross site scripting prevention
-function e($str){
-  return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
-}
 #Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
+#Getting some vars
+include("./vars.php");
 #Getting projects for the user
 $collection = [];
 $p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
 $projects = mysqli_query($connection,$p_query);
-#ID
-$id_q = "SELECT `id` FROM `users` WHERE `uname` = '$uname'";
-$id = mysqli_query($connection,$id_q);
-$id = mysqli_fetch_row($id);
-$id = $id[0];
-#Following system
-$followers_query = "SELECT `followers` FROM `users` WHERE `uname` = '$uname'";
-$followers = mysqli_query($connection,$followers_query);
-$followers = mysqli_fetch_row($followers);
-$followers = $followers[0];
-$follows_query = "SELECT `follows` FROM `users` WHERE `uname` = '$uname'";
-$follows = mysqli_query($connection,$follows_query);
-$follows = mysqli_fetch_row($follows);
-$follows = $follows[0];
-$followers = openssl_decrypt($followers,"AES-128-CBC",$id);
-$follows = openssl_decrypt($follows,"AES-128-CBC",$id);
-$followers = json_decode($followers,true);
-$follows = json_decode($follows,true);
 #Appending all the projects to one array
 while ($row = mysqli_fetch_assoc($projects)) {
     array_push($collection,$row);
@@ -46,11 +26,7 @@ else{
   #Reverse the order of the array, so newest will be 1st
   $collection = array_reverse($collection);
 }
-#getting profile image if set
-$prof_query = "SELECT `img` FROM `users` WHERE `uname` = '$uname'";
-$prof_img = mysqli_query($connection,$prof_query);
-$prof_img = mysqli_fetch_row($prof_img);
-$prof_img = $prof_img[0];
+#Profile image
 if ($prof_img == ""){
   $dir = '<img src="../root/imgs/profile-img.png" alt="prof-img">';
   $prof_img_state = false;
