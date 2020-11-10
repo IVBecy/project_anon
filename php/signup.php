@@ -47,10 +47,6 @@ $email_query = "SELECT `email` FROM `users` WHERE `email` = '$email'";
 $logged_email = mysqli_query($connection,$email_query);
 $logged_email = mysqli_fetch_row($logged_email);
 $logged_email = $logged_email[0];
-# Variables from the form
-$uname =  mysqli_real_escape_string($connection, e($_POST['uname']));
-$email = mysqli_real_escape_string($connection, e($_POST['email']));
-$pass = mysqli_real_escape_string($connection, e($_POST['pass']));
 # Hashing the password
 $hashed_password = password_hash($pass,PASSWORD_BCRYPT);
 #id 

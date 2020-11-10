@@ -3,7 +3,7 @@
 session_start();
 $uname = $_SESSION["uname"];
 #Username from URL query
-$src_uname = e($_POST["src_name"]);
+$src_uname = mysqli_real_escape_string($connection,e($_POST["src_name"]));
 $_SESSION["src_uname"] = $src_uname;
 #Redirect if the user searches themselves
 if ($src_uname == $uname){
