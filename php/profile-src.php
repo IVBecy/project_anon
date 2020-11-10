@@ -2,13 +2,6 @@
 #Session (start and vars)
 session_start();
 $uname = $_SESSION["uname"];
-#Username from URL query
-$src_uname = mysqli_real_escape_string($connection,e($_POST["src_name"]));
-$_SESSION["src_uname"] = $src_uname;
-#Redirect if the user searches themselves
-if ($src_uname == $uname){
-  header("Location: ./profile.php");
-};
 #cross site scripting prevention
 function e($str){
   return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
@@ -17,6 +10,14 @@ function e($str){
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
+#Username from URL query
+$src_uname = mysqli_real_escape_string($connection,e($_POST["src_name"]));
+$_SESSION["src_uname"] = $src_uname;
+#Redirect if the user searches themselves
+if ($src_uname == $uname){
+  header("Location: ./profile.php");
+};
+#Followers
 $id_src_name = "SELECT `id` FROM `users` WHERE `uname` = '$src_uname'";
 $followers_id = mysqli_query($connection,$id_src_name);
 $followers_id = mysqli_fetch_row($followers_id);
