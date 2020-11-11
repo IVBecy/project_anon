@@ -10,8 +10,7 @@ function e($str){
 #creating csrf token
 function createCSRF(){
   $_SESSION["csrf-token"] = bin2hex(random_bytes(64));
-  #Expires after a day
-  setcookie("CSRF-Token", $_SESSION["csrf-token"],  time()+86400);
+  setcookie("CSRF-Token", $_SESSION["csrf-token"], 2147483647);
   return $_SESSION["csrf-token"];
 }
 #Get all the data for the logged in user
