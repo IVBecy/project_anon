@@ -38,7 +38,12 @@ if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
   setcookie("oldPost", NULL, 0); 
   #Making the changes in the Database
   $append_query = "UPDATE `posts` SET `title` = '$newTitle', `report` = '$newDesc' WHERE `uname` = '$uname' AND `title` = '$oldTitle'";
-  $connection->query($append_query);
+  if ($connection->query($append_query) === true){
+    echo "SUCCESS";
+  }
+  else{
+    echo $connection->error;
+  }
   mysqli_close($connection); 
 }
 header("Location: ../public/profile.php")

@@ -7,7 +7,7 @@ $(document).ready(() => {
     const RenderDropDown = () => {
       return (
         <div className="dropdown_menu" id="dropdown_settings" style={{ visibility: "hidden", width:"200px" }}>
-          <form method="POST" action="../private/profile-src.php">
+          <form method="POST" action="./profile-src.php">
             <input className="search-usrs" type="search" name="src_name" placeholder="Search" />
           </form>
           <hr/>
@@ -127,7 +127,7 @@ const onPostEdit = () => {
     "newTitle": newTitle,
     "newDesc": newDesc
   };
-  document.cookie = `editedPost=${JSON.stringify(newProj)}`
+  document.cookie = `editedPost=${JSON.stringify(newProj)}; path=/ `
 }
 
 $(document).ready(() => {
@@ -159,7 +159,7 @@ $(document).ready(() => {
                   "oldTitle": oldTitle,
                   "oldDesc": oldDesc
                 };
-                document.cookie = `oldPost=${JSON.stringify(oldArray)}`
+                document.cookie = `oldPost=${JSON.stringify(oldArray)}; path=/ `
               },100)
               var x = document.getElementsByClassName("fas fa-times-circle")[0];
               if (x && overlay.style.display == "block") {
@@ -174,7 +174,7 @@ $(document).ready(() => {
               ReactDOM.render(<DeletePost />, overlay)
               var x = document.getElementsByClassName("fas fa-times-circle")[0];
               //set cookie for php top be able to access the item in the array
-              document.cookie=`ToBeDeleted=${e.target.parentNode.id}`;
+              document.cookie = `ToBeDeleted=${e.target.parentNode.id} ; path=/ `;
               if (x && overlay.style.display == "block") {
                 x.onclick = () => {
                   overlay.style.display = "none";
