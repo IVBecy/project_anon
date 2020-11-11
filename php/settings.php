@@ -68,6 +68,7 @@ $edits = [];
         <span>Email: <?php echo $logged_email?></span>
         <input type="email" name="email" placeholder="New email address"><br>
         <p>Your email is used for notifying you, of any changes regarding the platform or your account.</p>
+        <input type="hidden" name="csrftoken" value="<?php echo $_COOKIE["CSRF-Token"]?>"/>
         <?php 
         function update(){
           $msg = "";

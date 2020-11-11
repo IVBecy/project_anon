@@ -25,14 +25,12 @@
     <h5>A social media platform developed for sharing projects.</h5>
   </div>
 <?php
-#cross site scripting prevention
-function e($str){
-  return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
-}
 #Turn off all notices
 error_reporting(0);
 #Adding the script that connects to the DB
 include("./connect.php");
+#get some vars
+include("./vars.php");
 # Variables from the form
 $uname =  mysqli_real_escape_string($connection, e($_POST['uname']));
 $email = mysqli_real_escape_string($connection, e($_POST['email']));
@@ -108,6 +106,7 @@ mysqli_close($connection);
   </div>
 <?php }else{
   session_start();
+  createCSRF();
   $_SESSION["uname"] = $uname;
   header("Location: ./profile.php");
 }?>
