@@ -50,6 +50,7 @@ $logged_pass = $logged_pass[0];
 if ($uname == $logged_uname) {
   if (password_verify($pass, $logged_pass)) {
     $_SESSION["uname"] = $uname;
+    session_regenerate_id();
     header( "Location: ./feed.php" );
   }
   else{
