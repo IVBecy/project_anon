@@ -5,9 +5,9 @@ $uname = $_SESSION["uname"];
 #Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
-include("./connect.php");
+include("../private/connect.php");
 #Getting some vars
-include("./vars.php");
+include("../private/vars.php");
 #Username from URL query
 $src_uname = mysqli_real_escape_string($connection,e($_POST["src_name"]));
 $_SESSION["src_uname"] = $src_uname;
@@ -60,10 +60,10 @@ else{
 if ($usr === true){
   if (in_array($uname, $src_followers)){
     $btn_val = "Unfollow";
-    $script = "./unfollow.php";
+    $script = "../private/unfollow.php";
   }else{
     $btn_val = "Follow";
-    $script = "./follow.php";
+    $script = "../private/follow.php";
   }
 }
 # Showing profile picture
@@ -92,8 +92,8 @@ else{
   <!--  Bootstrap(s)  -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <!-- My scripts -->
-  <link rel="stylesheet" href="../root/css/design.css">
-  <script type="text/jsx" src="../root/js/index.js"></script>
+  <link rel="stylesheet" href="../assets/css/design.css">
+  <script type="text/jsx" src="../assets/js/index.js"></script>
   <title>Project Anon - <?php echo $src_uname;?></title>
 </head>
 <body id="feed_bg">
@@ -142,7 +142,7 @@ else{
   <?php }else if($show_projects_state === false && $usr === true){?>
     <div class="center-container">
       <div class="profile-card">
-        <img src="../root/imgs/profile-img.png" alt="prof-img">
+        <?php echo $src_dir?>
         <h1><?php echo $src_uname;?></h1>
          <form action="<?php echo $script?>" method="POST">
           <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">

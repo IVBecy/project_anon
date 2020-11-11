@@ -14,9 +14,8 @@
   <!--  Bootstrap(s)  -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <!-- My scripts -->
-  <link rel="stylesheet" href="../root/css/design.css">
-  <link rel="stylesheet" href="../root/css/style.css">
-  <script type="text/jsx" src="../root/js/index.js"></script>
+  <link rel="stylesheet" href="../assets/css/design.css">
+  <script type="text/jsx" src="../assets/js/index.js"></script>
   <title>Project Anon - Login</title>
 </head>
 <body>
@@ -53,7 +52,7 @@ if ($uname == $logged_uname) {
   if (password_verify($pass, $logged_pass)) {
     session_regenerate_id();
     $_SESSION["uname"] = $uname;
-    header( "Location: ./feed.php" );
+    header( "Location: ../public/feed.php" );
   }
   else{
     $logged_in = false;
@@ -76,7 +75,7 @@ mysqli_close($connection);
       <p class="bg-danger"><?php echo $message; ?></p>
       <input type="submit" value="Log in" id="signup">
     </form>
-    <p>Not a member yet?<br><a href="../root/signup.html">Sign up</a></p>
+    <p>Not a member yet?<br><a href="../public/signup.html">Sign up</a></p>
   </div>
 <?php }?>
 </html>

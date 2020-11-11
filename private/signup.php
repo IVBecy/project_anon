@@ -14,9 +14,8 @@
   <!--  Bootstrap(s)  -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <!-- My scripts -->
-  <link rel="stylesheet" href="../root/css/design.css">
-  <link rel="stylesheet" href="../root/css/style.css">
-  <script type="text/jsx" src="../root/js/index.js"></script>
+  <link rel="stylesheet" href="../assets/css/design.css">
+  <script type="text/jsx" src="../assets/js/index.js"></script>
   <title>Project Anon - Sign Up</title>
 </head>
 <body>
@@ -102,12 +101,12 @@ mysqli_close($connection);
       <p class="bg-danger"><?php echo $message; ?></p>
       <input type="submit" value="Sign Up" id="signup">
     </form>
-    <p>Already a member?<br><a href="../root/index.html">Sign in</a></p>
+    <p>Already a member?<br><a href="../public/index.html">Sign in</a></p>
   </div>
 <?php }else{
   session_start();
   createCSRF();
   $_SESSION["uname"] = $uname;
-  header("Location: ./profile.php");
+  header("Location: ../public/profile.php");
 }?>
 </html>

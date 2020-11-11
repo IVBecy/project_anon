@@ -31,6 +31,6 @@ if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
   #Delete cookie 
   setcookie("ToBeDeleted", NULL, 0);
   mysqli_close($connection);
-  header("Location: ./profile.php");
+  header("Location: ../public/profile.php");
 };
 ?>

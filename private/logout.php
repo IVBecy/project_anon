@@ -9,5 +9,5 @@ $uname = $_SESSION["uname"];
 $time_query = "UPDATE `users` SET `logout-time` = '$t' WHERE `uname` = '$uname'"; 
 $connection->query($time_query);
 session_destroy();
-header('Location: ../root/index.html');
+header('Location: ../public/index.html');
 ?>

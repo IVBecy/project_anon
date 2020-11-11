@@ -48,5 +48,5 @@ $connection->query($follow_q);
 #Append nwe following to the DB ## LOGGED IN
 $follow_q = "UPDATE `users` SET `follows` = '$follows' WHERE `uname` = '$uname'";
 $connection->query($follow_q);
-header("Location: ./profile.php")
+header("Location: ../public/profile.php")
 ?>

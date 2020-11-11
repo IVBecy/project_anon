@@ -1,13 +1,31 @@
-<?php
-#Start session and set uname as a var
+<?php 
+#Session (start and vars)
 session_start();
 $uname = $_SESSION["uname"];
 #Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
-include("./connect.php");
+include("../private/connect.php");
 #Getting some vars
-include("./vars.php");
+include("../private/vars.php");
+#Getting projects for the user
+$collection = [];
+$p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
+$projects = mysqli_query($connection,$p_query);
+#Appending all the projects to one array
+while ($row = mysqli_fetch_assoc($projects)) {
+    array_push($collection,$row);
+};
+#Checking if we can show projects
+if (count($collection) == 0){
+  $show_projects_state = False;
+  $msg = "You don't have any projects..."; 
+}
+else{
+  $show_projects_state = True;
+  #Reverse the order of the array, so newest will be 1st
+  $collection = array_reverse($collection);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,12 +43,13 @@ include("./vars.php");
   <!--  Bootstrap(s)  -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <!-- My scripts -->
-  <link rel="stylesheet" href="../root/css/design.css">
-  <script type="text/jsx" src="../root/js/index.js"></script>
-  <title>Project Anon - Your feed</title>
+  <link rel="stylesheet" href="../assets/css/design.css">
+  <script type="text/jsx" src="../assets/js/index.js"></script>
+  <title>Project Anon - <?php echo $uname;?></title>
 </head>
 <body id="feed_bg">
   <div id="project-form-overlay"></div>
+  <div id="menu-bar"></div>
   <div class="home-bar">
     <div class="align-right">
       <div class="profile-img" id="dropdown-img">
@@ -40,33 +59,22 @@ include("./vars.php");
     </div>
   </div>
   <br>
-  <?php    
-  #time
-  $t = time();
-  #collect
-  $collection = [];
-  #Get posts
-  if ($follows){
-    foreach($follows as $p){
-      $post_query = "SELECT `uname`,`title`,`report`,`time` FROM `posts` WHERE `uname` = '$p' AND `time` <= '$t'";
-      $post = mysqli_query($connection,$post_query);
-      while ($row = mysqli_fetch_assoc($post)) {
-          array_push($collection,$row);
-      }
-    }
-    #Sort the array by time, so newest will appear on the top
-    $time = array_column($collection, "time");
-    array_multisort($time, SORT_DESC, $collection);
-    #Restrict array to show max 300 posts
-    array_slice($collection, 0, 300);
-  }
-  ?>
-  <!--show posts-->
-  <?php foreach($collection as $k){ ?>
+  <div class="center-container">
+    <div class="profile-card">
+      <?php echo $dir?>
+      <h1><?php echo $uname;?></h1>
+      <h5>Projects: <?php echo count($collection)?></h5>
+      <h5>Followers: <?php echo count($followers)?></h5>
+      <h5>Follows: <?php echo count($follows)?></h5>
+    </div>
+  </div>
+  <!-- PROJECTS -->
+  <?php if ($show_projects_state == True){
+    foreach($collection as $k) {?>
     <div class="center-container">
       <div class="post">
-        <h6 class="posted-by">Posted by <?php echo $k["uname"]?></h6>
         <div class="project" id="<?php echo $k["title"]?>">
+          <i class="fas fa-ellipsis-h"></i>
           <h2 id="title"><?php echo $k["title"];?></h2>
           <p id="description" class="project-desc"><?php echo $k["report"];?></p>
         </div>
@@ -76,6 +84,8 @@ include("./vars.php");
         </div>
       </div>
     </div>
+  <?php }}else{?>
+    <div class="center-container"><?php echo $msg?></div>
   <?php }?>
 </body>
 </html>

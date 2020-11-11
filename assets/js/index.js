@@ -7,7 +7,7 @@ $(document).ready(() => {
     const RenderDropDown = () => {
       return (
         <div className="dropdown_menu" id="dropdown_settings" style={{ visibility: "hidden", width:"200px" }}>
-          <form method="POST" action="./profile-src.php">
+          <form method="POST" action="../private/profile-src.php">
             <input className="search-usrs" type="search" name="src_name" placeholder="Search" />
           </form>
           <hr/>
@@ -15,9 +15,9 @@ $(document).ready(() => {
           <span><a href="./feed.php">Your Feed</a></span>
           <span id="new_project">New project</span>
           <hr />
-          <span><a href="./settings.php">Settings</a></span>
+          <span><a href="../private/settings.php">Settings</a></span>
           <span>Docs</span>
-          <span><a href="./logout.php" style={{color:"red"}}>Sign out</a></span>
+          <span><a href="../private/logout.php" style={{color:"red"}}>Sign out</a></span>
         </div> 
       )
     }
@@ -45,7 +45,7 @@ const ProjectForm = () => {
       <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
       <div className="project-form" id="projects">
         <h2>Post a new project</h2>
-        <form method="POST" action="../../php/project-gen.php">
+        <form method="POST" action="../private/project-gen.php">
           <input type="text" name="title" placeholder="Title of Project" /><br/>
           <textarea name="desc" placeholder="Describe your project"></textarea><br />
           <input type="submit" value="Post" />
@@ -94,7 +94,7 @@ const RenderPostEdit = () =>{
       <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
       <div className="edit-post" id="projects">
         <h1>Edit your post</h1>
-        <form method="POST" onSubmit={onPostEdit} action="../../php/edit-post.php">
+        <form method="POST" onSubmit={onPostEdit} action="../private/edit-post.php">
           <input type="text" name="title" placeholder="Edit title" /><br />
           <textarea name="desc" placeholder="Edit the description of your projects"></textarea><br />
           <input type="submit" name="send-edited-post" value="Edit Post" />
@@ -109,7 +109,7 @@ const DeletePost = () => {
     <div className="center-container">
       <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
       <div className="delete-post-popup">
-        <form method="POST" action="../../php/delete-post.php">
+        <form method="POST" action="../private/delete-post.php">
           <h4>Are you sure that you want to delete your project?</h4>
           <input type="submit" value="Delete" style={{backgroundColor:"red",color:"white"}}/>
           <input type="hidden" name="csrftoken" value={csrfToken}/>
