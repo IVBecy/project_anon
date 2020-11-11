@@ -31,7 +31,9 @@ include("../private/vars.php");
   <div id="menu-bar"></div>
   <div class="home-bar">
     <div class="align-right">
-      <h4 id="uname"><?php echo $uname;?></h4>
+      <div class="profile-img" id="dropdown-img">
+        <?php echo $dir?>
+      </div>
       <div id="menu"></div>
     </div>
   </div>

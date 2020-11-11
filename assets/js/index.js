@@ -15,7 +15,7 @@ $(document).ready(() => {
           <span><a href="./feed.php">Your Feed</a></span>
           <span id="new_project">New project</span>
           <hr />
-          <span><a href="../private/settings.php">Settings</a></span>
+          <span><a href="./settings.php">Settings</a></span>
           <span>Docs</span>
           <span><a href="../private/logout.php" style={{color:"red"}}>Sign out</a></span>
         </div> 
