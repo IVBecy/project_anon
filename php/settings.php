@@ -186,7 +186,11 @@ $edits = [];
           echo $msg;
         }
         if(isset($_POST['submit'])){
-          update();
+          if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
+            update();
+            #Create new csrf token
+            createCSRF();
+          }
           mysqli_close($connection);
         }
         ?>

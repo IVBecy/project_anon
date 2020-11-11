@@ -7,8 +7,15 @@ include("./connect.php");
 function e($str){
   return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
 }
+#creating csrf token
+function createCSRF(){
+  $_SESSION["csrf-token"] = bin2hex(random_bytes(64));
+  #Expires after a day
+  setcookie("CSRF-Token", $_SESSION["csrf-token"],  time()+86400);
+  return $_SESSION["csrf-token"];
+}
+#Get all the data for the logged in user
 if ($uname){
-  #Get all the data for the logged in user
   $query = "SELECT * FROM `users` WHERE `uname` = '$uname'";
   $data = mysqli_query($connection,$query);
   $data = mysqli_fetch_assoc($data);

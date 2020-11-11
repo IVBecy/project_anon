@@ -46,6 +46,8 @@ $pass_query = "SELECT `pass` FROM `users` WHERE `uname` = '$uname'";
 $logged_pass = mysqli_query($connection,$pass_query);
 $logged_pass = mysqli_fetch_row($logged_pass);
 $logged_pass = $logged_pass[0];
+#Create new csrf token
+createCSRF();
 #Checking for the right data
 if ($uname == $logged_uname) {
   if (password_verify($pass, $logged_pass)) {

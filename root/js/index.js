@@ -1,3 +1,6 @@
+// Get CSRF token
+var csrfToken = ("; "+document.cookie).split("; CSRF-Token=").pop().split(";").shift();
+
 // Dropdown settings menu
 $(document).ready(() => {
   if (document.getElementById("menu")){
@@ -46,6 +49,7 @@ const ProjectForm = () => {
           <input type="text" name="title" placeholder="Title of Project" /><br/>
           <textarea name="desc" placeholder="Describe your project"></textarea><br />
           <input type="submit" value="Post" />
+          <input type="hidden" name="csrftoken" value={csrfToken}/>
         </form>
       </div>
     </div>
@@ -94,6 +98,7 @@ const RenderPostEdit = () =>{
           <input type="text" name="title" placeholder="Edit title" /><br />
           <textarea name="desc" placeholder="Edit the description of your projects"></textarea><br />
           <input type="submit" name="send-edited-post" value="Edit Post" />
+          <input type="hidden" name="csrftoken" value={csrfToken}/>
         </form>
       </div>
     </div>
@@ -107,6 +112,7 @@ const DeletePost = () => {
         <form method="POST" action="../../php/delete-post.php">
           <h4>Are you sure that you want to delete your project?</h4>
           <input type="submit" value="Delete" style={{backgroundColor:"red",color:"white"}}/>
+          <input type="hidden" name="csrftoken" value={csrfToken}/>
         </form>
       </div>
     </div>
