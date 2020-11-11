@@ -8,8 +8,13 @@ error_reporting(E_ALL & ~E_NOTICE);
 include("../private/connect.php");
 #Getting some vars
 include("../private/vars.php");
-#Username from URL query
-$src_uname = mysqli_real_escape_string($connection,e($_POST["src_name"]));
+#Username from URL query or form assig.
+if ($_POST["src_name"]){
+  $src_uname = mysqli_real_escape_string($connection,e($_POST["src_name"]));
+}
+else{
+ $src_uname = mysqli_real_escape_string($connection,e($_GET["src_name"]));
+}
 $_SESSION["src_uname"] = $src_uname;
 #Redirect if the user searches themselves
 if ($src_uname == $uname){
@@ -48,6 +53,10 @@ if (count($collection) == 0){
   if ($src_uname != $logged_src_name){
     $usr = false;
     $msg = $src_uname." is not a user.";
+    http_response_code(404);
+    $err_msg = $src_uname." is not a user.";
+    include("../errors/404.php");
+    die();
   }
 }
 else{
@@ -92,8 +101,8 @@ else{
   <!--  Bootstrap(s)  -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <!-- My scripts -->
-  <link rel="stylesheet" href="../assets/css/design.css">
-  <script type="text/jsx" src="../assets/js/index.js"></script>
+  <link rel="stylesheet" href="/../assets/css/design.css">
+  <script type="text/jsx" src="/../assets/js/index.js"></script>
   <title>Project Anon - <?php echo $src_uname;?></title>
 </head>
 <body id="feed_bg">

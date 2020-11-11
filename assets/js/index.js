@@ -7,15 +7,15 @@ $(document).ready(() => {
     const RenderDropDown = () => {
       return (
         <div className="dropdown_menu" id="dropdown_settings" style={{ visibility: "hidden", width:"200px" }}>
-          <form method="POST" action="./profile-src.php">
+          <form method="POST" action="../public/profile-src.php">
             <input className="search-usrs" type="search" name="src_name" placeholder="Search" />
           </form>
           <hr/>
-          <span><a href="./profile.php">Your Profile</a></span>
-          <span><a href="./feed.php">Your Feed</a></span>
+          <span><a href="../public/profile.php">Your Profile</a></span>
+          <span><a href="../public/feed.php">Your Feed</a></span>
           <span id="new_project">New project</span>
           <hr />
-          <span><a href="./settings.php">Settings</a></span>
+          <span><a href="../public/settings.php">Settings</a></span>
           <span>Docs</span>
           <span><a href="../private/logout.php" style={{color:"red"}}>Sign out</a></span>
         </div> 
