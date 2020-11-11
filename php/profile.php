@@ -26,15 +26,6 @@ else{
   #Reverse the order of the array, so newest will be 1st
   $collection = array_reverse($collection);
 }
-#Profile image
-if ($prof_img == ""){
-  $dir = '<img src="../root/imgs/profile-img.png" alt="prof-img">';
-  $prof_img_state = false;
-}
-else{
-  $dir = '<img src="data:image/jpeg;base64,'.$prof_img.'"/>';
-  $prof_img_state = true;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,7 +52,9 @@ else{
   <div id="menu-bar"></div>
   <div class="home-bar">
     <div class="align-right">
-      <h4 id="uname"><?php echo $uname;?></h4>
+      <div class="profile-img" id="dropdown-img">
+        <?php echo $dir?>
+      </div>
       <div id="menu"></div>
     </div>
   </div>

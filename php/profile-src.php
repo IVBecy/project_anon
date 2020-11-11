@@ -68,11 +68,11 @@ if ($usr === true){
 }
 # Showing profile picture
 if ($src_prof_img == ""){
-  $dir = '<img src="../root/imgs/profile-img.png" alt="prof-img">';
+  $src_dir = '<img src="../root/imgs/profile-img.png" alt="prof-img">';
   $prof_img_state = false;
 }
 else{
-  $dir = '<img src="data:image/jpeg;base64,'.$src_prof_img.'"/>';
+  $src_dir = '<img src="data:image/jpeg;base64,'.$src_prof_img.'"/>';
   $prof_img_state = true;
 }
 ?>
@@ -101,7 +101,9 @@ else{
   <div id="menu-bar"></div>
  <div class="home-bar">
     <div class="align-right">
-      <h4 id="uname"><?php echo $uname;?></h4>
+      <div class="profile-img" id="dropdown-img">
+        <?php echo $dir?>
+      </div>
       <div id="menu"></div>
     </div>
   </div>
@@ -110,7 +112,7 @@ else{
   <?php if ($show_projects_state === true && $usr === true){?>
     <div class="center-container">
       <div class="profile-card">
-        <?php echo $dir?>
+        <?php echo $src_dir?>
         <h1><?php echo $src_uname;?></h1>
          <form action="<?php echo $script?>" method="POST">
           <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">

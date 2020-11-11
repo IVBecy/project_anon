@@ -33,7 +33,9 @@ include("./vars.php");
   <div id="project-form-overlay"></div>
   <div class="home-bar">
     <div class="align-right">
-      <h4 id="uname"><?php echo $uname;?></h4>
+      <div class="profile-img" id="dropdown-img">
+        <?php echo $dir?>
+      </div>
       <div id="menu"></div>
     </div>
   </div>

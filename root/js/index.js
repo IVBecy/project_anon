@@ -17,13 +17,13 @@ $(document).ready(() => {
           <hr />
           <span><a href="./settings.php">Settings</a></span>
           <span>Docs</span>
-          <span><a href="./logout.php">Sign out</a></span>
+          <span><a href="./logout.php" style={{color:"red"}}>Sign out</a></span>
         </div> 
       )
     }
     ReactDOM.render(<RenderDropDown />, document.getElementById("menu"))
     setTimeout(() => {
-      var name = document.getElementById("uname");
+      var name = document.getElementById("dropdown-img");
       var elem = document.getElementById("dropdown_settings");
       if (name) {
         name.onclick = () => {
@@ -82,7 +82,7 @@ $(document).ready(() => {
 // When you click on the ellipses, you get options regarding your project
 const ProjectSettings = () => {
   return(
-    <div className="dropdown_menu" id="project-dropdown" style={{width: "200px", visibility:"visible"}}>
+    <div className="dropdown_menu" id="project-dropdown" style={{visibility:"visible"}}>
       <span id="edit-post">Edit</span>
       <span id="delete-post">Delete</span>
     </div> 
