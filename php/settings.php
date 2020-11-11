@@ -1,24 +1,10 @@
 <?php 
-#Session (start and vars)
-session_start();
-$uname = $_SESSION["uname"];
 #Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
 #Getting some vars
 include("./vars.php");
-#Set profile pic
-if ($prof_img == ""){
-  $prof_img_state = false;
-  $dir = "<img src='../root/imgs/profile-img.png'><br><p>(Default)</p>";
-}
-else{
-  $dir = '<img src="data:image/jpeg;base64,'.$prof_img.'"/>';
-  $prof_img_state = true;
-}
-#Array of edited stuff
-$edits = [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,9 +41,6 @@ $edits = [];
   </div>
   <div class="center-container" >
     <div class="settings-menu">
-      <div class="settings-imgs">
-        <?php echo $dir;?>
-      </div>
       <span>Profile picture:</span>
       <form method="POST" action="./settings.php" enctype="multipart/form-data">
         <input type="file" name="profile-img" accept=".png,.jpg,.jpeg"><br>
@@ -188,9 +171,9 @@ $edits = [];
         }
         if(isset($_POST['submit'])){
           if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
-            update();
             #Create new csrf token
             createCSRF();
+            update();
           }
           mysqli_close($connection);
         }

@@ -25,6 +25,14 @@ if ($uname){
   $logged_pass = $data["pass"];
   $logout_time = $data["logout-time"];
   $prof_img = $data["img"];
+  if ($prof_img == ""){
+    $prof_img_state = false;
+    $dir = "<img src='../root/imgs/profile-img.png'>";
+  }
+  else{
+    $dir = '<img src="data:image/jpeg;base64,'.$prof_img.'"/>';
+    $prof_img_state = true;
+  }
   $logged_email = $data["email"];
   $follows = $data["follows"];
   $follows = openssl_decrypt($follows,"AES-128-CBC",$id);
