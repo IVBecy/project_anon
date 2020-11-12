@@ -55,7 +55,7 @@ if (count($collection) == 0){
     $msg = $src_uname." is not a user.";
     http_response_code(404);
     $err_msg = $src_uname." is not a user.";
-    include("../errors/404.php");
+    include("../errors/404.html");
     die();
   }
 }
