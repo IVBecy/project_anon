@@ -52,7 +52,7 @@ if ($uname == $logged_uname) {
   if (password_verify($pass, $logged_pass)) {
     session_regenerate_id();
     $_SESSION["uname"] = $uname;
-    header( "Location: ../public/feed.php" );
+    header( "Location: ../public/feed" );
   }
   else{
     $logged_in = false;

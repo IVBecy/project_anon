@@ -11,11 +11,11 @@ $(document).ready(() => {
             <input className="search-usrs" type="search" name="src_name" placeholder="Search" />
           </form>
           <hr/>
-          <span><a href="../public/profile.php">Your Profile</a></span>
-          <span><a href="../public/feed.php">Your Feed</a></span>
+          <span><a href="../public/profile">Your Profile</a></span>
+          <span><a href="../public/feed">Your Feed</a></span>
           <span id="new_project">New project</span>
           <hr />
-          <span><a href="../public/settings.php">Settings</a></span>
+          <span><a href="../public/settings">Settings</a></span>
           <span>Docs</span>
           <span><a href="../private/logout.php" style={{color:"red"}}>Sign out</a></span>
         </div> 

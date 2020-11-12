@@ -26,6 +26,6 @@ if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
   #Create new csrf token
   createCSRF();
   mysqli_close($connection);
-  header("Location: ../public/profile.php");
+  header("Location: ../public/profile");
 }
 ?>

@@ -107,6 +107,6 @@ mysqli_close($connection);
   session_start();
   createCSRF();
   $_SESSION["uname"] = $uname;
-  header("Location: ../public/profile.php");
+  header("Location: ../public/profile");
 }?>
 </html>
