@@ -1,1 +1,9 @@
 Options -Indexes
+
+RewriteEngine on
+
+ErrorDocument 404 /errors/404.php
+ErrorDocument 403 /errors/403.php
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
