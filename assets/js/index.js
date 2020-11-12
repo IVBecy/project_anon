@@ -7,7 +7,7 @@ $(document).ready(() => {
     const RenderDropDown = () => {
       return (
         <div className="dropdown_menu" id="dropdown_settings" style={{ visibility: "hidden", width:"200px" }}>
-          <form method="POST" action="../public/profile-src.php">
+          <form method="POST" action="../public/profile-src">
             <input className="search-usrs" type="search" name="src_name" placeholder="Search" />
           </form>
           <hr/>
