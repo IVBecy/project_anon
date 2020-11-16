@@ -5,6 +5,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 include("../private/connect.php");
 #Getting some vars
 include("../private/vars.php");
+ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
