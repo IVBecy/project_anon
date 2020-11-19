@@ -106,6 +106,76 @@ else{
   <script type="text/jsx" src="/../assets/js/index.js"></script>
   <title>Project Anon - <?php echo $src_uname;?></title>
 </head>
+<script type="text/jsx">
+  //follows and followers onclick
+  const FollowersOverlay = () => {
+    return(
+      <div className="popup"> 
+        <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
+        <div className="user-social">
+          <div className="center-container">
+            <h2>Followers</h2>
+            <div className="left-container">
+              <?php foreach($src_followers as $f){?>
+                <div id="<?php echo $f?>"><span><?php echo $f?></span></div>
+              <?php }?>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  const FollowsOverlay = () => {
+    return(
+      <div className="popup"> 
+        <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
+        <div className="user-social">
+          <div className="center-container">
+            <h2>Follows</h2>
+            <div className="left-container">
+              <?php foreach($src_follows as $f){?>
+                <div id="<?php echo $f?>"><span><?php echo $f?></span></div>
+              <?php }?>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  $(document).ready(() => {
+    var followers_btn = document.getElementById("followers");
+    var follows_btn = document.getElementById("follows");
+    var overlay = document.getElementById("project-form-overlay");
+    if (followers_btn){
+      followers_btn.onclick = () => {
+        overlay.style.display = "block";
+        ReactDOM.render(<FollowersOverlay/>,overlay)
+        setTimeout(() => {
+          var x = document.getElementsByClassName("fas fa-times-circle")[0];
+          if (x && overlay.style.display == "block") {
+            x.onclick = () => {
+              overlay.style.display = "none";
+            };
+          };
+        },100)
+      }
+    }
+    if (followers_btn){
+      follows_btn.onclick = () => {
+        overlay.style.display = "block";
+        ReactDOM.render(<FollowsOverlay/>,overlay)
+        setTimeout(() => {
+          var x = document.getElementsByClassName("fas fa-times-circle")[0];
+          if (x && overlay.style.display == "block") {
+            x.onclick = () => {
+              overlay.style.display = "none";
+            };
+          };
+        },100)
+      }
+    }
+  })
+</script>
 <body id="feed_bg">
   <div id="project-form-overlay"></div>
   <div id="menu-bar"></div>
@@ -128,8 +198,8 @@ else{
           <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
         </form>
         <h5>Projects: <?php echo count($collection)?></h5>
-        <h5>Followers: <?php echo count($src_followers)?></h5>
-        <h5>Follows: <?php echo count($src_follows)?></h5>
+        <h5 id="followers">Followers: <?php echo count($src_followers)?></h5>
+        <h5 id="follows">Follows: <?php echo count($src_follows)?></h5>
       </div>
     </div>
     <?php foreach($collection as $k){?>
@@ -158,8 +228,8 @@ else{
           <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
         </form>
         <h5>Projects: <?php echo count($collection)?></h5>
-        <h5>Followers: <?php echo count($src_followers)?></h5>
-        <h5>Follows: <?php echo count($src_follows)?></h5>
+        <h5 id="followers">Followers: <?php echo count($src_followers)?></h5>
+        <h5 id="follows">Follows: <?php echo count($src_follows)?></h5>
       </div>
     </div>
     <div class="center-container"><?php echo $msg?></div>

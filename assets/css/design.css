@@ -405,6 +405,21 @@ span a:hover{
   border: 3px solid white;
 }
 
+.user-social{
+  padding:10px;
+}
+
+.popup{
+  z-index: 30;
+  background-color: white;
+  width:50%;
+  margin:auto;
+  margin-top:25%;
+}
+
+.popup span,h2,h1{
+  color:black;
+}
 /*ID Selectors*/
 #background{
   width: fit-content;

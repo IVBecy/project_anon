@@ -13,6 +13,8 @@ if ($logged_in === false){
   header("Location: ./index.html");
   die();
 }
+echo "Followers", json_encode($followers),"<br>";
+echo "Follows", json_encode($follows),"<br>";
 #Getting projects for the user
 $collection = [];
 $p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
@@ -52,6 +54,76 @@ else{
   <script type="text/jsx" src="../assets/js/index.js"></script>
   <title>Project Anon - <?php echo $uname;?></title>
 </head>
+<script type="text/jsx">
+  //follows and followers onclick
+  const FollowersOverlay = () => {
+    return(
+      <div className="popup"> 
+        <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
+        <div className="user-social">
+          <div className="center-container">
+            <h2>Followers</h2>
+            <div className="left-container">
+              <?php foreach($followers as $f){?>
+                <div id="<?php echo $f?>"><span><?php echo $f?></span></div>
+              <?php }?>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  const FollowsOverlay = () => {
+    return(
+      <div className="popup"> 
+        <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
+        <div className="user-social">
+          <div className="center-container">
+            <h2>Follows</h2>
+            <div className="left-container">
+              <?php foreach($follows as $f){?>
+                <div id="<?php echo $f?>"><span><?php echo $f?></span></div>
+              <?php }?>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  $(document).ready(() => {
+    var followers_btn = document.getElementById("followers");
+    var follows_btn = document.getElementById("follows");
+    var overlay = document.getElementById("project-form-overlay");
+    if (followers_btn){
+      followers_btn.onclick = () => {
+        overlay.style.display = "block";
+        ReactDOM.render(<FollowersOverlay/>,overlay)
+        setTimeout(() => {
+          var x = document.getElementsByClassName("fas fa-times-circle")[0];
+          if (x && overlay.style.display == "block") {
+            x.onclick = () => {
+              overlay.style.display = "none";
+            };
+          };
+        },100)
+      }
+    }
+    if (followers_btn){
+      follows_btn.onclick = () => {
+        overlay.style.display = "block";
+        ReactDOM.render(<FollowsOverlay/>,overlay)
+        setTimeout(() => {
+          var x = document.getElementsByClassName("fas fa-times-circle")[0];
+          if (x && overlay.style.display == "block") {
+            x.onclick = () => {
+              overlay.style.display = "none";
+            };
+          };
+        },100)
+      }
+    }
+  })
+</script>
 <body id="feed_bg">
   <div id="project-form-overlay"></div>
   <div id="menu-bar"></div>
@@ -69,8 +141,8 @@ else{
       <?php echo $dir?>
       <h1><?php echo $uname;?></h1>
       <h5>Projects: <?php echo count($collection)?></h5>
-      <h5>Followers: <?php echo count($followers)?></h5>
-      <h5>Follows: <?php echo count($follows)?></h5>
+      <h5 id="followers">Followers: <?php echo count($followers)?></h5>
+      <h5 id="follows">Follows: <?php echo count($follows)?></h5>
     </div>
   </div>
   <!-- PROJECTS -->
