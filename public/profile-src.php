@@ -76,7 +76,7 @@ if ($usr === true){
 }
 # Showing profile picture
 if ($src_prof_img == ""){
-  $src_dir = '<img src="../root/imgs/profile-img.png" alt="prof-img">';
+  $src_dir = '<img src="../assets/imgs/profile-img.png" alt="prof-img">';
   $prof_img_state = false;
 }
 else{
