@@ -159,15 +159,21 @@ ob_start();
           # PROFILE PIC
           if (!empty($_FILES["profile-img"])) {		
             if (empty($_FILES["profile-img"]["name"])){}
-            else{
-              $image = $_FILES["profile-img"]["tmp_name"];;  
-              $image = base64_encode(file_get_contents(addslashes($image)));
-              $q = "UPDATE `users` SET `img` = '$image' WHERE `uname` = '$uname'"; 
-              if ($connection->query($q) === true){}
-              else{
-                echo "<p class='bg-danger' style='width:fit-content'>Error: $connection->error</p>";
+            else{ 
+              $allowed = ["image/png", "image/jpg", "image/jpeg"];
+              if (!in_array($_FILES["profile-img"]["type"], $allowed)){
+                $msg .= "<p class='bg-danger' style='width:fit-content'>You are trying to upload a not allowed file type</p>";
               }
-              $msg .= "<p class='bg-success' style='width:fit-content'>New profile picture has been added</p>";
+              else{
+                $image = $_FILES["profile-img"]["tmp_name"];; 
+                $image = base64_encode(file_get_contents(addslashes($image)));
+                $q = "UPDATE `users` SET `img` = '$image' WHERE `uname` = '$uname'"; 
+                if ($connection->query($q) === true){}
+                else{
+                  echo "<p class='bg-danger' style='width:fit-content'>Error: $connection->error</p>";
+                }
+                $msg .= "<p class='bg-success' style='width:fit-content'>New profile picture has been added</p>";
+              }
             }
           }
           echo $msg;
