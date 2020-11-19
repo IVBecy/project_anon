@@ -34,6 +34,7 @@ include("./connect.php");
 include("./vars.php");
 # Variables from the form
 $uname =  mysqli_real_escape_string($connection, e($_POST['uname']));
+$uname = strtolower($uname);
 $pass = mysqli_real_escape_string($connection, e($_POST['pass']));
 # Getting the username from the database
 $query = "SELECT `uname` FROM `users` WHERE `uname` = '$uname'";

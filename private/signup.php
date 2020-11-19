@@ -32,6 +32,7 @@ include("./connect.php");
 include("./vars.php");
 # Variables from the form
 $uname =  mysqli_real_escape_string($connection, e($_POST['uname']));
+$uname = strtolower($uname);
 $email = mysqli_real_escape_string($connection, e($_POST['email']));
 $pass = mysqli_real_escape_string($connection, e($_POST['pass']));
 # Getting the username from the database (IF IT IS PRESENT)

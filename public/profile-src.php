@@ -10,9 +10,11 @@ include("../private/vars.php");
 #Username from URL query or form assig.
 if ($_POST["src_name"]){
   $src_uname = mysqli_real_escape_string($connection,e($_POST["src_name"]));
+  $src_uname = strtolower($src_uname);
 }
 else{
  $src_uname = mysqli_real_escape_string($connection,e($_GET["src_name"]));
+ $src_uname = strtolower($src_uname);
 }
 $_SESSION["src_uname"] = $src_uname;
 #Redirect if the user searches themselves
