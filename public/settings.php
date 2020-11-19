@@ -5,6 +5,12 @@ error_reporting(E_ALL & ~E_NOTICE);
 include("../private/connect.php");
 #Getting some vars
 include("../private/vars.php");
+# If not logged in, redirect to login page
+if ($logged_in === false){
+  http_response_code(404);
+  header("Location: ./index.html");
+  die();
+}
 ob_start();
 ?>
 <!DOCTYPE html>

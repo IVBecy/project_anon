@@ -1,13 +1,18 @@
 <?php 
 #Session (start and vars)
 session_start();
-$uname = $_SESSION["uname"];
 #Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("../private/connect.php");
 #Getting some vars
 include("../private/vars.php");
+# If not logged in, redirect to login page
+if ($logged_in === false){
+  http_response_code(404);
+  header("Location: ./index.html");
+  die();
+}
 #Getting projects for the user
 $collection = [];
 $p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";

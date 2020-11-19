@@ -1,6 +1,15 @@
 <?php
 session_start();
-$uname = $_SESSION["uname"];
+if ($_SESSION["uname"]){
+  $uname = $_SESSION["uname"];
+  $logged_in = true;
+  $html_id = "dropdown-img";
+}else{  
+  $uname = "<h5><a style='color:white' href='./index.html'>Login</a><h5>";
+  $logged_in = false;
+  $dir = $uname;
+  $html_id = "login-link";
+}
 #To be connected to the DB
 include("connect.php");
 #cross site scripting prevention
@@ -14,7 +23,7 @@ function createCSRF(){
   return $_SESSION["csrf-token"];
 }
 #Get all the data for the logged in user
-if ($uname){
+if ($uname && $logged_in === true){
   $query = "SELECT * FROM `users` WHERE `uname` = '$uname'";
   $data = mysqli_query($connection,$query);
   $data = mysqli_fetch_assoc($data);

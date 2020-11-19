@@ -1,7 +1,6 @@
 <?php 
 #Session (start and vars)
 session_start();
-$uname = $_SESSION["uname"];
 #Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
@@ -110,7 +109,7 @@ else{
   <div id="menu-bar"></div>
  <div class="home-bar">
     <div class="align-right">
-      <div class="profile-img" id="dropdown-img">
+      <div class="profile-img" id="<?php echo $html_id?>">
         <?php echo $dir?>
       </div>
       <div id="menu"></div>
