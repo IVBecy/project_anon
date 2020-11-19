@@ -28,12 +28,15 @@ foreach($followers as $u){
   $follower_follows = $follower_follows[0];
   $follower_follows = openssl_decrypt($follower_follows,"AES-128-CBC",$follower_id);
   $follower_follows = json_decode($follower_follows,true);
-  $pos = array_search($uname,$follower_follows);
-  unset($follower_follows[$pos]);
-  $follower_follows = json_encode($follower_follows);
-  $follower_follows = openssl_encrypt($follower_follows,"AES-128-CBC",$follower_id);
-  $q = "UPDATE `users` SET `follows` = '$follower_follows' WHERE `uname` = '$u'";
-  $connection->query($q);
+  if (in_array($uname,$follower_follows)){
+    $pos = array_search($uname,$follower_follows);
+    unset($follower_follows[$pos]);
+    $follower_follows = array_values($follower_follows);
+    $follower_follows = json_encode($follower_follows);
+    $follower_follows = openssl_encrypt($follower_follows,"AES-128-CBC",$follower_id);
+    $q = "UPDATE `users` SET `follows` = '$follower_follows' WHERE `uname` = '$u'";
+    $connection->query($q);
+  }
   #delete the follower name
   $q = "SELECT `followers` FROM `users` WHERE `uname` = '$u'";
   $follower_followers = mysqli_query($connection,$q);
@@ -44,6 +47,7 @@ foreach($followers as $u){
   if (in_array($uname,$follower_followers)){
     $pos = array_search($uname,$follower_followers);
     unset($follower_followers[$pos]);
+    $follower_followers = array_values($follower_followers);
     $follower_followers = json_encode($follower_followers);
     $follower_followers = openssl_encrypt($follower_followers,"AES-128-CBC",$follower_id);
     $q = "UPDATE `users` SET `followers` = '$follower_followers' WHERE `uname` = '$u'";
@@ -64,12 +68,15 @@ foreach($follows as $u){
   $follow_followers = $follow_followers[0];
   $follow_followers = openssl_decrypt($follow_followers,"AES-128-CBC",$follow_id);
   $follow_followers = json_decode($follow_followers,true);
-  $pos = array_search($uname,$follow_followers);
-  unset($follow_followers[$pos]);
-  $follow_followers = json_encode($follow_followers);
-  $follow_followers = openssl_encrypt($follow_followers,"AES-128-CBC",$follow_id);
-  $q = "UPDATE `users` SET `follows` = '$follow_followers' WHERE `uname` = '$u'";
-  $connection->query($q);
+  if (in_array($uname,$follow_followers)){
+    $pos = array_search($uname,$follow_followers);
+    unset($follow_followers[$pos]);
+    $follow_followers = array_values($follow_followers);
+    $follow_followers = json_encode($follow_followers);
+    $follow_followers = openssl_encrypt($follow_followers,"AES-128-CBC",$follow_id);
+    $q = "UPDATE `users` SET `follows` = '$follow_followers' WHERE `uname` = '$u'";
+    $connection->query($q);
+  }
 };
 #Delete the user's profile in the DB :(
 $q = "DELETE FROM `users` WHERE `uname` = '$uname'";

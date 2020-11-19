@@ -36,8 +36,10 @@ $followers = json_decode($followers,true);
 $follows = json_decode($follows,true);
 #Delete the pov user from the searched user's followers list ## NOT LOGGED IN USER
 unset($followers[array_search($uname,$followers)]);
+$followers = array_values($followers);
 #Delete the searched user from the pov user's following list ## LOGGED IN USER
 unset($follows[array_search($src_uname,$follows)]);
+$follows = array_values($follows);
 $followers = json_encode($followers);
 $follows = json_encode($follows);
 $followers = openssl_encrypt($followers,"AES-128-CBC",$followers_id);
