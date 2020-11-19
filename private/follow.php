@@ -1,17 +1,20 @@
 <?php 
 #Session (start and vars)
 session_start();
-$uname = $_SESSION["uname"];
 #Username from URL query
 $src_uname = $_SESSION["src_uname"];
-#cross site scripting prevention
-function e($str){
-  return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
-}
 #Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
+#Getting some vars
+include("./vars.php");
+# If not logged in, redirect to login page
+if ($logged_in === false){
+  http_response_code(404);
+  header("Location: ../public/index.html");
+  die();
+}
 #ID
 $id_src_name = "SELECT `id` FROM `users` WHERE `uname` = '$src_uname'";
 $followers_id = mysqli_query($connection,$id_src_name);
