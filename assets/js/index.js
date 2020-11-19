@@ -108,7 +108,7 @@ const DeletePost = () => {
   return (
     <div className="center-container">
       <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
-      <div className="delete-post-popup">
+      <div className="delete-popup">
         <form method="POST" action="../private/delete-post.php">
           <h4>Are you sure that you want to delete your project?</h4>
           <input type="submit" value="Delete" style={{backgroundColor:"red",color:"white"}}/>
@@ -186,4 +186,38 @@ $(document).ready(() => {
       };
     };
   };
+});
+// Deleting account
+const DeleteAccount = () => {
+  return (
+    <div className="center-container">
+      <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
+      <div className="delete-popup">
+        <form method="POST" action="../private/delete-account.php">
+          <h4>Are you sure that you want to delete your account?</h4>
+          <p style={{color:"red"}}>After this there is NO turning back!</p>
+          <input type="submit" value="Delete" style={{ backgroundColor: "red", color: "white" }} />
+          <input type="hidden" name="csrftoken" value={csrfToken} />
+        </form>
+      </div>
+    </div>
+  )
+};
+$(document).ready(() => {
+  var overlay = document.getElementById("project-form-overlay");
+  var deleteAccBtn = document.getElementById("delete-acc-btn");
+  if (deleteAccBtn){
+    deleteAccBtn.onclick = () =>{
+      overlay.style.display = "block";
+      ReactDOM.render(<DeleteAccount />, overlay)
+      setTimeout(() => {
+        var x = document.getElementsByClassName("fas fa-times-circle")[0];
+        if (x && overlay.style.display == "block") {
+          x.onclick = () => {
+            overlay.style.display = "none";
+          };
+        };
+      },100)
+    }
+  }
 });

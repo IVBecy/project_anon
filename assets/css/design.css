@@ -18,6 +18,7 @@
   --pink:#FF00FF;
   --purple:#9933FF;
   --red:#FF0000;
+  --dark_red:#D10000;
   --yellow:#FFFF00;
   --green:#00FF00;
   --neon_green:#93FA0B;
@@ -36,9 +37,11 @@ body,html{
 h1{
   font-family: "Merriweather Sans";
   margin:10px;
+  margin-right:0;
+  margin-left:0;
 }
 
-h2{
+h2,h4{
   font-family: "Poppins";
 }
 
@@ -68,6 +71,8 @@ button{
   transition: 0.5s;
   padding: 10px 15px 10px 15px;
   margin:20px;
+  margin-right:0;
+  margin-left:0;
   border:0;
   border-radius: 10px;
   background-color: black;
@@ -157,7 +162,10 @@ input[type="submit"]{
   transition: 0.5s;
   padding: 10px 15px 10px 15px;
   margin:20px;
-  width:100px;
+  margin-right:0px;
+  margin-left:0px;
+  min-width:100px;
+  width:fit-content;
   border:0;
   border-radius: 10px;
   background-color: black;
@@ -166,7 +174,7 @@ input[type="submit"]{
 }
 
 input[type="submit"]:hover{
-  background-color: var(--dark_grey);
+  background-color: rgba(0,0,0,0.1);
 }
 
 hr{
@@ -351,7 +359,7 @@ span a:hover{
   margin-top:-20px;
 }
 
-.delete-post-popup{
+.delete-popup{
   z-index: 30;
   margin-top: 100px;
   padding:50px;

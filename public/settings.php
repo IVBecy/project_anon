@@ -45,21 +45,27 @@ ob_start();
     </div>
   </div>
   <br>
-  <div class="center-container">
-    <h1>Settings menu</h1>
-  </div>
   <div class="center-container" >
     <div class="settings-menu">
-      <span>Profile picture:</span>
       <form method="POST" action="./settings.php" enctype="multipart/form-data">
+        <h2>Account information</h2>
+        <hr>
+        <h4>Edit profile picture</h4>
         <input type="file" name="profile-img" accept=".png,.jpg,.jpeg"><br>
         <p>This picture will appear whenever someone looks up your profile.</p>
-        <span>Username:</span>
+        <hr>
+        <h4>Change username:</h4>
         <input type="text" name="uname" value="<?php echo $uname?>"><br>
         <p>Your name appears on your profile and on any post, that you have shared previously.</p>
-        <span>Email: <?php echo $logged_email?></span>
+        <hr>
+        <h4>Change email</h4>
         <input type="email" name="email" placeholder="New email address"><br>
         <p>Your email is used for notifying you, of any changes regarding the platform or your account.</p>
+        <hr>
+        <h4 style="color:red">Delete your account</h4>
+        <p style="margin:0">If you delete your account, there is no turning back.</p>
+        <button type="button" id="delete-acc-btn" style="background-color:red">Delete account</button>
+        <hr>
         <input type="hidden" name="csrftoken" value="<?php echo $_COOKIE["CSRF-Token"]?>"/>
         <?php 
         function update(){
@@ -193,7 +199,7 @@ ob_start();
           mysqli_close($connection);
         }
         ?>
-        <input type="submit" value="Update" name="submit" style="background-color:#09D202;">
+        <input type="submit" value="Update" name="submit" style="background-color:#09D202;margin:0">
       </form>
     </div>  
   </div>
