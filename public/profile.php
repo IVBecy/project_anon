@@ -117,8 +117,12 @@ else{
                   echo "<span>There are no comments for this post.</span>";
                 }else{
                   foreach($comments as $n => $c){
+                    $q = "SELECT `uname` FROM `users` WHERE `id` = '$n'";  
+                    $f_name = mysqli_query($connection,$q);
+                    $f_name = mysqli_fetch_row($f_name);
+                    $f_name = $f_name[0];
                     echo "
-                      <h4><a href='./$n' style={{color:'black'}}>$n</a></h4>
+                      <h4><a href='./$f_name' style={{color:'black'}}>$f_name</a></h4>
                       <span>$c</span>
                     ";
                   }

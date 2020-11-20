@@ -171,8 +171,12 @@ else{
                   echo "<span>There are no comments for this post.</span>";
                 }else{
                   foreach($comments as $n => $c){
+                    $q = "SELECT `uname` FROM `users` WHERE `id` = '$n'";  
+                    $f_name = mysqli_query($connection,$q);
+                    $f_name = mysqli_fetch_row($f_name);
+                    $f_name = $f_name[0];
                     echo "
-                      <h4><a href='./$n' style={{color:'black'}}>$n</a></h4>
+                      <h4><a href='./$f_name' style={{color:'black'}}>$f_name</a></h4>
                       <span>$c</span>
                     ";
                   }
@@ -267,7 +271,7 @@ else{
       $likes = $likes[0];   
       $likes = openssl_decrypt($likes,"AES-128-CBC",$src_id);
       $likes = json_decode($likes,true);  
-      if (in_array($uname,$likes)){
+      if (in_array($id,$likes)){
         $star_txt = "Unstar";
       }else{
         $star_txt = "Star";

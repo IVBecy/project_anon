@@ -68,21 +68,90 @@ if ($logged_in === false){
   ?>
   <!--show posts-->
   <?php foreach($collection as $k){ 
+      #uname
       $q = "SELECT `uname` FROM `users` WHERE `id` = '$k[name_id]'";  
-      $f_name = mysqli_query($connection,$q);
-      $f_name = mysqli_fetch_row($f_name);
-      $f_name = $f_name[0];    
+      $p_name= mysqli_query($connection,$q);
+      $p_name = mysqli_fetch_row($p_name);
+      $p_name = $p_name[0];    
+      #likes
+      $likes_q = "SELECT `likes` FROM `posts` WHERE `name_id` = '$k[name_id]' AND `title` = '$k[title]'";
+      $likes = mysqli_query($connection,$likes_q);
+      $likes = mysqli_fetch_row($likes);
+      $likes = $likes[0];   
+      $likes = openssl_decrypt($likes,"AES-128-CBC",$k["name_id"]);
+      $likes = json_decode($likes,true);
+      if (in_array($id,$likes)){
+        $star_txt = "Unstar";
+      }else{
+        $star_txt = "Star";
+      }  
     ?>
+    <script type="text/jsx">
+    const CommentOverlay = () => {
+      return(
+        <div className="popup"> 
+          <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
+            <div className="center-container">
+              <h2>Comments</h2>
+              <div className="left-container">
+                <?php foreach($collection as $k){
+                  $comments_q = "SELECT `comments` FROM `posts` WHERE `name_id` = '$k[name_id]' AND `title` = '$k[title]'";
+                  $comments = mysqli_query($connection,$comments_q);
+                  $comments = mysqli_fetch_row($comments);
+                  $comments = $comments[0];   
+                  $comments = openssl_decrypt($comments,"AES-128-CBC",$k["name_id"]);
+                  $comments = json_decode($comments,true);  
+                  if (count($comments) == 0){
+                    echo "<span>There are no comments for this post.</span>";
+                  }else{
+                    foreach($comments as $n => $c){
+                      $q = "SELECT `uname` FROM `users` WHERE `id` = '$n'";  
+                      $f_name = mysqli_query($connection,$q);
+                      $f_name = mysqli_fetch_row($f_name);
+                      $f_name = $f_name[0];
+                      echo "
+                        <h4><a href='./$f_name' style={{color:'black'}}>$f_name</a></h4>
+                        <span>$c</span>
+                      ";
+                    }
+                  }
+                ?>
+                <form action="../private/comment.php" method="POST"><input type="text" placeholder="Comment" name="msg"/><input type="submit" value="Post comment"></input><input type="hidden" name="title" value="<?php echo $k["title"]?>"/></form>
+                <?php }?> 
+              </div>
+            </div>
+        </div>
+      )
+    }
+    $(document).ready(() => {
+      var overlay = document.getElementById("overlay");
+      var commentBtn = document.getElementById("comment");
+      if (commentBtn){
+        commentBtn.onclick = () => {
+          overlay.style.display = "block";
+          ReactDOM.render(<CommentOverlay/>,overlay)
+          setTimeout(() => {
+            var x = document.getElementsByClassName("fas fa-times-circle")[0];
+            if (x && overlay.style.display == "block") {
+              x.onclick = () => {
+                overlay.style.display = "none";
+              };
+            };
+          },100)
+        }
+      }
+    })
+  </script>
     <div class="center-container">
       <div class="post">
-        <h6 class="posted-by">Posted by <a style="color:black" href="<?php echo "./".$f_name?>"><?php echo $f_name?></a></h6>
+        <h6 class="posted-by">Posted by <a style="color:black" href="<?php echo "./".$p_name?>"><?php echo $p_name?></a></h6>
         <div class="project" id="<?php echo $k["title"]?>">
           <h2 id="title"><?php echo $k["title"];?></h2>
           <p id="description" class="project-desc"><?php echo $k["report"];?></p>
         </div>
         <div class="post-actions">
-          <div class="actions" id="star"><i class="fas fa-star"></i>Star</div>
-          <div class="actions" id="comment"><i class="fas fa-comment-alt"></i>Comment</div>
+          <form action="../private/star.php" method="POST"><button class="actions" id="star"><i class="fas fa-star"></i><?php echo $star_txt," ","(".count($likes).")";?></button><input type="hidden" name="title" value="<?php echo $k["title"]?>" /></form>
+          <div class="actions" id="comment"><i class="fas fa-comment-alt"></i>Comment <?php echo "(".count($comments).")"?></div>
         </div>
       </div>
     </div>
