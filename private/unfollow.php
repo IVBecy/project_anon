@@ -1,17 +1,14 @@
 <?php 
 #Session (start and vars)
 session_start();
-$uname = $_SESSION["uname"];
 #Username from URL query
 $src_uname = $_SESSION["src_uname"];
-#cross site scripting prevention
-function e($str){
-  return(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
-}
 #Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
 include("./connect.php");
+#Getting some vars
+include("./vars.php");
 #ID
 $id_src_name = "SELECT `id` FROM `users` WHERE `uname` = '$src_uname'";
 $followers_id = mysqli_query($connection,$id_src_name);
@@ -35,10 +32,10 @@ $follows = openssl_decrypt($follows,"AES-128-CBC",$follows_id);
 $followers = json_decode($followers,true);
 $follows = json_decode($follows,true);
 #Delete the pov user from the searched user's followers list ## NOT LOGGED IN USER
-unset($followers[array_search($uname,$followers)]);
+unset($followers[array_search($id,$followers)]);
 $followers = array_values($followers);
 #Delete the searched user from the pov user's following list ## LOGGED IN USER
-unset($follows[array_search($src_uname,$follows)]);
+unset($follows[array_search($followers_id,$follows)]);
 $follows = array_values($follows);
 $followers = json_encode($followers);
 $follows = json_encode($follows);

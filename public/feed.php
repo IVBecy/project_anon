@@ -53,7 +53,7 @@ if ($logged_in === false){
   #Get posts
   if ($follows){
     foreach($follows as $p){
-      $post_query = "SELECT `uname`,`title`,`report`,`time` FROM `posts` WHERE `uname` = '$p' AND `time` <= '$t'";
+      $post_query = "SELECT `name_id`,`title`,`report`,`time` FROM `posts` WHERE `name_id` = '$p' AND `time` <= '$t'";
       $post = mysqli_query($connection,$post_query);
       while ($row = mysqli_fetch_assoc($post)) {
           array_push($collection,$row);
@@ -67,10 +67,15 @@ if ($logged_in === false){
   }
   ?>
   <!--show posts-->
-  <?php foreach($collection as $k){ ?>
+  <?php foreach($collection as $k){ 
+      $q = "SELECT `uname` FROM `users` WHERE `id` = '$k[name_id]'";  
+      $f_name = mysqli_query($connection,$q);
+      $f_name = mysqli_fetch_row($f_name);
+      $f_name = $f_name[0];    
+    ?>
     <div class="center-container">
       <div class="post">
-        <h6 class="posted-by">Posted by <a style="color:black" href="<?php echo "./".$k["uname"]?>"><?php echo $k["uname"]?></a></h6>
+        <h6 class="posted-by">Posted by <a style="color:black" href="<?php echo "./".$f_name?>"><?php echo $f_name?></a></h6>
         <div class="project" id="<?php echo $k["title"]?>">
           <h2 id="title"><?php echo $k["title"];?></h2>
           <p id="description" class="project-desc"><?php echo $k["report"];?></p>

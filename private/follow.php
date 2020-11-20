@@ -38,9 +38,9 @@ $follows = openssl_decrypt($follows,"AES-128-CBC",$follows_id);
 $followers = json_decode($followers,true);
 $follows = json_decode($follows,true);
 #Add the pov user to the search user's followers list ## NOT LOGGED IN USER
-array_push($followers, $uname);
+array_push($followers, $id);
 #Add the searched user to the pov user's following list ## LOGGED IN USER
-array_push($follows, $src_uname);
+array_push($follows, $followers_id);
 $followers = json_encode($followers);
 $follows = json_encode($follows);
 $followers = openssl_encrypt($followers,"AES-128-CBC",$followers_id);

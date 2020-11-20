@@ -87,57 +87,6 @@ ob_start();
               }
             }
             else{
-              #new uname for post
-              $q = "SELECT `uname` FROM `posts` WHERE `uname` = '$uname'";
-              $posts_name = mysqli_query($connection,$q);
-              $posts_name = mysqli_fetch_row($posts_name);
-              $posts_name = $posts_name[0];
-              $q = "UPDATE `posts` SET `uname` = '$new_uname' WHERE `uname` = '$uname'";
-              if ($connection->query($q) === true){}
-              else{
-                echo "<p class='bg-danger' style='width:fit-content'>Error: $connection->error</p>";
-              }
-              foreach($followers as $u){
-                #get id of follower 
-                $q = "SELECT `id` FROM `users` WHERE `uname` = '$u'";
-                $follower_id = mysqli_query($connection,$q);
-                $follower_id = mysqli_fetch_row($follower_id);
-                $follower_id = $follower_id[0];
-                #replace the follow name
-                $q = "SELECT `follows` FROM `users` WHERE `uname` = '$u'";
-                $follower_follows = mysqli_query($connection,$q);
-                $follower_follows = mysqli_fetch_row($follower_follows);
-                $follower_follows = $follower_follows[0];
-                $follower_follows = openssl_decrypt($follower_follows,"AES-128-CBC",$follower_id);
-                $follower_follows = json_decode($follower_follows,true);
-                $pos = array_search($uname,$follower_follows);
-                $follower_follows = array_replace($follower_follows, [$pos => $new_uname]);
-                $follower_follows = json_encode($follower_follows);
-                $follower_follows = openssl_encrypt($follower_follows,"AES-128-CBC",$follower_id);
-                $q = "UPDATE `users` SET `follows` = '$follower_follows' WHERE `uname` = '$u'";
-                if ($connection->query($q) === true){}
-                else{
-                  echo "<p class='bg-danger' style='width:fit-content'>Error: $connection->error</p>";
-                }
-                #replace the follower name
-                $q = "SELECT `followers` FROM `users` WHERE `uname` = '$u'";
-                $follower_followers = mysqli_query($connection,$q);
-                $follower_followers = mysqli_fetch_row($follower_followers);
-                $follower_followers = $follower_followers[0];
-                $follower_followers = openssl_decrypt($follower_followers,"AES-128-CBC",$follower_id);
-                $follower_followers = json_decode($follower_followers,true);
-                if (in_array($uname,$follower_followers)){
-                  $pos = array_search($uname,$follower_followers);
-                  $follower_followers = array_replace($follower_followers, [$pos => $new_uname]);
-                  $follower_followers = json_encode($follower_followers);
-                  $follower_followers = openssl_encrypt($follower_followers,"AES-128-CBC",$follower_id);
-                  $q = "UPDATE `users` SET `followers` = '$follower_followers' WHERE `uname` = '$u'";
-                  if ($connection->query($q) === true){}
-                  else{
-                    echo "<p class='bg-danger' style='width:fit-content'>Error: $connection->error</p>";
-                  }
-                };
-              };
               #new uname
               $q = "UPDATE `users` SET `uname` = '$new_uname' WHERE `uname` = '$uname'";
               if ($connection->query($q) === true){}

@@ -16,7 +16,7 @@ if ($logged_in === false){
 }
 #Getting projects for the user
 $collection = [];
-$p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
+$p_query = "SELECT `title`,`report` FROM `posts` WHERE `name_id` = '$id'";
 $projects = mysqli_query($connection,$p_query);
 #Appending all the projects to one array
 while ($row = mysqli_fetch_assoc($projects)) {
@@ -63,8 +63,13 @@ else{
           <div className="center-container">
             <h2>Followers</h2>
             <div className="left-container">
-              <?php foreach($followers as $f){?>
-                <div id="<?php echo $f?>"><span><?php echo $f?></span></div>
+              <?php foreach($followers as $f){
+                $q = "SELECT `uname` FROM `users` WHERE `id` = '$f'";  
+                $f_name = mysqli_query($connection,$q);
+                $f_name = mysqli_fetch_row($f_name);
+                $f_name = $f_name[0];
+              ?>
+                <div id="<?php echo $f_name?>"><span><?php echo $f_name?></span></div>
               <?php }?>
             </div>
           </div>
@@ -80,8 +85,13 @@ else{
           <div className="center-container">
             <h2>Follows</h2>
             <div className="left-container">
-              <?php foreach($follows as $f){?>
-                <div id="<?php echo $f?>"><span><?php echo $f?></span></div>
+              <?php foreach($follows as $f){
+                $q = "SELECT `uname` FROM `users` WHERE `id` = '$f'";  
+                $f_name = mysqli_query($connection,$q);
+                $f_name = mysqli_fetch_row($f_name);
+                $f_name = $f_name[0];
+              ?>
+                <div id="<?php echo $f_name?>"><span><?php echo $f_name?></span></div>
               <?php }?>
             </div>
           </div>
@@ -97,7 +107,7 @@ else{
             <h2>Comments</h2>
             <div className="left-container">
               <?php foreach($collection as $k){
-                $comments_q = "SELECT `comments` FROM `posts` WHERE `uname` = '$uname' AND `title` = '$k[title]'";
+                $comments_q = "SELECT `comments` FROM `posts` WHERE `name_id` = '$id' AND `title` = '$k[title]'";
                 $comments = mysqli_query($connection,$comments_q);
                 $comments = mysqli_fetch_row($comments);
                 $comments = $comments[0];   
@@ -194,7 +204,7 @@ else{
   <!-- PROJECTS -->
   <?php if ($show_projects_state == True){
     foreach($collection as $k) {
-      $likes_q = "SELECT `likes` FROM `posts` WHERE `uname` = '$uname' AND `title` = '$k[title]'";
+      $likes_q = "SELECT `likes` FROM `posts` WHERE `name_id` = '$id' AND `title` = '$k[title]'";
       $likes = mysqli_query($connection,$likes_q);
       $likes = mysqli_fetch_row($likes);
       $likes = $likes[0];   

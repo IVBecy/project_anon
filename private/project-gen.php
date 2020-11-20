@@ -20,7 +20,7 @@ $comments  = openssl_encrypt($comments,"AES-128-CBC",$id);
 if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
   #Appending data to the Database
   $t = time();
-  $append_query = "INSERT INTO `posts` (uname,title,report,time,likes,comments) VALUES ('$uname','$title','$desc','$t','$likes','$comments')";
+  $append_query = "INSERT INTO `posts` (name_id,title,report,time,likes,comments) VALUES ('$id','$title','$desc','$t','$likes','$comments')";
   if ($connection->query($append_query) === TRUE) {
     $append = true;
     $message = "";
