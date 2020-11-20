@@ -26,6 +26,7 @@ $src_query = "SELECT * FROM `users` WHERE `uname` = '$src_uname'";
 $src_data = mysqli_query($connection,$src_query);
 $src_data = mysqli_fetch_assoc($src_data);
 $src_id  = $src_data["id"];
+$_SESSION["src_id"] = $src_id;
 $src_prof_img = $src_data["img"];
 $src_followers = $src_data["followers"];
 $src_followers = openssl_decrypt($src_followers,"AES-128-CBC",$src_id);
@@ -202,7 +203,19 @@ else{
         <h5 id="follows">Follows: <?php echo count($src_follows)?></h5>
       </div>
     </div>
-    <?php foreach($collection as $k){?>
+    <?php foreach($collection as $k){
+      $likes_q = "SELECT `likes` FROM `posts` WHERE `uname` = '$src_uname' AND `title` = '$k[title]'";
+      $likes = mysqli_query($connection,$likes_q);
+      $likes = mysqli_fetch_row($likes);
+      $likes = $likes[0];   
+      $likes = openssl_decrypt($likes,"AES-128-CBC",$src_id);
+      $likes = json_decode($likes,true);  
+      if (in_array($uname,$likes)){
+        $star_txt = "Unstar";
+      }else{
+        $star_txt = "Star";
+      }  
+    ?>
     <div class="center-container">
       <div class="post">
         <div class="project" id="<?php echo $k["title"]?>">
@@ -210,7 +223,7 @@ else{
           <p id="description" class="project-desc"><?php echo $k["report"];?></p>
         </div>
         <div class="post-actions">
-          <div class="actions" id="star"><i class="fas fa-star"></i>Star</div>
+          <form action="../private/star.php" method="POST"><button class="actions" id="star"><i class="fas fa-star"></i><?php echo $star_txt," ","(".count($likes).")";?></button><input type="hidden" name="title" value="<?php echo $k["title"]?>" /></form>
           <div class="actions" id="comment"><i class="fas fa-comment-alt"></i>Comment</div>
         </div>
       </div>

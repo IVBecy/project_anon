@@ -1,7 +1,6 @@
 <?php
 #Session (start and vars)
 session_start();
-$uname = $_SESSION["uname"];
 #Turn off all notices
 error_reporting(E_ALL & ~E_NOTICE);
 #Adding the script that connects to the DB
@@ -11,10 +10,17 @@ include("./vars.php");
 # Getting data from the form
 $title =  mysqli_real_escape_string($connection, e($_POST['title']));
 $desc =  mysqli_real_escape_string($connection, e($_POST['desc']));
+$likes = [];
+$likes = json_encode($likes);
+$likes = openssl_encrypt($likes,"AES-128-CBC",$id);
+$comments = [];
+$comments  = json_encode($comments);
+$comments  = openssl_encrypt($comments,"AES-128-CBC",$id);
+#Insert data
 if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
   #Appending data to the Database
   $t = time();
-  $append_query = "INSERT INTO `posts` (uname,title,report,time) VALUES ('$uname','$title','$desc','$t')";
+  $append_query = "INSERT INTO `posts` (uname,title,report,time,likes,comments) VALUES ('$uname','$title','$desc','$t','$likes','$comments')";
   if ($connection->query($append_query) === TRUE) {
     $append = true;
     $message = "";

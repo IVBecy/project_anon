@@ -145,7 +145,14 @@ else{
   </div>
   <!-- PROJECTS -->
   <?php if ($show_projects_state == True){
-    foreach($collection as $k) {?>
+    foreach($collection as $k) {
+      $likes_q = "SELECT `likes` FROM `posts` WHERE `uname` = '$uname' AND `title` = '$k[title]'";
+      $likes = mysqli_query($connection,$likes_q);
+      $likes = mysqli_fetch_row($likes);
+      $likes = $likes[0];   
+      $likes = openssl_decrypt($likes,"AES-128-CBC",$id);
+      $likes = json_decode($likes,true);     
+    ?>
     <div class="center-container">
       <div class="post">
         <div class="project" id="<?php echo $k["title"]?>">
@@ -154,7 +161,7 @@ else{
           <p id="description" class="project-desc"><?php echo $k["report"];?></p>
         </div>
         <div class="post-actions">
-          <div class="actions" id="star"><i class="fas fa-star"></i>Star</div>
+          <div class="actions" id="star"><i class="fas fa-star"></i>Star <?php echo "(".count($likes).")"?></div>
           <div class="actions" id="comment"><i class="fas fa-comment-alt"></i>Comment</div>
         </div>
       </div>
