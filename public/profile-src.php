@@ -247,9 +247,11 @@ else{
          <form action="<?php echo $script?>" method="POST">
           <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
         </form>
-        <h5>Projects: <?php echo count($collection)?></h5>
-        <h5 id="followers">Followers: <?php echo count($src_followers)?></h5>
-        <h5 id="follows">Follows: <?php echo count($src_follows)?></h5>
+        <div class="user-social">
+          <h4>Projects: <?php echo count($collection)?></h4>
+          <h4 id="followers">Followers: <?php echo count($src_followers)?></h4>
+          <h4 id="follows">Follows: <?php echo count($src_follows)?></h4>
+        </div>
       </div>
     </div>
     <?php foreach($collection as $k){
@@ -289,10 +291,11 @@ else{
          <form action="<?php echo $script?>" method="POST">
           <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
         </form>
-        <h5>Projects: <?php echo count($collection)?></h5>
-        <h5 id="followers">Followers: <?php echo count($src_followers)?></h5>
-        <h5 id="follows">Follows: <?php echo count($src_follows)?></h5>
-      </div>
+        <div class="user-social">
+          <h4>Projects: <?php echo count($collection)?></h4>
+          <h4 id="followers">Followers: <?php echo count($src_followers)?></h4>
+          <h4 id="follows">Follows: <?php echo count($src_follows)?></h4>
+        </div>
     </div>
     <div class="center-container"><?php echo $msg?></div>
   <?php } else{?>

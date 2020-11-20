@@ -189,10 +189,12 @@ else{
   <div class="center-container">
     <div class="profile-card">
       <?php echo $dir?>
-      <h1><?php echo $uname;?></h1>
-      <h5>Projects: <?php echo count($collection)?></h5>
-      <h5 id="followers">Followers: <?php echo count($followers)?></h5>
-      <h5 id="follows">Follows: <?php echo count($follows)?></h5>
+      <h1 id="name-text"><?php echo $uname;?></h1>
+      <div class="user-info">
+        <h4>Projects: <?php echo count($collection)?></h4>
+        <h4 id="followers">Followers: <?php echo count($followers)?></h4>
+        <h4 id="follows">Follows: <?php echo count($follows)?></h4>
+      </div>
     </div>
   </div>
   <!-- PROJECTS -->

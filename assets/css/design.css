@@ -26,7 +26,8 @@
   --warning:#f7f27aef;
   --info:#92d5f0c4;
   --success:#87f190b9;
-  --small-shadow: -5px 4px 24px -4px #a8a8a8;;
+  --small-shadow: -5px 4px 24px -4px #a8a8a8;
+  --medium-shadow: -5px 4px 24px -4px #292929;
 }
 
 /* HTML Elements */
@@ -88,7 +89,6 @@ ul {
 }
 
 input{
-  display: block;
   transition: 0.5s;
   padding: 5px 10px 5px 10px;
   color:black;
@@ -343,27 +343,26 @@ span a:hover{
 }
 
 .profile-card{
-  background-color: whitesmoke;
-  border: 2px solid black;
-  text-align: center;
   margin:auto;  
-  width:40%;
-}
-
-.profile-card h5{
-  display: inline-block;
-  padding-right:30px;
-  padding-left:30px;
+  width:65%;
+  height:250px;
+  border-radius: 30px;
+  box-shadow: var(--medium-shadow);
 }
 
 .profile-card img{
-  margin:10px;
-  width:  100px;
-  height: 100px;
+  float:left;
+  transition: 0.5s;
+  width: 230px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 20px;
-  border: 3px solid rgb(46, 46, 46);
-  margin-top:-20px;
+  box-shadow: var(--small-shadow);
+  border-radius: 30px 0px 0px 30px;
+}
+
+.user-info{
+  display: inline-block;
+  text-align: left;
 }
 
 .delete-button{
@@ -472,6 +471,10 @@ span a:hover{
   width:fit-content;
 }
 
+#name-text{
+  padding:10px;
+}
+
 /* Media Queries */
 @media screen and (max-width:1100px){
    input[type="search"]{
@@ -530,5 +533,28 @@ span a:hover{
     width:95%;
     margin:auto;
     margin-top:15%;
+  }
+  
+  .profile-card{
+    box-shadow: var(--medium-shadow);
+    text-align: center;
+    margin:auto;  
+    width:85%;
+    height:fit-content;
+  }
+
+  .profile-card img{
+    float:none;
+    margin:10px;
+    width:  100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: var(--small-shadow);
+    margin-top:-20px;
+  }
+
+  #name-text{
+    padding:none;
   }
 }
