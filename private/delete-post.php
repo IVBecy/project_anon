@@ -10,7 +10,7 @@ include("./connect.php");
 include("./vars.php");
 #Getting the projects from the database
 $collection = [];
-$p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
+$p_query = "SELECT `title`,`report` FROM `posts` WHERE `name_id` = '$id'";
 $projects = mysqli_query($connection,$p_query);
 if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
   #Appending all the projects to one array
@@ -22,7 +22,7 @@ if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
   #Delete the post from the DB
   foreach($collection as $k) {
   if ($k["title"] == $delete_item){
-    $delete_query = "DELETE FROM `posts` WHERE `uname` = '$uname' AND `title` = '$delete_item'";
+    $delete_query = "DELETE FROM `posts` WHERE `name_id` = '$id' AND `title` = '$delete_item'";
     $connection->query($delete_query);
     }
   }

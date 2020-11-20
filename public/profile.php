@@ -8,6 +8,8 @@ include("../private/connect.php");
 #Getting some vars
 include("../private/vars.php");
 $_SESSION["src_uname"] = $uname;
+$src_id = $id;
+$_SESSION["src_id"] =  $src_id;
 # If not logged in, redirect to login page
 if ($logged_in === false){
   http_response_code(404);
@@ -102,17 +104,19 @@ else{
           if (count($comments) == 0){
             echo "<span>There are no comments for this post.</span>";
           }else{
-            foreach($comments as $n => $c){
+            foreach($comments as $a){
+              foreach($a as $n => $c){
               $q = "SELECT `uname` FROM `users` WHERE `id` = '$n'";  
               $f_name = mysqli_query($connection,$q);
               $f_name = mysqli_fetch_row($f_name);
               $f_name = $f_name[0];
               echo "
-                <div className='comment'>
-                  <span><a href='./$f_name' style={{color:'black'}}>$f_name</a></span>
-                  <h6>$c</h6>
-                </div>
+              <div className='comment'>
+                <span><a href='./$f_name' style={{color:'black'}}>$f_name</a></span>
+                <h6>$c</h6>
+              </div>
               ";
+              }
             }
           }
         ?>

@@ -20,7 +20,7 @@ $comments = mysqli_fetch_row($comments);
 $comments = $comments[0];
 $comments = openssl_decrypt($comments,"AES-128-CBC",$src_id);
 $comments = json_decode($comments,true);
-$comments[$id] = mysqli_real_escape_string($connection,e($msg));
+array_push($comments,[$id => mysqli_real_escape_string($connection,e($msg))]);
 $comments = json_encode($comments);
 $comments = openssl_encrypt($comments,"AES-128-CBC",$src_id);
 $append_q = "UPDATE `posts` SET `comments` = '$comments'  WHERE `name_id` = '$src_id' AND `title` = '$like_title'";

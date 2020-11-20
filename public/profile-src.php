@@ -16,7 +16,7 @@ else{
  $src_uname = mysqli_real_escape_string($connection,e($_GET["src_name"]));
  $src_uname = strtolower($src_uname);
 }
-$_SESSION["src_uname"] = $src_uname;
+$_SESSION["src_uname"] = $src_uname; 
 #Redirect if the user searches themselves
 if ($src_uname == $uname){
   header("Location: ./profile.php");
@@ -156,7 +156,8 @@ else{
           if (count($comments) == 0){
             echo "<span>There are no comments for this post.</span>";
           }else{
-            foreach($comments as $n => $c){
+            foreach($comments as $a){
+              foreach($a as $n => $c){
               $q = "SELECT `uname` FROM `users` WHERE `id` = '$n'";  
               $f_name = mysqli_query($connection,$q);
               $f_name = mysqli_fetch_row($f_name);
@@ -167,6 +168,7 @@ else{
                 <h6>$c</h6>
               </div>
               ";
+              }
             }
           }
         ?>
