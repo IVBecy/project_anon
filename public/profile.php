@@ -7,6 +7,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 include("../private/connect.php");
 #Getting some vars
 include("../private/vars.php");
+$_SESSION["src_uname"] = $uname;
 # If not logged in, redirect to login page
 if ($logged_in === false){
   http_response_code(404);
@@ -88,10 +89,43 @@ else{
       </div>
     )
   }
+  const CommentOverlay = () => {
+    return(
+      <div className="popup"> 
+        <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
+          <div className="center-container">
+            <h2>Comments</h2>
+            <div className="left-container">
+              <?php foreach($collection as $k){
+                $comments_q = "SELECT `comments` FROM `posts` WHERE `uname` = '$uname' AND `title` = '$k[title]'";
+                $comments = mysqli_query($connection,$comments_q);
+                $comments = mysqli_fetch_row($comments);
+                $comments = $comments[0];   
+                $comments = openssl_decrypt($comments,"AES-128-CBC",$id);
+                $comments = json_decode($comments,true);  
+                if (count($comments) == 0){
+                  echo "<span>There are no comments for this post.</span>";
+                }else{
+                  foreach($comments as $n => $c){
+                    echo "
+                      <h4><a href='./$n' style={{color:'black'}}>$n</a></h4>
+                      <span>$c</span>
+                    ";
+                  }
+                }
+              ?>
+              <form action="../private/comment.php" method="POST"><input type="text" placeholder="Comment" name="msg"/><input type="submit" value="Post comment"></input><input type="hidden" name="title" value="<?php echo $k["title"]?>"/></form>
+              <?php }?> 
+            </div>
+          </div>
+      </div>
+    )
+  }
   $(document).ready(() => {
     var followers_btn = document.getElementById("followers");
     var follows_btn = document.getElementById("follows");
     var overlay = document.getElementById("overlay");
+    var commentBtn = document.getElementById("comment");
     if (followers_btn){
       followers_btn.onclick = () => {
         overlay.style.display = "block";
@@ -106,10 +140,24 @@ else{
         },100)
       }
     }
-    if (followers_btn){
+    if (follows_btn){
       follows_btn.onclick = () => {
         overlay.style.display = "block";
         ReactDOM.render(<FollowsOverlay/>,overlay)
+        setTimeout(() => {
+          var x = document.getElementsByClassName("fas fa-times-circle")[0];
+          if (x && overlay.style.display == "block") {
+            x.onclick = () => {
+              overlay.style.display = "none";
+            };
+          };
+        },100)
+      }
+    }
+    if (commentBtn){
+       commentBtn.onclick = () => {
+        overlay.style.display = "block";
+        ReactDOM.render(<CommentOverlay/>,overlay)
         setTimeout(() => {
           var x = document.getElementsByClassName("fas fa-times-circle")[0];
           if (x && overlay.style.display == "block") {
@@ -162,7 +210,7 @@ else{
         </div>
         <div class="post-actions">
           <div class="actions" id="star"><i class="fas fa-star"></i>Star <?php echo "(".count($likes).")"?></div>
-          <div class="actions" id="comment"><i class="fas fa-comment-alt"></i>Comment</div>
+          <div class="actions" id="comment"><i class="fas fa-comment-alt"></i>Comment <?php echo "(".count($comments).")"?></div>
         </div>
       </div>
     </div>

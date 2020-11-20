@@ -31,5 +31,5 @@ $likes = json_encode($likes);
 $likes = openssl_encrypt($likes,"AES-128-CBC",$src_id);
 $append_q = "UPDATE `posts` SET `likes` = '$likes'  WHERE `uname` = '$src_uname' AND `title` = '$like_title'";
 $connection->query($append_q);
-//header("Location: ../public/$src_uname");
+header("Location: ../public/$src_uname");
 ?>
