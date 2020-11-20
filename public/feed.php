@@ -70,7 +70,7 @@ if ($logged_in === false){
   <?php foreach($collection as $k){ ?>
     <div class="center-container">
       <div class="post">
-        <h6 class="posted-by">Posted by <?php echo $k["uname"]?></h6>
+        <h6 class="posted-by">Posted by <a style="color:black" href="<?php echo "./".$k["uname"]?>"><?php echo $k["uname"]?></a></h6>
         <div class="project" id="<?php echo $k["title"]?>">
           <h2 id="title"><?php echo $k["title"];?></h2>
           <p id="description" class="project-desc"><?php echo $k["report"];?></p>
