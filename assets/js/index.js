@@ -59,7 +59,7 @@ const ProjectForm = () => {
 // when clicking the "new project" span
 $(document).ready(() => {
   var trigger = document.getElementById("new_project");
-  var overlay = document.getElementById("project-form-overlay");
+  var overlay = document.getElementById("overlay");
   if (trigger) {
     trigger.onclick = () => {
       if (overlay) {
@@ -131,7 +131,7 @@ const onPostEdit = () => {
 }
 
 $(document).ready(() => {
-  var overlay = document.getElementById("project-form-overlay");
+  var overlay = document.getElementById("overlay");
   if (document.querySelectorAll(".fas.fa-ellipsis-h")[0]){
     var elips = document.querySelectorAll(".fas.fa-ellipsis-h");
     for (var i in elips){
@@ -204,7 +204,7 @@ const DeleteAccount = () => {
   )
 };
 $(document).ready(() => {
-  var overlay = document.getElementById("project-form-overlay");
+  var overlay = document.getElementById("overlay");
   var deleteAccBtn = document.getElementById("delete-acc-btn");
   if (deleteAccBtn){
     deleteAccBtn.onclick = () =>{

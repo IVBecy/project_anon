@@ -35,7 +35,7 @@ if ($logged_in === false){
   <title>Project Anon - Your feed</title>
 </head>
 <body id="feed_bg">
-  <div id="project-form-overlay"></div>
+  <div id="overlay"></div>
   <div class="home-bar">
     <div class="align-right">
       <div class="profile-img" id="dropdown-img">

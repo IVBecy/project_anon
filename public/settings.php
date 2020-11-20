@@ -34,7 +34,7 @@ ob_start();
   <title>Project Anon - Settings</title>
 </head>
 <body id="feed_bg">
-  <div id="project-form-overlay"></div>
+  <div id="overlay"></div>
   <div id="menu-bar"></div>
   <div class="home-bar">
     <div class="align-right">

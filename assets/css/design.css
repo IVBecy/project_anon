@@ -279,7 +279,7 @@ span a:hover{
 }
 
 .dropdown_menu span:last-child::after{
-  content: none;
+  content: "";
   white-space: none;
 }
 
@@ -414,7 +414,7 @@ span a:hover{
   background-color: white;
   width:50%;
   margin:auto;
-  margin-top:25%;
+  margin-top:15%;
 }
 
 .popup span,h2,h1{
@@ -433,7 +433,7 @@ span a:hover{
   background-color: #e2e1e1;
 }
 
-#project-form-overlay{
+#overlay{
   z-index: 20;
   position: fixed;
   top: 0;
@@ -455,7 +455,7 @@ span a:hover{
 #project-dropdown{
   right:12%;
   padding:10px;
-  width: fit-content;
+  width: 150px;
 }
 
 #delete-post{
@@ -499,5 +499,18 @@ span a:hover{
 
   .settings-menu input[type="file"]{
     max-width:300px;
+  }
+
+  input[type="file"]{
+    width:230px;
+  }
+
+  .popup{
+    padding:10px;
+  }
+
+  #projects{
+    padding:10px;
+    padding-top:60px;
   }
 }

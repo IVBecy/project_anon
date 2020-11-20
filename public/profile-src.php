@@ -145,7 +145,7 @@ else{
   $(document).ready(() => {
     var followers_btn = document.getElementById("followers");
     var follows_btn = document.getElementById("follows");
-    var overlay = document.getElementById("project-form-overlay");
+    var overlay = document.getElementById("overlay");
     if (followers_btn){
       followers_btn.onclick = () => {
         overlay.style.display = "block";
@@ -177,7 +177,7 @@ else{
   })
 </script>
 <body id="feed_bg">
-  <div id="project-form-overlay"></div>
+  <div id="overlay"></div>
   <div id="menu-bar"></div>
  <div class="home-bar">
     <div class="align-right">
