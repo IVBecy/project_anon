@@ -41,17 +41,15 @@ $(document).ready(() => {
 // Render the Project post form
 const ProjectForm = () => {
   return(
-    <div className="center-container">
+    <div className="popup">
       <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
-      <div className="popup">
-        <h2>Post a new project</h2>
-        <form method="POST" action="../private/project-gen.php">
-          <input type="text" name="title" placeholder="Title of Project" /><br/>
-          <textarea name="desc" placeholder="Describe your project"></textarea><br />
-          <input type="submit" value="Post" />
-          <input type="hidden" name="csrftoken" value={csrfToken}/>
-        </form>
-      </div>
+      <h2 id="title">Post a new project</h2>
+      <form method="POST" action="../private/project-gen.php">
+        <input type="text" name="title" placeholder="Title of Project" /><br/>
+        <textarea name="desc" placeholder="Describe your project"></textarea><br />
+        <input type="submit" value="Post" />
+        <input type="hidden" name="csrftoken" value={csrfToken}/>
+      </form>
     </div>
   )
 };
@@ -90,31 +88,27 @@ const ProjectSettings = () => {
 };
 const RenderPostEdit = () =>{
   return(
-    <div className="center-container" style={{backgroundColor:"white"}}>
+    <div className="popup">
       <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
-      <div className="popup">
-        <h1>Edit your post</h1>
-        <form method="POST" onSubmit={onPostEdit} action="../private/edit-post.php">
-          <input type="text" name="title" placeholder="Edit title" /><br />
-          <textarea name="desc" placeholder="Edit the description of your projects"></textarea><br />
-          <input type="submit" name="send-edited-post" value="Edit Post" />
-          <input type="hidden" name="csrftoken" value={csrfToken}/>
-        </form>
-      </div>
+      <h1>Edit your post</h1>
+      <form method="POST" onSubmit={onPostEdit} action="../private/edit-post.php">
+        <input type="text" name="title" placeholder="Edit title" /><br />
+        <textarea name="desc" placeholder="Edit the description of your projects"></textarea><br />
+        <input type="submit" name="send-edited-post" value="Edit Post" />
+        <input type="hidden" name="csrftoken" value={csrfToken}/>
+      </form>
     </div>
   )
 };
 const DeletePost = () => {
   return (
-    <div className="center-container">
+    <div className="popup" id="delete">
       <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
-      <div className="popup">
-        <form method="POST" action="../private/delete-post.php">
-          <h4>Are you sure that you want to delete your project?</h4>
-          <input type="submit" value="Delete" style={{backgroundColor:"red",color:"white"}}/>
-          <input type="hidden" name="csrftoken" value={csrfToken}/>
-        </form>
-      </div>
+      <form method="POST" action="../private/delete-post.php">
+        <h4>Are you sure that you want to delete your project?</h4>
+        <input type="submit" value="Delete" style={{backgroundColor:"red",color:"white"}}/>
+        <input type="hidden" name="csrftoken" value={csrfToken}/>
+      </form>
     </div>
   )
 };
@@ -190,16 +184,14 @@ $(document).ready(() => {
 // Deleting account
 const DeleteAccount = () => {
   return (
-    <div className="center-container">
-      <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
-      <div className="popup">
-        <form method="POST" action="../private/delete-account.php">
-          <h4>Are you sure that you want to delete your account?</h4>
-          <p style={{color:"red"}}>After this there is NO turning back!</p>
-          <input type="submit" value="Delete" style={{ backgroundColor: "red", color: "white" }} />
-          <input type="hidden" name="csrftoken" value={csrfToken} />
-        </form>
-      </div>
+    <div className="popup" id="delete">
+    <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
+      <form method="POST" action="../private/delete-account.php">
+        <h4>Are you sure that you want to delete your account?</h4>
+        <p style={{color:"red"}}>After this there is NO turning back!</p>
+        <input type="submit" value="Delete" style={{ backgroundColor: "red", color: "white" }} />
+        <input type="hidden" name="csrftoken" value={csrfToken} />
+      </form>
     </div>
   )
 };

@@ -89,7 +89,7 @@ if ($logged_in === false){
     <script type="text/jsx">
     const CommentOverlay = () => {
       return(
-        <div className="popup"> 
+        <div className="popup" id="comments"> 
           <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
           <h2>Comments</h2>
           <?php foreach($collection as $k){
