@@ -13,8 +13,6 @@ if ($logged_in === false){
   header("Location: ./index.html");
   die();
 }
-echo "Followers", json_encode($followers),"<br>";
-echo "Follows", json_encode($follows),"<br>";
 #Getting projects for the user
 $collection = [];
 $p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
