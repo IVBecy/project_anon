@@ -22,6 +22,15 @@ function createCSRF(){
   setcookie("CSRF-Token", $_SESSION["csrf-token"], 2147483647, "/");
   return $_SESSION["csrf-token"];
 }
+#Function for getting ID and NAME
+function getinfo($n){
+  global $connection;
+  $q = "SELECT `uname`,`id` FROM `users` WHERE `uname` = '$n'";
+  $n_d = mysqli_query($connection,$q);
+  $n_d = mysqli_fetch_assoc($n_d);
+  $q_id = $n_d["id"];
+  $q_name = $n_d["uname"];
+}
 #Get all the data for the logged in user
 if ($uname && $logged_in === true){
   $query = "SELECT * FROM `users` WHERE `uname` = '$uname'";
