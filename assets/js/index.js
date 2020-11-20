@@ -11,8 +11,8 @@ $(document).ready(() => {
             <input className="search-usrs" type="search" name="src_name" placeholder="Search" />
           </form>
           <hr/>
-          <span><a href="../public/profile.php">Your Profile</a></span>
-          <span><a href="../public/feed.php">Your Feed</a></span>
+          <span><a href="../public/profile.php">Profile</a></span>
+          <span><a href="../public/feed.php">Feed</a></span>
           <span id="new_project">New project</span>
           <hr />
           <span><a href="../public/settings.php">Settings</a></span>
@@ -42,8 +42,8 @@ $(document).ready(() => {
 const ProjectForm = () => {
   return(
     <div className="center-container">
-      <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
-      <div className="project-form" id="projects">
+      <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
+      <div className="popup">
         <h2>Post a new project</h2>
         <form method="POST" action="../private/project-gen.php">
           <input type="text" name="title" placeholder="Title of Project" /><br/>
@@ -68,7 +68,7 @@ $(document).ready(() => {
       setTimeout(() => {ReactDOM.render(<ProjectForm />, overlay)}, 100)
       setTimeout(() => {
         // When clicking the "x" in the overlay
-        var x = document.getElementsByClassName("fas fa-times-circle")[0];
+        var x = document.getElementsByClassName("fas fa-times")[0];
         if (x && overlay.style.display == "block") {
           x.onclick = () => {
             overlay.style.display = "none";
@@ -91,8 +91,8 @@ const ProjectSettings = () => {
 const RenderPostEdit = () =>{
   return(
     <div className="center-container" style={{backgroundColor:"white"}}>
-      <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
-      <div className="edit-post" id="projects">
+      <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
+      <div className="popup">
         <h1>Edit your post</h1>
         <form method="POST" onSubmit={onPostEdit} action="../private/edit-post.php">
           <input type="text" name="title" placeholder="Edit title" /><br />
@@ -107,8 +107,8 @@ const RenderPostEdit = () =>{
 const DeletePost = () => {
   return (
     <div className="center-container">
-      <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
-      <div className="delete-popup">
+      <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
+      <div className="popup">
         <form method="POST" action="../private/delete-post.php">
           <h4>Are you sure that you want to delete your project?</h4>
           <input type="submit" value="Delete" style={{backgroundColor:"red",color:"white"}}/>
@@ -161,7 +161,7 @@ $(document).ready(() => {
                 };
                 document.cookie = `oldPost=${JSON.stringify(oldArray)}; path=/ `
               },100)
-              var x = document.getElementsByClassName("fas fa-times-circle")[0];
+              var x = document.getElementsByClassName("fas fa-times")[0];
               if (x && overlay.style.display == "block") {
                 x.onclick = () => {
                   overlay.style.display = "none";
@@ -172,7 +172,7 @@ $(document).ready(() => {
             document.getElementById("delete-post").onclick = () => {
               overlay.style.display = "block";
               ReactDOM.render(<DeletePost />, overlay)
-              var x = document.getElementsByClassName("fas fa-times-circle")[0];
+              var x = document.getElementsByClassName("fas fa-times")[0];
               //set cookie for php top be able to access the item in the array
               document.cookie = `ToBeDeleted=${e.target.parentNode.id} ; path=/ `;
               if (x && overlay.style.display == "block") {
@@ -191,8 +191,8 @@ $(document).ready(() => {
 const DeleteAccount = () => {
   return (
     <div className="center-container">
-      <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
-      <div className="delete-popup">
+      <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
+      <div className="popup">
         <form method="POST" action="../private/delete-account.php">
           <h4>Are you sure that you want to delete your account?</h4>
           <p style={{color:"red"}}>After this there is NO turning back!</p>
@@ -211,7 +211,7 @@ $(document).ready(() => {
       overlay.style.display = "block";
       ReactDOM.render(<DeleteAccount />, overlay)
       setTimeout(() => {
-        var x = document.getElementsByClassName("fas fa-times-circle")[0];
+        var x = document.getElementsByClassName("fas fa-times")[0];
         if (x && overlay.style.display == "block") {
           x.onclick = () => {
             overlay.style.display = "none";

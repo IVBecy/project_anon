@@ -112,80 +112,66 @@ else{
   const FollowersOverlay = () => {
     return(
       <div className="popup"> 
-        <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
-        <div className="user-social">
-          <div className="center-container">
-            <h2>Followers</h2>
-            <div className="left-container">
-              <?php foreach($src_followers as $f){
-                $q = "SELECT `uname` FROM `users` WHERE `id` = '$f'";  
-                $f_name = mysqli_query($connection,$q);
-                $f_name = mysqli_fetch_row($f_name);
-                $f_name = $f_name[0];  
-              ?>
-                <div id="<?php echo $f_name?>"><span><?php echo $f_name?></span></div>
-              <?php }?>
-            </div>
-          </div>
-        </div>
+        <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
+        <h2>Followers</h2>
+        <?php foreach($src_followers as $f){
+          $q = "SELECT `uname` FROM `users` WHERE `id` = '$f'";  
+          $f_name = mysqli_query($connection,$q);
+          $f_name = mysqli_fetch_row($f_name);
+          $f_name = $f_name[0];  
+        ?>
+          <div id="<?php echo $f_name?>"><span><?php echo $f_name?></span></div>
+        <?php }?>
       </div>
     )
   }
   const FollowsOverlay = () => {
     return(
       <div className="popup"> 
-        <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
-        <div className="user-social">
-          <div className="center-container">
-            <h2>Follows</h2>
-            <div className="left-container">
-              <?php foreach($src_follows as $f){
-                $q = "SELECT `uname` FROM `users` WHERE `id` = '$f'";  
-                $f_name = mysqli_query($connection,$q);
-                $f_name = mysqli_fetch_row($f_name);
-                $f_name = $f_name[0];    
-              ?>
-                <div id="<?php echo $f_name?>"><span><?php echo $f_name?></span></div>
-              <?php }?>
-            </div>
-          </div>
-        </div>
+        <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
+        <h2>Follows</h2>
+        <?php foreach($src_follows as $f){
+          $q = "SELECT `uname` FROM `users` WHERE `id` = '$f'";  
+          $f_name = mysqli_query($connection,$q);
+          $f_name = mysqli_fetch_row($f_name);
+          $f_name = $f_name[0];    
+        ?>
+          <div id="<?php echo $f_name?>"><span><?php echo $f_name?></span></div>
+        <?php }?>
       </div>
     )
   }
   const CommentOverlay = () => {
     return(
       <div className="popup"> 
-        <i className="fas fa-times-circle" style={{ fontSize: "30px" }}></i>
-          <div className="center-container">
-            <h2>Comments</h2>
-            <div className="left-container">
-              <?php foreach($collection as $k){
-                $comments_q = "SELECT `comments` FROM `posts` WHERE `name_id` = '$src_id' AND `title` = '$k[title]'";
-                $comments = mysqli_query($connection,$comments_q);
-                $comments = mysqli_fetch_row($comments);
-                $comments = $comments[0];   
-                $comments = openssl_decrypt($comments,"AES-128-CBC",$src_id);
-                $comments = json_decode($comments,true);  
-                if (count($comments) == 0){
-                  echo "<span>There are no comments for this post.</span>";
-                }else{
-                  foreach($comments as $n => $c){
-                    $q = "SELECT `uname` FROM `users` WHERE `id` = '$n'";  
-                    $f_name = mysqli_query($connection,$q);
-                    $f_name = mysqli_fetch_row($f_name);
-                    $f_name = $f_name[0];
-                    echo "
-                      <h4><a href='./$f_name' style={{color:'black'}}>$f_name</a></h4>
-                      <span>$c</span>
-                    ";
-                  }
-                }
-              ?>
-              <form action="../private/comment.php" method="POST"><input type="text" placeholder="Comment" name="msg"/><input type="submit" value="Post comment"></input><input type="hidden" name="title" value="<?php echo $k["title"]?>"/></form>
-              <?php }?> 
-            </div>
-          </div>
+        <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
+        <h2>Comments</h2>
+        <?php foreach($collection as $k){
+          $comments_q = "SELECT `comments` FROM `posts` WHERE `name_id` = '$src_id' AND `title` = '$k[title]'";
+          $comments = mysqli_query($connection,$comments_q);
+          $comments = mysqli_fetch_row($comments);
+          $comments = $comments[0];   
+          $comments = openssl_decrypt($comments,"AES-128-CBC",$src_id);
+          $comments = json_decode($comments,true);  
+          if (count($comments) == 0){
+            echo "<span>There are no comments for this post.</span>";
+          }else{
+            foreach($comments as $n => $c){
+              $q = "SELECT `uname` FROM `users` WHERE `id` = '$n'";  
+              $f_name = mysqli_query($connection,$q);
+              $f_name = mysqli_fetch_row($f_name);
+              $f_name = $f_name[0];
+              echo "
+              <div className='comment'>
+                <span><a href='./$f_name' style={{color:'black'}}>$f_name</a></span>
+                <h6>$c</h6>
+              </div>
+              ";
+            }
+          }
+        ?>
+        <form action="../private/comment.php" method="POST"><input type="text" placeholder="Comment" name="msg"/><input type="submit" value="Post comment"></input><input type="hidden" name="title" value="<?php echo $k["title"]?>"/></form>
+        <?php }?> 
       </div>
     )
   }
@@ -199,7 +185,7 @@ else{
         overlay.style.display = "block";
         ReactDOM.render(<FollowersOverlay/>,overlay)
         setTimeout(() => {
-          var x = document.getElementsByClassName("fas fa-times-circle")[0];
+          var x = document.getElementsByClassName("fas fa-times")[0];
           if (x && overlay.style.display == "block") {
             x.onclick = () => {
               overlay.style.display = "none";
@@ -213,7 +199,7 @@ else{
         overlay.style.display = "block";
         ReactDOM.render(<FollowsOverlay/>,overlay)
         setTimeout(() => {
-          var x = document.getElementsByClassName("fas fa-times-circle")[0];
+          var x = document.getElementsByClassName("fas fa-times")[0];
           if (x && overlay.style.display == "block") {
             x.onclick = () => {
               overlay.style.display = "none";
@@ -227,7 +213,7 @@ else{
         overlay.style.display = "block";
         ReactDOM.render(<CommentOverlay/>,overlay)
         setTimeout(() => {
-          var x = document.getElementsByClassName("fas fa-times-circle")[0];
+          var x = document.getElementsByClassName("fas fa-times")[0];
           if (x && overlay.style.display == "block") {
             x.onclick = () => {
               overlay.style.display = "none";
