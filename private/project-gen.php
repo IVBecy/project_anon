@@ -10,6 +10,21 @@ include("./vars.php");
 # Getting data from the form
 $title =  mysqli_real_escape_string($connection, e($_POST['title']));
 $desc =  mysqli_real_escape_string($connection, e($_POST['desc']));
+echo $_FILES["preview-img"];
+if (!empty($_FILES["preview-img"])) {		
+  if (empty($_FILES["preview-img"]["name"])){}
+  else{ 
+    $allowed = ["image/png", "image/jpg", "image/jpeg"];
+    if (!in_array($_FILES["preview-img"]["type"], $allowed)){
+      $up_img = false;
+    }
+    else{
+      $image = $_FILES["preview-img"]["tmp_name"];; 
+      $image = base64_encode(file_get_contents(addslashes($image)));
+      $up_img = true; 
+    }
+  }
+}
 $likes = [];
 $likes = json_encode($likes);
 $likes = openssl_encrypt($likes,"AES-128-CBC",$id);
@@ -29,9 +44,18 @@ if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"]) && $append === true
   $t = time();
   $append_query = "INSERT INTO `posts` (name_id,title,report,time,likes) VALUES ('$id','$title','$desc','$t','$likes')";
   $connection->query($append_query);
+  # Append image
+  if ($up_img === true){
+    $q = "UPDATE `posts` SET `prev_img` = '$image' WHERE `name_id` = '$id' AND `title` = '$title'"; 
+    if ($connection->query($q) === true){
+      echo "Image is up";
+    }else{
+      echo $connection->error;
+    }
+  }
   #Create new csrf token
   createCSRF();
   mysqli_close($connection);
-  header("Location: ../public/profile.php");
+  //header("Location: ../public/profile.php");
 }
 ?>

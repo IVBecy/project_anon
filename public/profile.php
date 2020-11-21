@@ -18,7 +18,7 @@ if ($logged_in === false){
 }
 #Getting projects for the user
 $collection = [];
-$p_query = "SELECT `title`,`report` FROM `posts` WHERE `name_id` = '$id'";
+$p_query = "SELECT `title`,`report`,`prev_img` FROM `posts` WHERE `name_id` = '$id'";
 $projects = mysqli_query($connection,$p_query);
 #Appending all the projects to one array
 while ($row = mysqli_fetch_assoc($projects)) {
@@ -164,6 +164,7 @@ else{
         <i class="fas fa-ellipsis-h"></i>
         <h2 id="title"><?php echo $k["title"];?></h2>
         <p id="description" class="project-desc"><?php echo $k["report"];?></p>
+        <?php if ($k["prev_img"]){echo'<img class="post-preview-img" src="data:image/jpeg;base64,'.$k["prev_img"].'"/>';}?>
       </div>
       <hr>
       <div class="post-actions">

@@ -53,7 +53,7 @@ if ($logged_in === false){
   #Get posts
   if ($follows){
     foreach($follows as $p){
-      $post_query = "SELECT `name_id`,`title`,`report`,`time` FROM `posts` WHERE `name_id` = '$p' AND `time` <= '$t'";
+      $post_query = "SELECT `name_id`,`title`,`report`,`time`,`prev_img` FROM `posts` WHERE `name_id` = '$p' AND `time` <= '$t'";
       $post = mysqli_query($connection,$post_query);
       while ($row = mysqli_fetch_assoc($post)) {
           array_push($collection,$row);
@@ -91,6 +91,7 @@ if ($logged_in === false){
       <div class="project" id="<?php echo $k["title"]?>">
         <h2 id="title"><?php echo $k["title"];?></h2>
         <p id="description" class="project-desc"><?php echo $k["report"];?></p>
+        <?php if ($k["prev_img"]){echo'<img class="post-preview-img" src="data:image/jpeg;base64,'.$k["prev_img"].'"/>';}?>
       </div>
       <hr>
       <div class="post-actions">

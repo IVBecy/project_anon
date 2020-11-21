@@ -46,8 +46,9 @@ const ProjectForm = () => {
       <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
       <h2 id="title">Post a new project</h2>
       <hr/>
-      <form method="POST" action="../private/project-gen.php">
+      <form method="POST" action="../private/project-gen.php" enctype="multipart/form-data">
         <input type="text" name="title" placeholder="Title" required/><br/>
+        <input type="file" name="preview-img" accept=".png,.jpg,.jpeg" /><br/>
         <textarea name="desc" placeholder="Description" required></textarea><br />
         <input type="submit" value="Post" />
         <input type="hidden" name="csrftoken" value={csrfToken}/>
