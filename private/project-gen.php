@@ -47,15 +47,11 @@ if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"]) && $append === true
   # Append image
   if ($up_img === true){
     $q = "UPDATE `posts` SET `prev_img` = '$image' WHERE `name_id` = '$id' AND `title` = '$title'"; 
-    if ($connection->query($q) === true){
-      echo "Image is up";
-    }else{
-      echo $connection->error;
-    }
+    $connection->query($q) === true;
   }
   #Create new csrf token
   createCSRF();
   mysqli_close($connection);
-  //header("Location: ../public/profile.php");
+  header("Location: ../public/profile.php");
 }
 ?>
