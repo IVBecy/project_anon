@@ -10,7 +10,6 @@ include("./vars.php");
 # Getting data from the form
 $title =  mysqli_real_escape_string($connection, e($_POST['title']));
 $desc =  mysqli_real_escape_string($connection, e($_POST['desc']));
-echo $_FILES["preview-img"];
 if (!empty($_FILES["preview-img"])) {		
   if (empty($_FILES["preview-img"]["name"])){}
   else{ 
@@ -52,6 +51,6 @@ if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"]) && $append === true
   #Create new csrf token
   createCSRF();
   mysqli_close($connection);
-  header("Location: ../public/profile.php");
 }
+header("Location: ../public/profile.php");
 ?>
