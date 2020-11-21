@@ -223,7 +223,12 @@ else{
           <p id="description" class="project-desc"><?php echo $k["report"];?></p>
         </div>
         <div class="post-actions">
+          <?php if ($logged_in === true){
+          ?>  
           <form action="../private/star.php" method="POST"><button class="actions" id="star"><i class="fas fa-star"></i><?php echo $star_txt," ","(".count($likes).")";?></button><input type="hidden" name="title" value="<?php echo $k["title"]?>" /></form>
+          <?php } else{?>
+          <a href="./index.html"><button class="actions" id="star"><i class="fas fa-star"></i>Star</button></a>
+          <?php }?>
         </div>
       </div>
     </div>
