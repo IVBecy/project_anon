@@ -13,14 +13,11 @@ $desc =  mysqli_real_escape_string($connection, e($_POST['desc']));
 $likes = [];
 $likes = json_encode($likes);
 $likes = openssl_encrypt($likes,"AES-128-CBC",$id);
-$comments = [];
-$comments  = json_encode($comments);
-$comments  = openssl_encrypt($comments,"AES-128-CBC",$id);
 #Insert data
 if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
   #Appending data to the Database
   $t = time();
-  $append_query = "INSERT INTO `posts` (name_id,title,report,time,likes,comments) VALUES ('$id','$title','$desc','$t','$likes','$comments')";
+  $append_query = "INSERT INTO `posts` (name_id,title,report,time,likes) VALUES ('$id','$title','$desc','$t','$likes')";
   if ($connection->query($append_query) === TRUE) {
     $append = true;
     $message = "";
