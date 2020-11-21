@@ -37,7 +37,7 @@ if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
   setcookie("editedPost", NULL, 0);
   setcookie("oldPost", NULL, 0); 
   #Making the changes in the Database
-  $append_query = "UPDATE `posts` SET `title` = '$newTitle', `report` = '$newDesc' WHERE `uname` = '$uname' AND `title` = '$oldTitle'";
+  $append_query = "UPDATE `posts` SET `title` = '$newTitle', `report` = '$newDesc' WHERE `name_id` = '$id' AND `title` = '$oldTitle'";
   if ($connection->query($append_query) === true){
     echo "SUCCESS";
   }
