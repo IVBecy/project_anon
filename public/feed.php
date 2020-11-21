@@ -97,6 +97,8 @@ if ($logged_in === false){
         <form action="../private/star.php" method="POST"><button class="actions" id="star"><i class="fas fa-star"></i><?php echo $star_txt," ","(".count($likes).")";?></button><input type="hidden" name="title" value="<?php echo $k["title"]?>" /></form>
       </div>
     </div>
+    <br>
+    <br>
   <?php }?>
 </body>
 </html>

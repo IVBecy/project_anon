@@ -170,6 +170,8 @@ else{
         <div class="actions" id="star"><i class="fas fa-star"></i>Star <?php echo "(".count($likes).")"?></div>
       </div>
     </div>
+    <br>
+    <br>
   <?php }}else{?>
     <div class="center-container"><?php echo $msg?></div>
   <?php }?>

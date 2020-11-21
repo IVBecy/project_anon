@@ -233,6 +233,8 @@ else{
         <?php }?>
       </div>
     </div>
+    <br>
+    <br>
   <?php }}else{ if($usr === false){?>
     <div class="center-container">
       <h1><?php echo $msg?></h1>
