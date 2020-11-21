@@ -316,6 +316,7 @@ span a:hover{
   padding:10px;
   width:50%;
   margin:auto;
+  border:1px solid white;
 }
 
 .post:hover{
