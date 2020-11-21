@@ -159,17 +159,15 @@ else{
       $likes = openssl_decrypt($likes,"AES-128-CBC",$id);
       $likes = json_decode($likes,true);     
     ?>
-    <div class="center-container">
-      <div class="post">
-        <div class="project" id="<?php echo $k["title"]?>">
-          <i class="fas fa-ellipsis-h"></i>
-          <h2 id="title"><?php echo $k["title"];?></h2>
-          <p id="description" class="project-desc"><?php echo $k["report"];?></p>
-        </div>
-        <hr>
-        <div class="post-actions">
-          <div class="actions" id="star"><i class="fas fa-star"></i>Star <?php echo "(".count($likes).")"?></div>
-        </div>
+    <div class="post">
+      <div class="project" id="<?php echo $k["title"]?>">
+        <i class="fas fa-ellipsis-h"></i>
+        <h2 id="title"><?php echo $k["title"];?></h2>
+        <p id="description" class="project-desc"><?php echo $k["report"];?></p>
+      </div>
+      <hr>
+      <div class="post-actions">
+        <div class="actions" id="star"><i class="fas fa-star"></i>Star <?php echo "(".count($likes).")"?></div>
       </div>
     </div>
   <?php }}else{?>
