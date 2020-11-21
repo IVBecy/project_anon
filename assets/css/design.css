@@ -478,6 +478,14 @@ span a:hover{
   width:20%;
 }
 
+#error-box{
+  width: fit-content;
+  margin: auto;
+  padding:50px;
+  border-radius: 20px;
+  box-shadow: var(--small-shadow);
+}
+
 /* Media Queries */
 @media screen and (max-width:1100px){
    input[type="search"]{
