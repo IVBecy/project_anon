@@ -11,13 +11,14 @@ $(document).ready(() => {
             <input className="search-usrs" type="search" name="src_name" placeholder="Search" />
           </form>
           <hr/>
-          <span><a href="../public/profile.php">Profile</a></span>
-          <span><a href="../public/feed.php">Feed</a></span>
-          <span id="new_project">New project</span>
+          <span><a href="../public/profile.php"><i className="fas fa-user" style={{marginRight:"5px"}}></i>Profile</a></span>
+          <span><a href="../public/feed.php"><i className="fas fa-newspaper" style={{ marginRight: "5px" }}></i>Feed</a></span>
+          <span id="new_project"><i className="fas fa-plus-square" style={{ marginRight: "5px" }}></i>New project</span>
           <hr />
-          <span><a href="../public/settings.php">Settings</a></span>
-          <span>Docs</span>
-          <span><a href="../private/logout.php" style={{color:"red"}}>Sign out</a></span>
+          <span><a href="../public/settings.php"><i className="fas fa-cog" style={{ marginRight: "5px" }}></i>Settings</a></span>
+          <span><i className="fas fa-question-circle" style={{ marginRight: "5px" }}></i>Docs</span>
+          <hr />
+          <span><a href="../private/logout.php" style={{ color: "red" }}><i className="fas fa-sign-out-alt" style={{ marginRight: "5px" }}></i>Sign out</a></span>
         </div> 
       )
     }
@@ -44,9 +45,10 @@ const ProjectForm = () => {
     <div className="popup">
       <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
       <h2 id="title">Post a new project</h2>
+      <hr/>
       <form method="POST" action="../private/project-gen.php">
-        <input type="text" name="title" placeholder="Title of Project" required/><br/>
-        <textarea name="desc" placeholder="Describe your project" required></textarea><br />
+        <input type="text" name="title" placeholder="Title" required/><br/>
+        <textarea name="desc" placeholder="Description" required></textarea><br />
         <input type="submit" value="Post" />
         <input type="hidden" name="csrftoken" value={csrfToken}/>
       </form>
@@ -91,9 +93,10 @@ const RenderPostEdit = () =>{
     <div className="popup">
       <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
       <h1>Edit your post</h1>
+      <hr />
       <form method="POST" onSubmit={onPostEdit} action="../private/edit-post.php">
         <input type="text" name="title" placeholder="Edit title" /><br />
-        <textarea name="desc" placeholder="Edit the description of your projects"></textarea><br />
+        <textarea name="desc" placeholder="Edit description"></textarea><br />
         <input type="submit" name="send-edited-post" value="Edit Post" />
         <input type="hidden" name="csrftoken" value={csrfToken}/>
       </form>

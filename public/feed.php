@@ -93,6 +93,7 @@ if ($logged_in === false){
           <h2 id="title"><?php echo $k["title"];?></h2>
           <p id="description" class="project-desc"><?php echo $k["report"];?></p>
         </div>
+        <hr>
         <div class="post-actions">
           <form action="../private/star.php" method="POST"><button class="actions" id="star"><i class="fas fa-star"></i><?php echo $star_txt," ","(".count($likes).")";?></button><input type="hidden" name="title" value="<?php echo $k["title"]?>" /></form>
         </div>

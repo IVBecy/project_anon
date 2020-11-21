@@ -12,8 +12,11 @@
   --dark_grey:#373737;
   --light_grey:#bbbbbb;
   --mid-grey:#292929;
+  --feed-bg:#e0e3e6;
+  --l_blue:#caecf8;
   --dark_blue:#0B22F2;
-  --light_blue:#0BB4F2;
+  --medium_blue:#0684eb;
+  --light_blue:#36bbeb;
   --cyan:#00FFFF;
   --pink:#FF00FF;
   --purple:#9933FF;
@@ -76,7 +79,7 @@ button{
   margin-left:0;
   border:0;
   border-radius: 10px;
-  background-color: black;
+  background-color: var(--medium_blue);
   color:white;
 }
 
@@ -92,9 +95,11 @@ input{
   transition: 0.5s;
   padding: 5px 10px 5px 10px;
   color:black;
-  background-color: var(--light_grey);
+  background-color: var(--feed-bg);
   border:2px solid black;
   margin-bottom: 20px;
+  border-radius: 5px;
+  color:black;
 }
 
 input::placeholder{
@@ -104,13 +109,12 @@ input::placeholder{
 input:focus{
   outline:0;
   border-radius: 15px;
-  background-color: rgba(0,0,0,0.7);
+  background-color: var(--l_blue);
   width:200px;
-  color:white;
 }
 
 input:focus::placeholder{
-  color: white;
+  color: black;
 }
 
 input[type="search"]{
@@ -133,13 +137,14 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 textarea{
+  border-radius: 5px;
   font-family: "Cairo";
   width:80%;
   height:200px;
   transition: 0.5s;
   padding: 5px 10px 5px 10px;
   color:black;
-  background-color: var(--light_grey);
+  background-color: var(--feed-bg);
   border:2px solid black;
   margin-bottom: 20px;
 }
@@ -151,12 +156,11 @@ textarea::placeholder{
 textarea:focus{
   outline:0;
   border-radius: 15px;
-  background-color: rgba(0,0,0,0.7);
-  color:white;
+  background-color: var(--l_blue);
 }
 
 textarea:focus::placeholder{
-  color: white;
+  color: black;
 }
 
 input[type="submit"]{
@@ -169,18 +173,13 @@ input[type="submit"]{
   width:fit-content;
   border:0;
   border-radius: 10px;
-  background-color: black;
+  background-color: var(--medium_blue);
   color:white;
   font-family: "Russo one";
 }
 
-input[type="submit"]:hover{
-  background-color: rgba(0,0,0,0.1);
-}
-
 hr{
-  margin:10px,0px,10px,0px;
-  border:1px solid #7a7a7a;
+  border:1px solid #c2c2c2;
 }
 
 span {
@@ -271,7 +270,7 @@ span a:hover{
   padding:10px;
   border-radius: 5px;
   right:3%;
-  box-shadow: var(--small-shadow);
+  border: 1px solid var(--light_grey);
 }
 
 .dropdown_menu span::after{
@@ -305,14 +304,19 @@ span a:hover{
 
 .project .fas.fa-ellipsis-h{
   float: right;
+  margin-top:-10px;
+  margin-right:-10px;
 }
 
 .post{
+  border-radius: 10px;
   text-align: left;
-  border: 1px solid black;
-  padding:20px;
-  box-shadow: var(--small-shadow);
-  transition: 0.5s;
+  background-color: white;
+  padding:10px;
+}
+
+.post:hover{
+  border:1px solid black;
 }
 
 .post-actions div{
@@ -328,13 +332,16 @@ span a:hover{
   display: inline-block;
 }
 
+.post-actions button{
+  background-color: white;
+}
+
 .actions{
   padding:0;
   padding-left:10px;
   padding-right:10px;
   border-radius:5px;
-  margin-right:10px;
-  background-color: #e2e1e1;
+  margin-right:10px;;
   color:black;
 }
 
@@ -343,11 +350,12 @@ span a:hover{
 }
 
 .profile-card{
+  background-color: white;
   margin:auto;  
   width:65%;
   height:250px;
   border-radius: 30px;
-  box-shadow: var(--medium-shadow);
+  box-shadow: var(--small-shadow);
 }
 
 .profile-card img{
@@ -408,36 +416,28 @@ span a:hover{
   text-align: left;
   z-index: 30;
   background-color: white;
-  width:70%;
+  width:50%;
   padding:15px;
   margin:auto;
   margin-top:5%;
   border-radius: 20px;
 }
 
-.popup span,h2,h1{
+.popup span,h1,h2,h3,h4{
   color:black;
 }
-
-.comment{
-  background-color: rgba(0,0,0,0.1);
-  padding:10px;
-  width: fit-content;
-  border-radius: 10px;
-  margin:10px;
-}
-
 /*ID Selectors*/
 #background{
   width: fit-content;
   transition: 0.5s;
-  background-color: rgba(0,0,0,0.2);
+  background-color: white;
   padding:50px;
   border-radius: 20px;
+  box-shadow: var(--small-shadow);
 }
 
 #feed_bg{
-  background-color: #e2e1e1;
+  background-color: var(--feed-bg);
 }
 
 #overlay{
@@ -463,16 +463,16 @@ span a:hover{
   color: red;
 }
 
-#comments{
-  width:fit-content;
-}
-
 #delete{
   width:fit-content;
 }
 
 #name-text{
   padding:10px;
+}
+
+#f{
+  width:20%;
 }
 
 /* Media Queries */
@@ -556,5 +556,9 @@ span a:hover{
 
   #name-text{
     padding:none;
+  }
+
+  #f{
+    width:95%;
   }
 }

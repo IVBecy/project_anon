@@ -33,6 +33,11 @@ ob_start();
   <script type="text/jsx" src="../assets/js/index.js"></script>
   <title>Project Anon - Settings</title>
 </head>
+<style>
+input{
+  background-color:rgba(0,0,0,0.05);
+}
+</style>
 <body id="feed_bg">
   <div id="overlay"></div>
   <div id="menu-bar"></div>

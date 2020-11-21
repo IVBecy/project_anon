@@ -60,32 +60,34 @@ else{
   //follows and followers onclick
   const FollowersOverlay = () => {
     return(
-      <div className="popup"> 
+      <div className="popup" id="f"> 
         <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
         <h2>Followers</h2>
+        <hr/>
         <?php foreach($followers as $f){
           $q = "SELECT `uname` FROM `users` WHERE `id` = '$f'";  
           $f_name = mysqli_query($connection,$q);
           $f_name = mysqli_fetch_row($f_name);
           $f_name = $f_name[0];
         ?>
-          <div id="<?php echo $f_name?>"><span><?php echo $f_name?></span></div>
+          <div id="<?php echo $f_name?>"><a href="<?php echo "./$f_name"?>"><h4><?php echo $f_name?></h4></a></div>
         <?php }?>
       </div>
     )
   }
   const FollowsOverlay = () => {
     return(
-      <div className="popup"> 
+      <div className="popup" id="f"> 
         <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
         <h2>Follows</h2>
+        <hr/>
         <?php foreach($follows as $f){
           $q = "SELECT `uname` FROM `users` WHERE `id` = '$f'";  
           $f_name = mysqli_query($connection,$q);
           $f_name = mysqli_fetch_row($f_name);
           $f_name = $f_name[0];
         ?>
-          <div id="<?php echo $f_name?>"><span><?php echo $f_name?></span></div>
+          <div id="<?php echo $f_name?>"><a href="<?php echo "./$f_name"?>"><h4><?php echo $f_name?></h4></a></div>
         <?php }?>
       </div>
     )
@@ -164,6 +166,7 @@ else{
           <h2 id="title"><?php echo $k["title"];?></h2>
           <p id="description" class="project-desc"><?php echo $k["report"];?></p>
         </div>
+        <hr>
         <div class="post-actions">
           <div class="actions" id="star"><i class="fas fa-star"></i>Star <?php echo "(".count($likes).")"?></div>
         </div>

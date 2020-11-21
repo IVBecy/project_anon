@@ -111,32 +111,34 @@ else{
   //follows and followers onclick
   const FollowersOverlay = () => {
     return(
-      <div className="popup"> 
+      <div className="popup" id="f"> 
         <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
         <h2>Followers</h2>
+        <hr/>
         <?php foreach($src_followers as $f){
           $q = "SELECT `uname` FROM `users` WHERE `id` = '$f'";  
           $f_name = mysqli_query($connection,$q);
           $f_name = mysqli_fetch_row($f_name);
           $f_name = $f_name[0];  
         ?>
-          <div id="<?php echo $f_name?>"><span><?php echo $f_name?></span></div>
+          <div id="<?php echo $f_name?>"><a href="<?php echo "./$f_name"?>"><h4><?php echo $f_name?></h4></a></div>
         <?php }?>
       </div>
     )
   }
   const FollowsOverlay = () => {
     return(
-      <div className="popup"> 
+      <div className="popup" id="f"> 
         <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
         <h2>Follows</h2>
+        <hr/>
         <?php foreach($src_follows as $f){
           $q = "SELECT `uname` FROM `users` WHERE `id` = '$f'";  
           $f_name = mysqli_query($connection,$q);
           $f_name = mysqli_fetch_row($f_name);
           $f_name = $f_name[0];    
         ?>
-          <div id="<?php echo $f_name?>"><span><?php echo $f_name?></span></div>
+          <div id="<?php echo $f_name?>"><a href="<?php echo "./$f_name"?>"><h4><?php echo $f_name?></h4></a></div>
         <?php }?>
       </div>
     )
@@ -193,14 +195,14 @@ else{
       <div class="profile-card">
         <?php echo $src_dir?>
         <h1><?php echo $src_uname;?></h1>
-         <form action="<?php echo $script?>" method="POST">
-          <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
-        </form>
-        <div class="user-social">
+        <div class="user-info">
           <h4>Projects: <?php echo count($collection)?></h4>
           <h4 id="followers">Followers: <?php echo count($src_followers)?></h4>
           <h4 id="follows">Follows: <?php echo count($src_follows)?></h4>
         </div>
+        <form action="<?php echo $script?>" method="POST">
+          <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
+        </form>
       </div>
     </div>
     <?php foreach($collection as $k){
@@ -222,6 +224,7 @@ else{
           <h2 id="title"><?php echo $k["title"];?></h2>
           <p id="description" class="project-desc"><?php echo $k["report"];?></p>
         </div>
+        <hr>
         <div class="post-actions">
           <?php if ($logged_in === true){
           ?>  
@@ -241,14 +244,14 @@ else{
       <div class="profile-card">
         <?php echo $src_dir?>
         <h1><?php echo $src_uname;?></h1>
-         <form action="<?php echo $script?>" method="POST">
-          <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
-        </form>
-        <div class="user-social">
+        <div class="user-info">
           <h4>Projects: <?php echo count($collection)?></h4>
           <h4 id="followers">Followers: <?php echo count($src_followers)?></h4>
           <h4 id="follows">Follows: <?php echo count($src_follows)?></h4>
         </div>
+        <form action="<?php echo $script?>" method="POST">
+          <input type="submit" value="<?php echo $btn_val?>" class="follow-btn">
+        </form>
     </div>
     <div class="center-container"><?php echo $msg?></div>
   <?php } else{?>
