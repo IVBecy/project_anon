@@ -13,19 +13,22 @@ $desc =  mysqli_real_escape_string($connection, e($_POST['desc']));
 $likes = [];
 $likes = json_encode($likes);
 $likes = openssl_encrypt($likes,"AES-128-CBC",$id);
+#Check if title exist for user
+$q = "SELECT `title` FROM `posts` WHERE `name_id` = '$id' AND `title` = '$title'";
+$e_t = mysqli_query($connection,$q);
+$e_t = mysqli_fetch_row($e_t);
+$e_t = $e_t[0];
+if ($e_t == $title || $title == ""){
+  $append = false;
+}else{
+  $append = true;
+}
 #Insert data
-if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
+if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"]) && $append === true){
   #Appending data to the Database
   $t = time();
   $append_query = "INSERT INTO `posts` (name_id,title,report,time,likes) VALUES ('$id','$title','$desc','$t','$likes')";
-  if ($connection->query($append_query) === TRUE) {
-    $append = true;
-    $message = "";
-  }
-  #If something goes wrong
-  else{
-    $append = false;
-  } 
+  $connection->query($append_query);
   #Create new csrf token
   createCSRF();
   mysqli_close($connection);

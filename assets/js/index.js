@@ -45,8 +45,8 @@ const ProjectForm = () => {
       <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
       <h2 id="title">Post a new project</h2>
       <form method="POST" action="../private/project-gen.php">
-        <input type="text" name="title" placeholder="Title of Project" /><br/>
-        <textarea name="desc" placeholder="Describe your project"></textarea><br />
+        <input type="text" name="title" placeholder="Title of Project" required/><br/>
+        <textarea name="desc" placeholder="Describe your project" required></textarea><br />
         <input type="submit" value="Post" />
         <input type="hidden" name="csrftoken" value={csrfToken}/>
       </form>
