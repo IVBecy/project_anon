@@ -143,14 +143,6 @@ $(document).ready(() => {
             ReactDOM.unmountComponentAtNode(e.target)
           } else {
             ReactDOM.render(<ProjectSettings />, e.target)
-            setTimeout(() => {
-              var elem = document.getElementById("project-dropdown");
-              if (elem) {
-                document.body.onclick = () => {
-                  elem.style.display = "none";
-                }
-              };
-            },500)
             //editing posts
             document.getElementById("edit-post").onclick = () => {
               var title = e.target.parentNode.id;
