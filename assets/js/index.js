@@ -11,12 +11,12 @@ $(document).ready(() => {
             <input className="search-usrs" type="search" name="src_name" placeholder="Search" />
           </form>
           <hr/>
-          <span><a href="../public/profile.php"><i className="fas fa-user" style={{marginRight:"5px"}}></i>Profile</a></span>
-          <span><a href="../public/feed.php"><i className="fas fa-newspaper" style={{ marginRight: "5px" }}></i>Feed</a></span>
-          <span id="new_project"><i className="fas fa-plus-square" style={{ marginRight: "5px" }}></i>New project</span>
+          <span><a href="../public/profile.php">Profile</a></span>
+          <span><a href="../public/feed.php">Feed</a></span>
+          <span id="new_project">New project</span>
           <hr />
-          <span><a href="../public/settings.php"><i className="fas fa-cog" style={{ marginRight: "5px" }}></i>Settings</a></span>
-          <span><i className="fas fa-question-circle" style={{ marginRight: "5px" }}></i>Docs</span>
+          <span><a href="../public/settings.php">Settings</a></span>
+          <span>Docs</span>
           <hr />
           <span><a href="../private/logout.php" style={{ color: "red" }}><i className="fas fa-sign-out-alt" style={{ marginRight: "5px" }}></i>Sign out</a></span>
         </div> 
