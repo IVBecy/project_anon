@@ -18,7 +18,7 @@
   <script type="text/jsx" src="../assets/js/index.js"></script>
   <title>Project Anon - Sign Up</title>
 </head>
-<body>
+<body id="feed_bg">
   <div class="center-container">
     <h1>Project Anon</h1>
     <h5>A social media platform developed for sharing projects.</h5>
