@@ -8,29 +8,21 @@ error_reporting(E_ALL & ~E_NOTICE);
 include("./connect.php");
 #getting some vars
 include("./vars.php");
+#Edited Post and reassign vars
+$newArray = json_decode($_COOKIE["editedPost"],true);
+$newTitle = mysqli_real_escape_string($connection,e($newArray["newTitle"]));
+$newDesc = mysqli_real_escape_string($connection,e($newArray["newDesc"]));
+$oldArray = json_decode($_COOKIE["oldPost"],true);
+$oldTitle = $oldArray["oldTitle"];
+$oldDesc = mysqli_real_escape_string($connection,e($oldArray["oldDesc"]));
 #Getting the projects from the database
-$collection = [];
-$p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
-$projects = mysqli_query($connection,$p_query);
+$p_query = "SELECT `title`,`report` FROM `posts` WHERE `name_id` = '$id' AND `title` = '$oldTitle'";
+$project = mysqli_query($connection,$p_query);
+$project = mysqli_fetch_assoc($project);
 if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
-  #Appending all the projects to one array
-  while ($row = mysqli_fetch_assoc($projects)) {
-    array_push($collection,$row);
-  };
-  #Edited Post and reassign vars
-  $newArray = json_decode($_COOKIE["editedPost"],true);
-  $newTitle = mysqli_real_escape_string($connection,e($newArray["newTitle"]));
-  $newDesc = mysqli_real_escape_string($connection,e($newArray["newDesc"]));
-  $oldArray = json_decode($_COOKIE["oldPost"],true);
-  $oldTitle = mysqli_real_escape_string($connection,e($oldArray["oldTitle"]));
-  $oldDesc = mysqli_real_escape_string($connection,e($oldArray["oldDesc"]));
   #Adding new title and description
-  foreach($collection as $k) {
-  if ($k["title"] == $oldTitle){
-    $k["title"] = $newTitle;
-    $k["report"] = $newDesc;
-    }
-  }
+  $project["title"] = $newTitle;
+  $project["report"] = $newDesc;
   #Create new csrf token
   createCSRF();
   #Delete cookies
@@ -40,6 +32,7 @@ if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
   $append_query = "UPDATE `posts` SET `title` = '$newTitle', `report` = '$newDesc' WHERE `name_id` = '$id' AND `title` = '$oldTitle'";
   if ($connection->query($append_query) === true){
     echo "SUCCESS";
+    echo json_encode($collection);
   }
   else{
     echo $connection->error;

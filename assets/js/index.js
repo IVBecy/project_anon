@@ -46,10 +46,11 @@ const ProjectForm = () => {
       <i className="fas fa-times" style={{ fontSize: "30px" }}></i>
       <h2 id="title">Post a new project</h2>
       <hr/>
-      <form method="POST" action="../private/project-gen.php" enctype="multipart/form-data">
+      <form method="POST" action="../private/project-gen.php" encType="multipart/form-data">
         <input type="text" name="title" placeholder="Title" required/><br/>
-        <input type="file" name="preview-img" accept=".png,.jpg,.jpeg" /><br/>
-        <textarea name="desc" placeholder="Description" required></textarea><br />
+        <span>Maximum characters allowed: 500</span>
+        <textarea name="desc" placeholder="Description" maxLength="500" required></textarea><br />
+        <input type="file" name="preview-img" accept=".png,.jpg,.jpeg" /><br />
         <input type="submit" value="Post" />
         <input type="hidden" name="csrftoken" value={csrfToken}/>
       </form>
@@ -97,7 +98,8 @@ const RenderPostEdit = () =>{
       <hr />
       <form method="POST" onSubmit={onPostEdit} action="../private/edit-post.php">
         <input type="text" name="title" placeholder="Edit title" /><br />
-        <textarea name="desc" placeholder="Edit description"></textarea><br />
+        <span>Maximum characters allowed: 500</span>
+        <textarea name="desc" placeholder="Edit description" maxLength="500"></textarea><br />
         <input type="submit" name="send-edited-post" value="Edit Post" />
         <input type="hidden" name="csrftoken" value={csrfToken}/>
       </form>
