@@ -43,6 +43,12 @@ if ($logged_in === false){
       </div>
       <div id="menu"></div>
     </div>
+    <div class="search-div">
+      <form method="POST" action="../public/profile-src.php">
+        <input class="search-usrs" type="search" name="src_name" placeholder="Search" onkeyup="nameLookup(this.value)" autocomplete="off"></input>
+        <div id="name-guess"></div>
+      </form>
+    </div>
   </div>
   <br>
   <?php    

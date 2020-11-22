@@ -7,10 +7,6 @@ $(document).ready(() => {
     const RenderDropDown = () => {
       return (
         <div className="dropdown_menu" id="dropdown_settings" style={{ visibility: "hidden", width:"200px" }}>
-          <form method="POST" action="../public/profile-src.php">
-            <input className="search-usrs" type="search" name="src_name" placeholder="Search" />
-          </form>
-          <hr/>
           <span><a href="../public/profile.php">Profile</a></span>
           <span><a href="../public/feed.php">Feed</a></span>
           <span id="new_project">New project</span>
@@ -219,3 +215,21 @@ $(document).ready(() => {
     }
   }
 });
+// function for ajax username lookup
+const nameLookup = (str) => {
+  var nameDiv = document.getElementById("name-guess");
+  nameDiv.style.visibility = "visible";
+  document.body.onclick = () => { nameDiv.style.visibility = "hidden";}
+  str.toLowerCase()
+  if (str.length == 0) {
+    nameDiv.innerHTML = "";
+    return
+  } else {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = () => {
+      nameDiv.innerHTML = xmlhttp.responseText;
+    };
+    xmlhttp.open("GET", "../private/name-lookup.php?str=" + str, true);
+    xmlhttp.send();
+  }
+}
