@@ -222,8 +222,7 @@ const nameLookup = (str) => {
   document.body.onclick = () => { nameDiv.style.visibility = "hidden";}
   str.toLowerCase()
   if (str.length == 0) {
-    nameDiv.innerHTML = "";
-    return
+    nameDiv.style.visibility = "hidden"
   } else {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = () => {
