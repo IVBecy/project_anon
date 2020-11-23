@@ -10,7 +10,7 @@ include("../private/vars.php");
 #Username to like post for
 $src_uname = $_SESSION["src_uname"];
 #Post title
-$like_title = $_POST["title"];
+$like_title = mysqli_real_escape_string($connection,e($_POST["title"]));
 $src_id = $_SESSION["src_id"];
 #Getting likes from the posts table
 $src_query = "SELECT `likes` FROM `posts` WHERE `name_id` = '$src_id' AND `title` = '$like_title'";
