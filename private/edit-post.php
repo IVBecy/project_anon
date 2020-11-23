@@ -13,7 +13,7 @@ $newArray = json_decode($_COOKIE["editedPost"],true);
 $newTitle = mysqli_real_escape_string($connection,e($newArray["newTitle"]));
 $newDesc = mysqli_real_escape_string($connection,e($newArray["newDesc"]));
 $oldArray = json_decode($_COOKIE["oldPost"],true);
-$oldTitle = $oldArray["oldTitle"];
+$oldTitle = mysqli_real_escape_string($connection,e($oldArray["oldTitle"]));
 $oldDesc = mysqli_real_escape_string($connection,e($oldArray["oldDesc"]));
 #Getting the projects from the database
 $p_query = "SELECT `title`,`report` FROM `posts` WHERE `name_id` = '$id' AND `title` = '$oldTitle'";
