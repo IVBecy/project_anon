@@ -58,7 +58,7 @@ if ($uname && $logged_in === true){
   $followers  = openssl_decrypt($followers ,"AES-128-CBC",$id);
   $followers = json_decode($followers,true);
   #Posts
-  $p_query = "SELECT `title`,`report` FROM `posts` WHERE `uname` = '$uname'";
+  $p_query = "SELECT `title`,`report` FROM `posts` WHERE `name_id` = '$id'";
   $projects = mysqli_query($connection,$p_query);
 }
 ?>
