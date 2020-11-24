@@ -101,7 +101,7 @@ if ($logged_in === false){
       </div>
       <hr>
       <div class="post-actions">
-        <form action="../private/star.php" method="POST"><button class="actions" id="star"><i class="fas fa-star"></i><?php echo $star_txt," ","(".count($likes).")";?></button><input type="hidden" name="title" value="<?php echo $k["title"]?>" /></form>
+        <form action="../private/star.php" method="POST"><button class="actions" id="star"><i class="fas fa-star"></i><?php echo $star_txt," ","(".count($likes).")";?></button><input type="hidden" name="title" value="<?php echo $k["title"]?>" /><input type="hidden" name="poster-name" value="<?php echo $k["name_id"]?>" /></form>
       </div>
     </div>
     <br>
