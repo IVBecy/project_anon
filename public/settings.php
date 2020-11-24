@@ -86,6 +86,7 @@ input{
           # USERNAME
           if (isset($_POST["uname"])){
             $new_uname = mysqli_real_escape_string($connection,e($_POST["uname"]));
+            $new_uname = strtolower($new_uname);
             #check for matching usernames in the BD
             $q = "SELECT `uname` FROM `users` WHERE `uname` = '$new_uname'";
             $db_name = mysqli_query($connection,$q);
