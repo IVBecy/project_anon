@@ -156,6 +156,7 @@ input{
             #Create new csrf token
             createCSRF();
             update();
+            header("Location: ./profile.php");
           }
           mysqli_close($connection);
         }
