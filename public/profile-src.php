@@ -219,9 +219,9 @@ else{
       $likes = openssl_decrypt($likes,"AES-128-CBC",$src_id);
       $likes = json_decode($likes,true);  
       if (in_array($id,$likes)){
-        $star_txt = "Unstar";
+        $txt = '<i class="fas fa-star"></i>Unstar ('.count($likes).')';
       }else{
-        $star_txt = "Star";
+        $txt = '<i class="far fa-star"></i>Star ('.count($likes).')';
       }  
     ?>
     <div class="post">
@@ -234,7 +234,7 @@ else{
       <div class="post-actions">
         <?php if ($logged_in === true){
         ?>  
-        <div onclick="Starring(<?php echo $k['title']?>,<?php echo $src_id;?>)" id="<?php echo $k["title"],$src_id,"star";?>"><button class="actions"><i class="fas fa-star"></i><?php echo $star_txt," ","(".count($likes).")";?></button></div>
+        <div onclick="Starring(<?php echo $k['title']?>,<?php echo $src_id;?>)" id="<?php echo $k["title"],$src_id,"star";?>"><button class="actions"><?php echo $txt;?></button></div>
         <?php } else{?>
         <a href="./index.html"><button class="actions" id="star"><i class="fas fa-star"></i>Star</button></a>
         <?php }?>
