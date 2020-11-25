@@ -12,7 +12,7 @@ if(hash_equals($_SESSION["csrf-token"], $_POST["csrftoken"])){
   $delete_item = mysqli_real_escape_string($connection,e($_COOKIE["ToBeDeleted"]));
   #Delete the post from the DB
   $delete_query = "DELETE FROM `posts` WHERE `name_id` = '$id' AND `title` = '$delete_item'";
-  if ($connection->query($delete_query) === true){}else{$connection->error;};
+  $connection->query($delete_query);
   #Create new csrf token
   createCSRF();
   #Delete cookie 
