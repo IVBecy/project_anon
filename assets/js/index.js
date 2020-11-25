@@ -232,9 +232,12 @@ const nameLookup = (str) => {
     xmlhttp.send();
   }
 }
-// function for starring posts
+// function for starring posts (ajax)
 const Starring = (title,id) => {
   var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = () => {
+    document.getElementById(`${title.id}${id}star`).innerHTML = xmlhttp.responseText;
+  };
   xmlhttp.open("GET", `../private/star.php?id=${id}&title=${title.id}`, true);
   xmlhttp.send();
 }

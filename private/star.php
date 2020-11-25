@@ -2,7 +2,7 @@
 #Session (start and vars)
 session_start();
 #Turn off all notices
-error_reporting(E_ALL & ~E_NOTICE);
+error_reporting(0);
 #Adding the script that connects to the DB
 include("../private/connect.php");
 #Getting some vars
@@ -26,9 +26,11 @@ if (in_array($id,$likes)){
   # Remove the user's username from the like list
   unset($likes[array_search($id,$likes)]);
   $likes = array_values($likes);
+  echo '<button class="actions"><i class="far fa-star"></i>Star ('.count($likes).')</button>';
 }else{
   # Add the user's username to the like list
   array_push($likes,$id);
+  echo '<button class="actions"><i class="fas fa-star"></i>Unstar ('.count($likes).')</button>';
 }
 $likes = json_encode($likes);
 $likes = openssl_encrypt($likes,"AES-128-CBC",$src_id);
