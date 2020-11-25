@@ -8,8 +8,8 @@ include("../private/connect.php");
 #Getting some vars
 include("../private/vars.php");
 #Post title
-$like_title = mysqli_real_escape_string($connection,e($_POST["title"]));
-$src_id = mysqli_real_escape_string($connection,e($_POST["poster-name"]));
+$like_title = mysqli_real_escape_string($connection,e($_GET["title"]));
+$src_id = mysqli_real_escape_string($connection,e($_GET["id"]));
 #Username to like post for
 $q = "SELECT `uname` FROM `users` WHERE `id` = '$src_id'";
 $src_uname = mysqli_query($connection,$q);
@@ -34,5 +34,4 @@ $likes = json_encode($likes);
 $likes = openssl_encrypt($likes,"AES-128-CBC",$src_id);
 $append_q = "UPDATE `posts` SET `likes` = '$likes'  WHERE `name_id` = '$src_id' AND `title` = '$like_title'";
 $connection->query($append_q);
-header("Location: ../public/$src_uname");
 ?>

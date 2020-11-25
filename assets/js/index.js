@@ -228,7 +228,13 @@ const nameLookup = (str) => {
     xmlhttp.onreadystatechange = () => {
       nameDiv.innerHTML = xmlhttp.responseText;
     };
-    xmlhttp.open("GET", "../private/name-lookup.php?str=" + str, true);
+    xmlhttp.open("GET", `../private/name-lookup.php?str=${str}`, true);
     xmlhttp.send();
   }
+}
+// function for starring posts
+const Starring = (title,id) => {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", `../private/star.php?id=${id}&title=${title.id}`, true);
+  xmlhttp.send();
 }
