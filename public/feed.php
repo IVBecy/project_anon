@@ -101,7 +101,7 @@ if ($logged_in === false){
       </div>
       <hr>
       <div class="post-actions">
-        <div onclick="Starring(<?php echo $k['title']?>,<?php echo $k['name_id'];?>)" id="<?php echo $k["title"],$k["name_id"],"star";?>"><button class="actions"><?php echo $txt;?></button></div>
+        <div onclick="Starring('<?php echo $k['title']?>','<?php echo $k['name_id']?>')" id="<?php echo $k["title"],$k["name_id"],"star";?>"><button class="actions"><?php echo $txt;?></button></div>
       </div>
     </div>
     <br>

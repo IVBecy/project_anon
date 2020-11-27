@@ -234,7 +234,7 @@ else{
       <div class="post-actions">
         <?php if ($logged_in === true){
         ?>  
-        <div onclick="Starring(<?php echo $k['title']?>,<?php echo $src_id;?>)" id="<?php echo $k["title"],$src_id,"star";?>"><button class="actions"><?php echo $txt;?></button></div>
+        <div onclick="Starring('<?php echo $k['title']?>','<?php echo $k['name_id']?>')" id="<?php echo $k["title"],$k["name_id"],"star";?>"><button class="actions"><?php echo $txt;?></button></div>  
         <?php } else{?>
         <a href="./index.html"><button class="actions" id="star"><i class="fas fa-star"></i>Star</button></a>
         <?php }?>

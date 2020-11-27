@@ -236,8 +236,8 @@ const nameLookup = (str) => {
 const Starring = (title,id) => {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = () => {
-    document.getElementById(`${title.id}${id}star`).innerHTML = xmlhttp.responseText;
+    document.getElementById(`${title}${id}star`).innerHTML = xmlhttp.responseText;
   };
-  xmlhttp.open("GET", `../private/star.php?id=${id}&title=${title.id}`, true);
+  xmlhttp.open("GET", `../private/star.php?id=${id}&title=${title}`, true);
   xmlhttp.send();
 }
