@@ -9,7 +9,7 @@ This software was made to practice my skills on full stack development and see h
 - HTML
 
 # Security implemented: 
-- [x] CSRF Forgery
+- [x] CSRF
 - [x] Session hijacking
 - [x] XSS and SQL injection
 - [x] Directory traversal
